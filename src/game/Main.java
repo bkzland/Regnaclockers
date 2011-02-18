@@ -1,8 +1,5 @@
 package game;
 
-import java.io.IOException;
-import java.util.zip.ZipException;
-
 import engine.GameWindow;
 
 import interpreter.ArchiveReader;
@@ -11,7 +8,6 @@ import interpreter.ArchiveReader;
  * A program to load and play rpgs.
  * 
  * @author regnaclockers
- * 
  */
 public class Main {
 

@@ -1,8 +1,5 @@
 package engine;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 /**
  * This class is used to represent a tileset.
  * 

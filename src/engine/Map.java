@@ -17,7 +17,8 @@ public class Map {
 	private Tileset tileset;
 
 	/**
-	 * creates a Map object. It gets the height and width of the map from the dimensions of the mapGrid array.
+	 * creates a Map object. It gets the height and width of the map from the
+	 * dimensions of the mapGrid array.
 	 * 
 	 * @param mapName
 	 *            the name which the map should have.

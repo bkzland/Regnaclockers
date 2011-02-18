@@ -1,11 +1,7 @@
 package engine;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.io.IOException;
-import java.util.zip.ZipException;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 /**
  * This class is used to represent the main game window.
@@ -22,7 +18,6 @@ public class GameWindow extends JFrame {
 
 	/**
 	 * creates a GameWindow object.
-	 * 
 	 */
 	public GameWindow() {
 
