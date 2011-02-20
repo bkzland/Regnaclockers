@@ -71,12 +71,12 @@ public class Map {
 	 * @return tile
 	 */
 	public BufferedImage getTile(int x, int y) {
-		BufferedImage tile = this.tileset.getSprite(mapGrid.get(new Point(x, y)));
+		BufferedImage tile = tileset.getSprite(mapGrid.get(new Point(x, y)));
 		return tile;
 	}
 
 	/**
-	 * sets tile on map position (x|y)
+	 * changes tile on map position (x|y)
 	 * 
 	 * @param x
 	 *            the x-value of the position.
@@ -85,8 +85,8 @@ public class Map {
 	 * @param tileID
 	 *            the tile which is set on position (x|y).
 	 */
-	public void setTile(int x, int y, int tileID) {
-		this.mapGrid.put(new Point(x, y), tileID);
+	public void changeTile(int x, int y, int tileID) {
+		mapGrid.put(new Point(x, y), tileID);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Map {
 	 * @return mapWidth
 	 */
 	public int getWidth() {
-		return this.mapWidth;
+		return mapWidth;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Map {
 	 * @return mapHeight
 	 */
 	public int getHeight() {
-		return this.mapHeight;
+		return mapHeight;
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class Map {
 	 * @return mapName
 	 */
 	public String getName() {
-		return this.mapName;
+		return mapName;
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class Map {
 	 * @return tileSize
 	 */
 	public int getTileSize() {
-		int tileSize = this.tileset.getTileSize();
+		int tileSize = tileset.getTileSize();
 		return tileSize;
 	}
 
