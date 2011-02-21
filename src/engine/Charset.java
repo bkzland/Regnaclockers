@@ -11,6 +11,10 @@ import java.util.ArrayList;
  */
 public class Charset extends SpriteCollection {
 	int animationSpriteAmount;
+	ArrayList<BufferedImage> lookDown = new ArrayList<BufferedImage>();
+	ArrayList<BufferedImage> lookLeft = new ArrayList<BufferedImage>();
+	ArrayList<BufferedImage> lookRight = new ArrayList<BufferedImage>();
+	ArrayList<BufferedImage> lookUp = new ArrayList<BufferedImage>();
 
 	/**
 	 * creates a Charset Object.
@@ -27,52 +31,57 @@ public class Charset extends SpriteCollection {
 	public Charset(String charsetPath, int charWidth, int charHeight, int animationSpriteAmount) {
 		super(charsetPath, charWidth, charHeight);
 		this.animationSpriteAmount = animationSpriteAmount;
+		readSprites();
 	}
 
 	/**
 	 * returns all sprites with the character looking down. It assumes the
 	 * character looks in the first images down, then left, then right, then up.
 	 * 
-	 * @return downArray
+	 * @return lookDown
 	 */
 	public ArrayList<BufferedImage> getLookDownArray() {
-		ArrayList<BufferedImage> downArray = getSpriteArray(0, animationSpriteAmount - 1);
-		return downArray;
+		return lookDown;
 	}
 
 	/**
 	 * returns all sprites with the character looking left. It assumes the
 	 * character looks in the first images down, then left, then right, then up.
 	 * 
-	 * @return leftArray
+	 * @return lookLeft
 	 */
 	public ArrayList<BufferedImage> getLookLeftArray() {
-		ArrayList<BufferedImage> leftArray = getSpriteArray(animationSpriteAmount, 2 * animationSpriteAmount - 1);
-		return leftArray;
+		return lookLeft;
 	}
 
 	/**
 	 * returns all sprites with the character looking right. It assumes the
 	 * character looks in the first images down, then left, then right, then up.
 	 * 
-	 * @return rightArray
+	 * @return lookRight
 	 */
 	public ArrayList<BufferedImage> getLookRightArray() {
-		ArrayList<BufferedImage> rightArray = getSpriteArray(2 * animationSpriteAmount, 3 * animationSpriteAmount - 1);
-		return rightArray;
+		return lookRight;
 	}
 
 	/**
 	 * returns all sprites with the character looking up. It assumes the
 	 * character looks in the first images down, then left, then right, then up.
 	 * 
-	 * @return upArray
+	 * @return lookUp
 	 */
 	public ArrayList<BufferedImage> getLookUpArray() {
-		ArrayList<BufferedImage> upArray = getSpriteArray(3 * animationSpriteAmount, 4 * animationSpriteAmount - 1);
-		return upArray;
+		return lookUp;
 	}
 
+	
+	private void readSprites() {
+		lookDown = getSpriteArray(0, animationSpriteAmount - 1);
+		lookLeft = getSpriteArray(animationSpriteAmount, 2 * animationSpriteAmount - 1);
+		lookRight = getSpriteArray(2 * animationSpriteAmount, 3 * animationSpriteAmount - 1);
+		lookUp = getSpriteArray(3 * animationSpriteAmount, 4 * animationSpriteAmount - 1);
+	}
+	
 	/**
 	 * returns an array of sprites from the tiles ArrayList.
 	 * 

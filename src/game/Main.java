@@ -1,6 +1,7 @@
 package game;
 
 import engine.GameWindow;
+import engine.KeyBoardControl;
 
 import interpreter.ArchiveReader;
 

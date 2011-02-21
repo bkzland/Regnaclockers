@@ -86,7 +86,7 @@ public class Map {
 		int startX = x - horResolution / 2;
 		int startY = y - vertResolution / 2;
 		
-		// prevents that the map moves even if theres no more map to show
+		// prevents that the map moves if there's no more map to show
 		// only effects the upper and left side
 		if (startX < 0){
 			startX = 0;
