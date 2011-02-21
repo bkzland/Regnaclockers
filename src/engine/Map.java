@@ -1,5 +1,6 @@
 package engine;
 
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -11,10 +12,12 @@ import java.util.HashMap;
  */
 public class Map {
 	private HashMap<Point, Integer> mapGrid = new HashMap<Point, Integer>();
+	private BufferedImage map;
 	private int mapWidth;
 	private int mapHeight;
 	private String mapName;
 	private Tileset tileset;
+	private int tileSize;
 
 	/**
 	 * creates a Map object. It gets the height and width of the map from the
@@ -37,6 +40,8 @@ public class Map {
 		this.mapWidth = mapGrid.length;
 		this.mapHeight = mapGrid[0].length;
 		this.tileset = tileset;
+		tileSize = tileset.getTileSize();
+		loadMap();
 	}
 
 	/**
@@ -59,20 +64,8 @@ public class Map {
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 		this.tileset = tileset;
-	}
-
-	/**
-	 * returns tileImage on position (x|y).
-	 * 
-	 * @param x
-	 *            the x-value of the tile.
-	 * @param y
-	 *            the y-value of the tile.
-	 * @return tile
-	 */
-	public BufferedImage getTile(int x, int y) {
-		BufferedImage tile = tileset.getSprite(mapGrid.get(new Point(x, y)));
-		return tile;
+		tileSize = tileset.getTileSize();
+		loadMap();
 	}
 
 	/**
@@ -126,4 +119,37 @@ public class Map {
 		return tileSize;
 	}
 
+	/**
+	 * returns a part of the map. (x|y) is the coordinate, width and height the
+	 * size of the map part. It starts on the top left.
+	 * 
+	 * @param x
+	 *            x position in pixels.
+	 * @param y
+	 *            y position in pixels.
+	 * @param width
+	 *            width in pixels.
+	 * @param height
+	 *            height in pixels.
+	 * @return mapPart part of the map
+	 */
+	public BufferedImage getMapPart(int x, int y, int width, int height) {
+		//TODO prevent error by requesting a subimage outside of the maps size
+		BufferedImage mapPart = map.getSubimage(x, y, width, height);
+		return mapPart;
+	}
+
+	/**
+	 * creates an image of the whole map.
+	 */
+	private void loadMap() {
+		map = new BufferedImage(mapWidth * tileSize, mapHeight * tileSize, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = map.createGraphics();
+
+		for (int x = 0; x < mapWidth; x++) {
+			for (int y = 0; y < mapHeight; y++) {
+				g2d.drawImage(tileset.getSprite(mapGrid.get(new Point(x, y))), y * tileSize, x * tileSize, null);
+			}
+		}
+	}
 }

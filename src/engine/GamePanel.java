@@ -29,7 +29,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		drawMap(g);
 		drawPlayer(g);
+
 	}
+
+	// test only
+	int loops = 0;
+	int a = 0;
 
 	/**
 	 * draws the map.
@@ -37,11 +42,14 @@ public class GamePanel extends JPanel implements Runnable {
 	 * @param g
 	 */
 	private void drawMap(Graphics g) {
-		for (int x = 0; x < map.getWidth(); x++) {
-			for (int y = 0; y < map.getHeight(); y++) {
-				g.drawImage(map.getTile(x, y), y * map.getTileSize(), x * map.getTileSize(), this);
-			}
+		if (a > 100)
+			a = 0;
+		if (loops % 1 == 0) {
+			a += 2;
 		}
+		g.drawImage(map.getMapPart(a, 0, 640, 480), 0, 0, this);
+		loops++;
+
 	}
 
 	/**
