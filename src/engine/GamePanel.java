@@ -27,37 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		drawMap(g);
-		drawPlayer(g);
-
-	}
-
-	// test only
-	int loops = 0;
-	int a = 0;
-
-	/**
-	 * draws the map.
-	 * 
-	 * @param g
-	 */
-	private void drawMap(Graphics g) {
-		if (a > 100)
-			a = 0;
-		if (loops % 1 == 0) {
-			a += 2;
-		}
-		g.drawImage(map.getMapPart(a, 0, 640, 480), 0, 0, this);
-		loops++;
-
-	}
-
-	/**
-	 * draws the player.
-	 * 
-	 * @param g
-	 */
-	private void drawPlayer(Graphics g) {
+		map.drawMapPart(g, 3330, 1250, 640, 480);
 
 	}
 

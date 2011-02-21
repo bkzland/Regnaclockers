@@ -1,5 +1,6 @@
 package engine;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -13,8 +14,10 @@ import java.util.HashMap;
 public class Map {
 	private HashMap<Point, Integer> mapGrid = new HashMap<Point, Integer>();
 	private BufferedImage map;
-	private int mapWidth;
-	private int mapHeight;
+	private int mapWidthInTiles;
+	private int mapHeightInTiles;
+	private int mapWidthInPixel;
+	private int mapHeightInPixel;
 	private String mapName;
 	private Tileset tileset;
 	private int tileSize;
@@ -37,8 +40,8 @@ public class Map {
 				this.mapGrid.put(new Point(x, y), mapGrid[x][y]);
 			}
 		}
-		this.mapWidth = mapGrid.length;
-		this.mapHeight = mapGrid[0].length;
+		this.mapWidthInTiles = mapGrid.length;
+		this.mapHeightInTiles = mapGrid[0].length;
 		this.tileset = tileset;
 		tileSize = tileset.getTileSize();
 		loadMap();
@@ -51,105 +54,71 @@ public class Map {
 	 *            the name which the map should have.
 	 * @param mapGrid
 	 *            contains the IDs of the tiles for every single position.
-	 * @param mapWidth
+	 * @param mapWidthInTiles
 	 *            width of the map.
-	 * @param mapHeight
+	 * @param mapHeightInTiles
 	 *            height of the map.
 	 * @param tileset
 	 *            the Tileset object it should use.
 	 */
-	public Map(String mapName, HashMap<Point, Integer> mapGrid, int mapWidth, int mapHeight, Tileset tileset) {
+	public Map(String mapName, HashMap<Point, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles, Tileset tileset) {
 		this.mapName = mapName;
 		this.mapGrid = mapGrid;
-		this.mapWidth = mapWidth;
-		this.mapHeight = mapHeight;
+		this.mapWidthInTiles = mapWidthInTiles;
+		this.mapHeightInTiles = mapHeightInTiles;
 		this.tileset = tileset;
 		tileSize = tileset.getTileSize();
 		loadMap();
 	}
 
 	/**
-	 * changes tile on map position (x|y)
+	 * draws a part of the map. It creates a rectangle around (x|y).
 	 * 
-	 * @param x
-	 *            the x-value of the position.
-	 * @param y
-	 *            the y-value of the position.
-	 * @param tileID
-	 *            the tile which is set on position (x|y).
+	 * @param g
+	 * @param x players position on x-axis
+	 * @param y players position on y-axis.
+	 * @param horResolution
+	 * @param vertResolution
 	 */
-	public void changeTile(int x, int y, int tileID) {
-		mapGrid.put(new Point(x, y), tileID);
-	}
+	public void drawMapPart(Graphics g, int x, int y, int horResolution, int vertResolution) {
 
-	/**
-	 * returns the width of the map.
-	 * 
-	 * @return mapWidth
-	 */
-	public int getWidth() {
-		return mapWidth;
-	}
+		
+		int startX = x - horResolution / 2;
+		int startY = y - vertResolution / 2;
+		
+		// prevents that the map moves even if theres no more map to show
+		// only effects the upper and left side
+		if (startX < 0){
+			startX = 0;
+		}
+		if (startY < 0) {
+			startY = 0;
+		}
+		//same for lower and right side
+		if (startX + horResolution > mapWidthInPixel) {
+			startX = mapWidthInPixel - horResolution;
+		}
+		if (startY + vertResolution > mapHeightInPixel) {
+			startY = mapHeightInPixel - vertResolution;
+		}
 
-	/**
-	 * returns the height of the map.
-	 * 
-	 * @return mapHeight
-	 */
-	public int getHeight() {
-		return mapHeight;
-	}
-
-	/**
-	 * returns name of the map.
-	 * 
-	 * @return mapName
-	 */
-	public String getName() {
-		return mapName;
-	}
-
-	/**
-	 * returns the size of the tiles.
-	 * 
-	 * @return tileSize
-	 */
-	public int getTileSize() {
-		int tileSize = tileset.getTileSize();
-		return tileSize;
-	}
-
-	/**
-	 * returns a part of the map. (x|y) is the coordinate, width and height the
-	 * size of the map part. It starts on the top left.
-	 * 
-	 * @param x
-	 *            x position in pixels.
-	 * @param y
-	 *            y position in pixels.
-	 * @param width
-	 *            width in pixels.
-	 * @param height
-	 *            height in pixels.
-	 * @return mapPart part of the map
-	 */
-	public BufferedImage getMapPart(int x, int y, int width, int height) {
-		//TODO prevent error by requesting a subimage outside of the maps size
-		BufferedImage mapPart = map.getSubimage(x, y, width, height);
-		return mapPart;
+		g.drawImage(map.getSubimage(startX, startY, horResolution, vertResolution), 0, 0, null);
 	}
 
 	/**
 	 * creates an image of the whole map.
 	 */
 	private void loadMap() {
-		map = new BufferedImage(mapWidth * tileSize, mapHeight * tileSize, BufferedImage.TYPE_INT_RGB);
+		map = new BufferedImage(mapWidthInTiles * tileSize, mapHeightInTiles * tileSize, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2d = map.createGraphics();
 
-		for (int x = 0; x < mapWidth; x++) {
-			for (int y = 0; y < mapHeight; y++) {
+		for (int x = 0; x < mapWidthInTiles; x++) {
+			for (int y = 0; y < mapHeightInTiles; y++) {
 				g2d.drawImage(tileset.getSprite(mapGrid.get(new Point(x, y))), y * tileSize, x * tileSize, null);
 			}
 		}
+		
+		mapWidthInPixel = map.getWidth();
+		mapHeightInPixel = map.getHeight();
 	}
 }

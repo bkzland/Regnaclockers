@@ -20,7 +20,6 @@ public abstract class SpriteCollection {
 	private BufferedImage spriteset;
 	private int spriteWidth;
 	private int spriteHeight;
-	private File imageFile;
 
 	/**
 	 * creates a SpriteCollection Object.
@@ -33,9 +32,9 @@ public abstract class SpriteCollection {
 	 *            Height of the subimages.
 	 */
 	public SpriteCollection(String imagePath, int spriteWidth, int spriteHeight) {
-		imageFile = new File(imagePath);
+
 		try {
-			spriteset = ImageIO.read(imageFile);
+			spriteset = ImageIO.read(new File(imagePath));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -125,15 +124,4 @@ public abstract class SpriteCollection {
 		}
 
 	}
-
-	/**
-	 * returns the name of the image file without path.
-	 * 
-	 * @return fileName
-	 */
-	public String getFileName() {
-		String fileName = imageFile.getName();
-		return fileName;
-	}
-
 }
