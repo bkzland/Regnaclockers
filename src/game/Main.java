@@ -1,5 +1,6 @@
 package game;
 
+import engine.GameLoop;
 import engine.GameWindow;
 import engine.KeyBoardControl;
 

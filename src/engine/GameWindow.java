@@ -10,9 +10,10 @@ import javax.swing.JFrame;
  * 
  * @author regnaclockers
  */
+@SuppressWarnings("serial")
 public class GameWindow extends JFrame {
-	GamePanel panel;
-	GameMenu menu;
+	private GamePanel panel = new GamePanel();
+	private GameMenu menu = new GameMenu();
 
 	/**
 	 * creates a GameWindow object.
@@ -21,12 +22,9 @@ public class GameWindow extends JFrame {
 		setTitle("Regnaclock");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		requestFocus();
-		menu = new GameMenu();
-		panel = new GamePanel();
 		add(menu, BorderLayout.NORTH);
 		add(panel);
 		pack();
 		setVisible(true);
-		panel.run();
 	}
 }

@@ -12,20 +12,19 @@ import javax.swing.JPanel;
  * @author regnaclockers
  */
 public class GamePanel extends JPanel implements Runnable {
-	KeyBoardControl key = new KeyBoardControl();
+	private int fps = 0;
+	private int frames = 0;
+	private long firstFrame;
+	private long currentFrame;
 
-	// test
-	Tileset tileset = new Tileset("dummytileset.png", 128);
-	int grid[][] = { { 11, 11, 11, 11, 11, 11 }, { 11, 18, 22, 18, 18, 11 }, { 11, 18, 22, 18, 18, 11 },
-			{ 11, 18, 22, 18, 18, 11 }, { 11, 18, 22, 18, 18, 11 }, { 11, 11, 11, 11, 11, 11 } };
-
-	Map map = new Map("Map", grid, tileset);
-	Charset charset = new Charset("dummycharset.png", 128, 192, 4);
-	Character character = new Character(charset);
+	private KeyBoardControl key = new KeyBoardControl();
+	private GameLoop loop = new GameLoop(key);
+	private Thread t1 = new Thread(loop);
+	private Thread t2 = new Thread(this);
 
 	int x = 128;
 	int y = 128;
-	
+
 	/**
 	 * creates the game panel.
 	 */
@@ -34,6 +33,8 @@ public class GamePanel extends JPanel implements Runnable {
 		setDoubleBuffered(true);
 		setFocusable(true);
 		addKeyListener(key);
+		t1.start();
+		t2.start();
 	}
 
 	/**
@@ -41,35 +42,31 @@ public class GamePanel extends JPanel implements Runnable {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		map.drawMapPart(g, 3330, 1250, 640, 480);
-		character.drawCharacter(g, x, y);
+		loop.drawGame(g);
+		showFps(g);
 	}
 
-	/**
-	 * the game loop.
-	 */
 	@Override
 	public void run() {
 		while (true) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			if (key.isDownPressed()) {
-				y++;
-			}
-			else if (key.isLeftPressed()) {
-				x--;
-			}
-			else if (key.isRightPressed()) {
-				x++;
-			}
-			else if (key.isUpPressed()) {
-				y--;
-			}
 			repaint();
+			measureFps();
+		}
+	}
+
+	private void measureFps() {
+		frames++;
+		currentFrame = System.currentTimeMillis();
+		if (currentFrame > firstFrame + 1000) {
+			firstFrame = currentFrame;
+			fps = frames;
+			frames = 0;
+		}
+	}
+	
+	private void showFps(Graphics g) {
+		if (fps != 0) {
+			g.drawString(fps + "FPS", 0, 10);
 		}
 	}
 }

@@ -74,7 +74,6 @@ public class Charset extends SpriteCollection {
 		return lookUp;
 	}
 
-	// TODO fix this, creates errors or something
 	private void readSprites() {
 		lookDown = getSpriteArray(0, animationSpriteAmount - 1);
 		lookLeft = getSpriteArray(animationSpriteAmount, 2 * animationSpriteAmount - 1);
