@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			if(fps >= 120 || fps == 0) {
+			if(fps >= MAX_FPS || fps == 0) {
 				try {
 					Thread.sleep(1000 / MAX_FPS);
 				} catch (InterruptedException e) {
