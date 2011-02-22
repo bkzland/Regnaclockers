@@ -74,14 +74,14 @@ public class Charset extends SpriteCollection {
 		return lookUp;
 	}
 
-	
+	// TODO fix this, creates errors or something
 	private void readSprites() {
 		lookDown = getSpriteArray(0, animationSpriteAmount - 1);
 		lookLeft = getSpriteArray(animationSpriteAmount, 2 * animationSpriteAmount - 1);
 		lookRight = getSpriteArray(2 * animationSpriteAmount, 3 * animationSpriteAmount - 1);
 		lookUp = getSpriteArray(3 * animationSpriteAmount, 4 * animationSpriteAmount - 1);
 	}
-	
+
 	/**
 	 * returns an array of sprites from the tiles ArrayList.
 	 * 
@@ -93,10 +93,9 @@ public class Charset extends SpriteCollection {
 	 */
 	private ArrayList<BufferedImage> getSpriteArray(int start, int end) {
 		ArrayList<BufferedImage> spriteArray = new ArrayList<BufferedImage>();
-		for (int i = 0; start + i < end; i++) {
+		for (int i = 0; start + i <= end; i++) {
 			spriteArray.add(getSprite(start + i));
 		}
 		return spriteArray;
 	}
-
 }

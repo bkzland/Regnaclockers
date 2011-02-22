@@ -14,14 +14,12 @@ public class GameMenu extends JMenuBar {
 	JMenuItem quit = new JMenuItem("Quit");
 
 	public GameMenu() {
-
 		quit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				quit();
 			}
 		});
-
 		file.add(quit);
 		add(file);
 	}
@@ -29,5 +27,4 @@ public class GameMenu extends JMenuBar {
 	public void quit() {
 		System.exit(0);
 	}
-
 }

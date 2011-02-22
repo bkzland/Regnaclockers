@@ -17,10 +17,8 @@ public class Main {
 	 *            console arguments.
 	 */
 	public static void main(String[] args) {
-
 		// everything just for testing here
 		ArchiveReader archiveReader = new ArchiveReader("DummyGame.rcz");
 		GameWindow window = new GameWindow();
 	}
-
 }

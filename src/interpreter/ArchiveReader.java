@@ -14,7 +14,6 @@ import java.util.zip.ZipFile;
  * @author regnaclockers
  */
 public class ArchiveReader {
-
 	private ZipFile gameArchive;
 	private ZipEntry gameInformation;
 	private ZipEntry monster;

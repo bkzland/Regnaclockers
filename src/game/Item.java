@@ -7,7 +7,6 @@ package game;
  * 
  */
 abstract class Item {
-
 	private String name;
 	private int price;
 	private String script;
@@ -46,5 +45,4 @@ abstract class Item {
 		this(name, price);
 		this.script = script;
 	}
-
 }

@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
  * @author regnaclockers
  */
 public abstract class SpriteCollection {
-
 	protected ArrayList<BufferedImage> sprites = new ArrayList<BufferedImage>();
 
 	private BufferedImage spriteset;
@@ -32,7 +31,6 @@ public abstract class SpriteCollection {
 	 *            Height of the subimages.
 	 */
 	public SpriteCollection(String imagePath, int spriteWidth, int spriteHeight) {
-
 		try {
 			spriteset = ImageIO.read(new File(imagePath));
 		} catch (IOException e) {
@@ -41,7 +39,6 @@ public abstract class SpriteCollection {
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
 		loadTiles();
-
 	}
 
 	/**
@@ -55,7 +52,6 @@ public abstract class SpriteCollection {
 	 */
 	public SpriteCollection(String imagePath, int spriteSize) {
 		this(imagePath, spriteSize, spriteSize);
-
 	}
 
 	/**
@@ -69,7 +65,6 @@ public abstract class SpriteCollection {
 
 		int widthInTiles = spriteset.getWidth() / spriteWidth;
 		int heightInTiles = spriteset.getHeight() / spriteHeight;
-
 		for (int y = 0; y < heightInTiles; y++) {
 			for (int x = 0; x < widthInTiles; x++) {
 				sprites.add(spriteset.getSubimage(x * spriteWidth, y * spriteHeight, spriteWidth, spriteHeight));
@@ -122,6 +117,5 @@ public abstract class SpriteCollection {
 			System.exit(1);
 			return null;
 		}
-
 	}
 }

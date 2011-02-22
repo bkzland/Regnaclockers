@@ -40,5 +40,4 @@ public class Armor extends Item {
 		super(name, price, script);
 		this.defense = defense;
 	}
-
 }

@@ -4,7 +4,6 @@ package game;
  * This class represents weapon items.
  * 
  * @author regnaclockers
- * 
  */
 public class Weapon extends Item {
 	private int attack;
@@ -42,5 +41,4 @@ public class Weapon extends Item {
 		super(name, price, script);
 		this.attack = attack;
 	}
-
 }

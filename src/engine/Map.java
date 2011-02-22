@@ -61,7 +61,8 @@ public class Map {
 	 * @param tileset
 	 *            the Tileset object it should use.
 	 */
-	public Map(String mapName, HashMap<Point, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles, Tileset tileset) {
+	public Map(String mapName, HashMap<Point, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles,
+			Tileset tileset) {
 		this.mapName = mapName;
 		this.mapGrid = mapGrid;
 		this.mapWidthInTiles = mapWidthInTiles;
@@ -75,33 +76,32 @@ public class Map {
 	 * draws a part of the map. It creates a rectangle around (x|y).
 	 * 
 	 * @param g
-	 * @param x players position on x-axis
-	 * @param y players position on y-axis.
+	 * @param x
+	 *            players position on x-axis
+	 * @param y
+	 *            players position on y-axis.
 	 * @param horResolution
 	 * @param vertResolution
 	 */
 	public void drawMapPart(Graphics g, int x, int y, int horResolution, int vertResolution) {
-
-		
 		int startX = x - horResolution / 2;
 		int startY = y - vertResolution / 2;
-		
+
 		// prevents that the map moves if there's no more map to show
 		// only effects the upper and left side
-		if (startX < 0){
+		if (startX < 0) {
 			startX = 0;
 		}
 		if (startY < 0) {
 			startY = 0;
 		}
-		//same for lower and right side
+		// same for lower and right side
 		if (startX + horResolution > mapWidthInPixel) {
 			startX = mapWidthInPixel - horResolution;
 		}
 		if (startY + vertResolution > mapHeightInPixel) {
 			startY = mapHeightInPixel - vertResolution;
 		}
-
 		g.drawImage(map.getSubimage(startX, startY, horResolution, vertResolution), 0, 0, null);
 	}
 
@@ -117,7 +117,6 @@ public class Map {
 				g2d.drawImage(tileset.getSprite(mapGrid.get(new Point(x, y))), y * tileSize, x * tileSize, null);
 			}
 		}
-		
 		mapWidthInPixel = map.getWidth();
 		mapHeightInPixel = map.getHeight();
 	}
