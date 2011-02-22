@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 public abstract class SpriteCollection {
 	protected ArrayList<BufferedImage> sprites = new ArrayList<BufferedImage>();
 
-	private BufferedImage spriteset;
+	protected BufferedImage spriteset;
 	private int spriteWidth;
 	private int spriteHeight;
 

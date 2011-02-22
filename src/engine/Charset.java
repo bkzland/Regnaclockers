@@ -28,9 +28,9 @@ public class Charset extends SpriteCollection {
 	 * @param animationSprites
 	 *            Amount of sprites for animation.
 	 */
-	public Charset(String charsetPath, int charWidth, int charHeight, int animationSpriteAmount) {
+	public Charset(String charsetPath, int charWidth, int charHeight) {
 		super(charsetPath, charWidth, charHeight);
-		this.animationSpriteAmount = animationSpriteAmount;
+		animationSpriteAmount = spriteset.getWidth() / charWidth;
 		readSprites();
 	}
 
@@ -40,7 +40,7 @@ public class Charset extends SpriteCollection {
 	 * 
 	 * @return lookDown
 	 */
-	public ArrayList<BufferedImage> getLookDownArray() {
+	public ArrayList<BufferedImage> getLookDownSprites() {
 		return lookDown;
 	}
 
@@ -50,7 +50,7 @@ public class Charset extends SpriteCollection {
 	 * 
 	 * @return lookLeft
 	 */
-	public ArrayList<BufferedImage> getLookLeftArray() {
+	public ArrayList<BufferedImage> getLookLeftSprites() {
 		return lookLeft;
 	}
 
@@ -60,7 +60,7 @@ public class Charset extends SpriteCollection {
 	 * 
 	 * @return lookRight
 	 */
-	public ArrayList<BufferedImage> getLookRightArray() {
+	public ArrayList<BufferedImage> getLookRightSprites() {
 		return lookRight;
 	}
 
@@ -70,15 +70,15 @@ public class Charset extends SpriteCollection {
 	 * 
 	 * @return lookUp
 	 */
-	public ArrayList<BufferedImage> getLookUpArray() {
+	public ArrayList<BufferedImage> getLookUpSprites() {
 		return lookUp;
 	}
 
 	private void readSprites() {
-		lookDown = getSpriteArray(0, animationSpriteAmount - 1);
-		lookLeft = getSpriteArray(animationSpriteAmount, 2 * animationSpriteAmount - 1);
-		lookRight = getSpriteArray(2 * animationSpriteAmount, 3 * animationSpriteAmount - 1);
-		lookUp = getSpriteArray(3 * animationSpriteAmount, 4 * animationSpriteAmount - 1);
+		lookDown = getSprites(0, animationSpriteAmount - 1);
+		lookLeft = getSprites(animationSpriteAmount, 2 * animationSpriteAmount - 1);
+		lookRight = getSprites(2 * animationSpriteAmount, 3 * animationSpriteAmount - 1);
+		lookUp = getSprites(3 * animationSpriteAmount, 4 * animationSpriteAmount - 1);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class Charset extends SpriteCollection {
 	 *            TileID to stop.
 	 * @return spriteArray
 	 */
-	private ArrayList<BufferedImage> getSpriteArray(int start, int end) {
+	private ArrayList<BufferedImage> getSprites(int start, int end) {
 		ArrayList<BufferedImage> spriteArray = new ArrayList<BufferedImage>();
 		for (int i = 0; start + i <= end; i++) {
 			spriteArray.add(getSprite(start + i));

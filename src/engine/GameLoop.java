@@ -10,7 +10,7 @@ public class GameLoop implements Runnable {
 			{ 11, 18, 22, 18, 18, 11 }, { 11, 18, 22, 18, 18, 11 }, { 11, 11, 11, 11, 11, 11 } };
 
 	private Map map = new Map("Map", grid, tileset);
-	private Charset charset = new Charset("dummycharset.png", 128, 192, 4);
+	private Charset charset = new Charset("dummycharset.png", 128, 192);
 	private Character character = new Character(charset);
 
 	private int x;
