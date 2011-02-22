@@ -1,10 +1,9 @@
 package engine;
 
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 
 public class GameLoop implements Runnable {
-	private static int ticksPerSecond = 25;
+	private static final int ticksPerSecond = 25;
 
 	private Tileset tileset = new Tileset("dummytileset.png", 128);
 	private int grid[][] = { { 11, 11, 11, 11, 11, 11 }, { 11, 18, 22, 18, 18, 11 }, { 11, 18, 22, 18, 18, 11 },
@@ -31,15 +30,15 @@ public class GameLoop implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			//test
 			if (key.isDownPressed()) {
-				y++;
-				System.out.println("down");
+				y += 5;
 			} else if (key.isLeftPressed()) {
-				x--;
+				x -= 5;
 			} else if (key.isRightPressed()) {
-				x++;
+				x += 5;
 			} else if (key.isUpPressed()) {
-				y--;
+				y -= 5;
 			}
 		}
 	}

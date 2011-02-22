@@ -2,7 +2,6 @@ package engine;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
@@ -11,11 +10,16 @@ import javax.swing.JPanel;
  * 
  * @author regnaclockers
  */
+@SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable {
+	
+	//for measuring the fps
 	private int fps = 0;
 	private int frames = 0;
 	private long firstFrame;
 	private long currentFrame;
+	
+	private static final int MAX_FPS = 120;
 
 	private KeyBoardControl key = new KeyBoardControl();
 	private GameLoop loop = new GameLoop(key);
@@ -25,9 +29,6 @@ public class GamePanel extends JPanel implements Runnable {
 	int x = 128;
 	int y = 128;
 
-	/**
-	 * creates the game panel.
-	 */
 	public GamePanel() {
 		setPreferredSize(new Dimension(640, 480));
 		setDoubleBuffered(true);
@@ -49,6 +50,14 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
+			if(fps >= 120 || fps == 0) {
+				try {
+					Thread.sleep(1000 / MAX_FPS);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
 			repaint();
 			measureFps();
 		}
