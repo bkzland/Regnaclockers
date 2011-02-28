@@ -2,6 +2,8 @@ package engine;
 
 import java.awt.Graphics;
 
+import engine.sprite.Charset;
+
 /**
  * The graphical representation of any character.
  * 
@@ -15,6 +17,6 @@ public class Character {
 	}
 
 	public void drawCharacter(Graphics g, int x, int y) {
-		g.drawImage(charset.lookDown.get(0), x, y, null);
+		g.drawImage(charset.getLookDownSprites().get(0), x, y, null);
 	}
 }

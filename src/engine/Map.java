@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+import engine.sprite.Tileset;
+
 /**
  * This class is used to represent a map.
  * 

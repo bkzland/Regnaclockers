@@ -1,4 +1,4 @@
-package engine;
+package engine.sprite;
 
 /**
  * This class is used to represent a tileset.

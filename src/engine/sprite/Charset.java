@@ -1,4 +1,4 @@
-package engine;
+package engine.sprite;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
  */
 public class Charset extends SpriteCollection {
 	int animationSpriteAmount;
-	ArrayList<BufferedImage> lookDown = new ArrayList<BufferedImage>();
-	ArrayList<BufferedImage> lookLeft = new ArrayList<BufferedImage>();
-	ArrayList<BufferedImage> lookRight = new ArrayList<BufferedImage>();
-	ArrayList<BufferedImage> lookUp = new ArrayList<BufferedImage>();
+	private ArrayList<BufferedImage> lookDown = new ArrayList<BufferedImage>();
+	private ArrayList<BufferedImage> lookLeft = new ArrayList<BufferedImage>();
+	private ArrayList<BufferedImage> lookRight = new ArrayList<BufferedImage>();
+	private ArrayList<BufferedImage> lookUp = new ArrayList<BufferedImage>();
 
 	/**
 	 * creates a Charset Object.

@@ -2,6 +2,10 @@ package engine;
 
 import java.awt.Graphics;
 
+import engine.control.KeyBoardControl;
+import engine.sprite.Charset;
+import engine.sprite.Tileset;
+
 public class GameLoop implements Runnable {
 	private static final int TICKS_PER_SECOND = 25;
 

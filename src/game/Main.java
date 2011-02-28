@@ -1,8 +1,7 @@
 package game;
 
 import engine.GameLoop;
-import engine.GameWindow;
-import engine.KeyBoardControl;
+import engine.gui.GameWindow;
 
 import interpreter.ArchiveReader;
 

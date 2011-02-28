@@ -1,4 +1,4 @@
-package engine;
+package engine.gui;
 
 import java.awt.BorderLayout;
 

@@ -1,9 +1,12 @@
-package engine;
+package engine.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
+
+import engine.GameLoop;
+import engine.control.KeyBoardControl;
 
 /**
  * This class contains all graphical content.
@@ -12,13 +15,13 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable {
-	
-	//for measuring the fps
+
+	// for measuring the fps
 	private int fps = 0;
 	private int frames = 0;
 	private long firstFrame;
 	private long currentFrame;
-	
+
 	private static final int MAX_FPS = 120;
 
 	private KeyBoardControl key = new KeyBoardControl();
@@ -50,19 +53,22 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			if(fps >= MAX_FPS || fps == 0) {
+			if (fps >= MAX_FPS || fps == 0) {
 				try {
 					Thread.sleep(1000 / MAX_FPS);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			
+
 			repaint();
 			measureFps();
 		}
 	}
 
+	/**
+	 * measures the frames per second.
+	 */
 	private void measureFps() {
 		frames++;
 		currentFrame = System.currentTimeMillis();
@@ -72,7 +78,12 @@ public class GamePanel extends JPanel implements Runnable {
 			frames = 0;
 		}
 	}
-	
+
+	/**
+	 * shows the frames per second int the upper left corner.
+	 * 
+	 * @param g
+	 */
 	private void showFps(Graphics g) {
 		if (fps != 0) {
 			g.drawString(fps + "FPS", 0, 10);
