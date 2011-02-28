@@ -3,7 +3,7 @@ package engine;
 import java.awt.Graphics;
 
 public class GameLoop implements Runnable {
-	private static final int ticksPerSecond = 25;
+	private static final int TICKS_PER_SECOND = 25;
 
 	private Tileset tileset = new Tileset("dummytileset.png", 128);
 	private int grid[][] = { { 11, 11, 11, 11, 11, 11 }, { 11, 18, 22, 18, 18, 11 }, { 11, 18, 22, 18, 18, 11 },
@@ -26,7 +26,7 @@ public class GameLoop implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(1000 / ticksPerSecond);
+				Thread.sleep(1000 / TICKS_PER_SECOND);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
