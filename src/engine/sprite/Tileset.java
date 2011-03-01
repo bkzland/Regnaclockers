@@ -1,11 +1,15 @@
 package engine.sprite;
 
+import java.util.logging.Logger;
+
 /**
  * This class is used to represent a tileset.
  * 
  * @author regnaclockers
  */
 public class Tileset extends SpriteCollection {
+	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Tileset.class.getName());
+
 	private int tileSize;
 
 	/**
@@ -20,6 +24,7 @@ public class Tileset extends SpriteCollection {
 	public Tileset(String tilesetPath, int tileSize) {
 		super(tilesetPath, tileSize);
 		this.tileSize = tileSize;
+		LOGGER.fine("\"" + tilesetPath + "\" loaded");
 	}
 
 	/**

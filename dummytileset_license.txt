@@ -1,0 +1,26 @@
+dummytileset.png
+This work is licensed under the Creative Commons CC-BY-SA 3.0 License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/deed.en; or, (b) send a letter to Creative Commons, 171 2nd Street, Suite 300, San Francisco, California, 94105, USA.
+
+
+Components:
+
+Grass 4th Row, 4th Column
+License: Public Domain
+Author: Moohasha
+Source: http://commons.wikimedia.org/wiki/File:Blender3DNoobToPro-Grass.jpg
+
+
+Water 3rd Row, 2nd Column
+License: CC-BY-SA 3.0
+Author: Wknight94
+Source: http://commons.wikimedia.org/wiki/File:Tracy_Arm_calm_water_closeup.jpg
+
+Stone 5th Row, 3rd Column
+License: Public Domain
+Author: Dmharvey
+Source: http://commons.wikimedia.org/wiki/File:Wallpaper_group-p3-1.jpg
+
+Beach 3rd Row, 3rd Column
+License: CC-BY-SA 2.5
+Author: Robert Lawton
+Source: http://commons.wikimedia.org/wiki/File:Footprints_in_sand.JPG

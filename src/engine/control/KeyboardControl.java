@@ -2,8 +2,11 @@ package engine.control;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.logging.Logger;
 
-public class KeyBoardControl implements KeyListener {
+public class KeyboardControl implements KeyListener {
+	private final static Logger LOGGER = Logger.getLogger(engine.control.KeyboardControl.class.getName());
+
 	private boolean downPressed = false;
 	private boolean leftPressed = false;
 	private boolean rightPressed = false;
@@ -13,19 +16,25 @@ public class KeyBoardControl implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_DOWN:
+
 				downPressed = true;
+				LOGGER.fine("Down pressed");
 				break;
 			case KeyEvent.VK_LEFT:
 				leftPressed = true;
+				LOGGER.fine("Left pressed");
 				break;
 			case KeyEvent.VK_RIGHT:
 				rightPressed = true;
+				LOGGER.fine("Right pressed");
+
 				break;
 			case KeyEvent.VK_UP:
 				upPressed = true;
+				LOGGER.fine("Up pressed");
 				break;
 			case KeyEvent.VK_ESCAPE:
-				System.out.println("Exiting");
+				LOGGER.fine("Escape pressed");
 				System.exit(0);
 		}
 	}

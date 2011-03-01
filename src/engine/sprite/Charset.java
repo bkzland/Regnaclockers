@@ -2,6 +2,7 @@ package engine.sprite;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * contains the charset and gives access to the images sorted by direction the
@@ -10,6 +11,8 @@ import java.util.ArrayList;
  * @author regnaclockers
  */
 public class Charset extends SpriteCollection {
+	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Charset.class.getName());
+
 	int animationSpriteAmount;
 	private ArrayList<BufferedImage> lookDown = new ArrayList<BufferedImage>();
 	private ArrayList<BufferedImage> lookLeft = new ArrayList<BufferedImage>();
@@ -32,6 +35,7 @@ public class Charset extends SpriteCollection {
 		super(charsetPath, charWidth, charHeight);
 		animationSpriteAmount = spriteset.getWidth() / charWidth;
 		readSprites();
+		LOGGER.fine("\"" + charsetPath + "\" loaded");
 	}
 
 	/**

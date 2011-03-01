@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -14,11 +15,12 @@ import javax.imageio.ImageIO;
  * @author regnaclockers
  */
 public abstract class SpriteCollection {
+	private final static Logger LOGGER = Logger.getLogger(engine.sprite.SpriteCollection.class.getName());
 	protected ArrayList<BufferedImage> sprites = new ArrayList<BufferedImage>();
-
 	protected BufferedImage spriteset;
 	private int spriteWidth;
 	private int spriteHeight;
+	private String imagePath;
 
 	/**
 	 * creates a SpriteCollection Object.
@@ -38,7 +40,10 @@ public abstract class SpriteCollection {
 		}
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
+		this.imagePath = imagePath;
 		loadTiles();
+
+
 	}
 
 	/**
@@ -108,14 +113,23 @@ public abstract class SpriteCollection {
 	 * @return sprite
 	 */
 	public BufferedImage getSprite(int spriteID) {
+		LOGGER.entering(this.getClass().getName(), "getSprite", spriteID);
+
 		BufferedImage sprite;
 		try {
 			sprite = sprites.get(spriteID);
-			return sprite;
+
 		} catch (IndexOutOfBoundsException e) {
-			System.err.println("ERROR: Sprite ID " + spriteID + " does not exist. Exiting.");
-			System.exit(1);
-			return null;
+			LOGGER.severe("Sprite ID " + spriteID + " does not exist");
+			sprite = null;
 		}
+
+		LOGGER.exiting(this.getClass().getName(), "getSprite", sprite);
+		return sprite;
+	}
+	
+	@Override
+	public String toString() {
+		return imagePath;
 	}
 }

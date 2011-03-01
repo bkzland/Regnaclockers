@@ -2,11 +2,12 @@ package engine.gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
 import engine.GameLoop;
-import engine.control.KeyBoardControl;
+import engine.control.KeyboardControl;
 
 /**
  * This class contains all graphical content.
@@ -15,7 +16,9 @@ import engine.control.KeyBoardControl;
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable {
+	private final static Logger LOGGER = Logger.getLogger(engine.gui.GamePanel.class.getName());
 
+	
 	// for measuring the fps
 	private int fps = 0;
 	private int frames = 0;
@@ -24,21 +27,21 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private static final int MAX_FPS = 120;
 
-	private KeyBoardControl key = new KeyBoardControl();
+	private KeyboardControl key = new KeyboardControl();
 	private GameLoop loop = new GameLoop(key);
-	private Thread t1 = new Thread(loop);
-	private Thread t2 = new Thread(this);
-
-	int x = 128;
-	int y = 128;
+	private Thread gameThread = new Thread(loop);
+	private Thread graphicsThread = new Thread(this);
 
 	public GamePanel() {
 		setPreferredSize(new Dimension(640, 480));
 		setDoubleBuffered(true);
 		setFocusable(true);
 		addKeyListener(key);
-		t1.start();
-		t2.start();
+		gameThread.start();
+		LOGGER.info("Game Thread started");
+		graphicsThread.start();
+		LOGGER.info("Graphics Thread started");
+
 	}
 
 	/**
@@ -60,7 +63,6 @@ public class GamePanel extends JPanel implements Runnable {
 					e.printStackTrace();
 				}
 			}
-
 			repaint();
 			measureFps();
 		}
@@ -80,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	/**
-	 * shows the frames per second int the upper left corner.
+	 * shows the frames per second in the upper left corner.
 	 * 
 	 * @param g
 	 */

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 
 import java.util.zip.ZipFile;
@@ -14,6 +15,7 @@ import java.util.zip.ZipFile;
  * @author regnaclockers
  */
 public class ArchiveReader {
+
 	private ZipFile gameArchive;
 	private ZipEntry gameInformation;
 	private ZipEntry monster;
