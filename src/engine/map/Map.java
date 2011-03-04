@@ -1,8 +1,7 @@
-package engine;
+package engine.map;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,9 +16,9 @@ import engine.sprite.Tileset;
  * @author regnaclockers
  */
 public class Map {
-	private final static Logger LOGGER = Logger.getLogger(engine.Map.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(engine.map.Map.class.getName());
 
-	private HashMap<Point, Integer> mapGrid = new HashMap<Point, Integer>();
+	private HashMap<MapCoordinates, Integer> mapGrid = new HashMap<MapCoordinates, Integer>();
 	private ArrayList<Event> events;
 	private BufferedImage map;
 	private int mapWidthInTiles;
@@ -45,13 +44,16 @@ public class Map {
 		this.mapName = mapName;
 		this.mapWidthInTiles = mapGrid.length;
 		this.mapHeightInTiles = mapGrid[0].length;
+		tileSize = tileset.getTileSize();
+		mapWidthInPixel = mapWidthInTiles * tileSize;
+		mapHeightInPixel = mapHeightInTiles * tileSize;
 		for (int x = 0, width = mapWidthInTiles; x < width; x++) {
 			for (int y = 0, height = mapHeightInTiles; y < height; y++) {
-				this.mapGrid.put(new Point(x, y), mapGrid[x][y]);
+				this.mapGrid.put(new MapCoordinates(x, y), mapGrid[x][y]);
 			}
 		}
 		this.tileset = tileset;
-		tileSize = tileset.getTileSize();
+
 		this.events = events;
 		loadMap();
 		LOGGER.info("Map \"" + mapName + "\" created with " + tileset.toString());
@@ -71,7 +73,7 @@ public class Map {
 	 * @param tileset
 	 *            the Tileset object it should use.
 	 */
-	public Map(String mapName, HashMap<Point, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles,
+	public Map(String mapName, HashMap<MapCoordinates, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles,
 			Tileset tileset, ArrayList<Event> events) {
 		this.mapName = mapName;
 		this.mapGrid = mapGrid;
@@ -79,6 +81,8 @@ public class Map {
 		this.mapHeightInTiles = mapHeightInTiles;
 		this.tileset = tileset;
 		tileSize = tileset.getTileSize();
+		mapWidthInPixel = mapWidthInTiles * tileSize;
+		mapHeightInPixel = mapHeightInTiles * tileSize;
 		this.events = events;
 		loadMap();
 		LOGGER.info("Map \"" + mapName + "\" created");
@@ -126,15 +130,19 @@ public class Map {
 	 * creates an image of the whole map.
 	 */
 	private void loadMap() {
-		mapWidthInPixel = mapWidthInTiles * tileSize;
-		mapHeightInPixel = mapHeightInTiles * tileSize;
 
 		map = new BufferedImage(mapWidthInPixel, mapHeightInPixel, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2d = map.createGraphics();
 		for (int x = 0; x < mapWidthInTiles; x++) {
 			for (int y = 0; y < mapHeightInTiles; y++) {
-				g2d.drawImage(tileset.getSprite(mapGrid.get(new Point(x, y))), x * tileSize, y * tileSize, null);
+				g2d
+						.drawImage(tileset.getImage(mapGrid.get(new MapCoordinates(x, y))), x * tileSize, y * tileSize,
+								null);
 			}
 		}
+	}
+
+	public String toString() {
+		return mapName;
 	}
 }

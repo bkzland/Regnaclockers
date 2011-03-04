@@ -1,7 +1,7 @@
 package engine.event;
 
 import java.awt.Graphics;
-import java.awt.Point;
+import engine.map.MapCoordinates;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -10,10 +10,10 @@ public class Event {
 
 	private ArrayList<Page> pages;
 	private Page currentPage;
-	private Point position;
+	private MapCoordinates position;
 	private String eventName;
 
-	public Event(String eventName, ArrayList<Page> pages, Point position) {
+	public Event(String eventName, ArrayList<Page> pages, MapCoordinates position) {
 
 		this.eventName = eventName;
 		this.pages = pages;
@@ -25,11 +25,11 @@ public class Event {
 			e.printStackTrace();
 		}
 
-		LOGGER.info("Event \"" + this.toString() + "\" created on (" + (int) position.getX() + "|"
-				+ (int) position.getY() + ") with " + pages.size() + ((pages.size() != 1) ? " Pages" : " Page"));
+		LOGGER.info("Event \"" + this.toString() + "\" created on (" + position.getX() + "|" + position.getY()
+				+ ") with " + pages.size() + ((pages.size() != 1) ? " Pages" : " Page"));
 	}
 
-	public void drawEvent(Graphics g, Point position, int horResolution, int vertResolution) {
+	public void drawEvent(Graphics g, MapCoordinates position, int horResolution, int vertResolution) {
 		currentPage.drawSprite(g, position);
 	}
 

@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * 
  * @author regnaclockers
  */
-public class Charset extends SpriteCollection {
+public class Charset extends ImageSet {
 	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Charset.class.getName());
 
 	int animationSpriteAmount;
@@ -97,7 +97,7 @@ public class Charset extends SpriteCollection {
 	private ArrayList<BufferedImage> getSprites(int start, int end) {
 		ArrayList<BufferedImage> spriteArray = new ArrayList<BufferedImage>();
 		for (int i = 0; start + i <= end; i++) {
-			spriteArray.add(getSprite(start + i));
+			spriteArray.add(getImage(start + i));
 		}
 		return spriteArray;
 	}

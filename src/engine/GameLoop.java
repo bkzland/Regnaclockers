@@ -1,7 +1,9 @@
 package engine;
 
 import java.awt.Graphics;
-import java.awt.Point;
+
+import engine.map.Map;
+import engine.map.MapCoordinates;
 import java.util.ArrayList;
 
 import engine.control.KeyboardControl;
@@ -41,7 +43,7 @@ public class GameLoop implements Runnable {
 		this.key = key;
 
 		pages.add(page);
-		event = new Event("TestEvent", pages, new Point(2, 2));
+		event = new Event("TestEvent", pages, new MapCoordinates(2, 2));
 	}
 
 	@Override

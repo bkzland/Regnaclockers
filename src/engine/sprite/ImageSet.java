@@ -14,8 +14,8 @@ import javax.imageio.ImageIO;
  * 
  * @author regnaclockers
  */
-public abstract class SpriteCollection {
-	private final static Logger LOGGER = Logger.getLogger(engine.sprite.SpriteCollection.class.getName());
+public abstract class ImageSet {
+	private final static Logger LOGGER = Logger.getLogger(engine.sprite.ImageSet.class.getName());
 	protected ArrayList<BufferedImage> sprites = new ArrayList<BufferedImage>();
 	protected BufferedImage spriteset;
 	private int spriteWidth;
@@ -32,7 +32,7 @@ public abstract class SpriteCollection {
 	 * @param spriteHeight
 	 *            Height of the subimages.
 	 */
-	public SpriteCollection(String imagePath, int spriteWidth, int spriteHeight) {
+	public ImageSet(String imagePath, int spriteWidth, int spriteHeight) {
 		try {
 			spriteset = ImageIO.read(new File(imagePath));
 		} catch (IOException e) {
@@ -42,7 +42,6 @@ public abstract class SpriteCollection {
 		this.spriteHeight = spriteHeight;
 		this.imagePath = imagePath;
 		loadTiles();
-
 
 	}
 
@@ -55,7 +54,7 @@ public abstract class SpriteCollection {
 	 * @param spriteSize
 	 *            Height and Width of the subimages.
 	 */
-	public SpriteCollection(String imagePath, int spriteSize) {
+	public ImageSet(String imagePath, int spriteSize) {
 		this(imagePath, spriteSize, spriteSize);
 	}
 
@@ -112,8 +111,8 @@ public abstract class SpriteCollection {
 	 *            the number of the tile.
 	 * @return sprite
 	 */
-	public BufferedImage getSprite(int spriteID) {
-		LOGGER.entering(this.getClass().getName(), "getSprite", spriteID);
+	public BufferedImage getImage(int spriteID) {
+		LOGGER.entering(this.getClass().getName(), "getImage", spriteID);
 
 		BufferedImage sprite;
 		try {
@@ -124,10 +123,10 @@ public abstract class SpriteCollection {
 			sprite = null;
 		}
 
-		LOGGER.exiting(this.getClass().getName(), "getSprite", sprite);
+		LOGGER.exiting(this.getClass().getName(), "getImage", sprite);
 		return sprite;
 	}
-	
+
 	@Override
 	public String toString() {
 		return imagePath;
