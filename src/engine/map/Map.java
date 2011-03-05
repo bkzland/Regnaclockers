@@ -92,38 +92,40 @@ public class Map {
 	 * draws a part of the map. It creates a rectangle around (x|y).
 	 * 
 	 * @param g
-	 * @param x
+	 * @param charMapPositionXInPixel
 	 *            players position on x-axis
-	 * @param y
+	 * @param charMapPositionYInPixel
 	 *            players position on y-axis.
 	 * @param horResolution
 	 * @param vertResolution
 	 */
-	public void drawMapPart(Graphics g, int x, int y, int horResolution, int vertResolution) {
+	public void drawMapPart(Graphics g, int charMapPositionXInPixel, int charMapPositionYInPixel, int horResolution,
+			int vertResolution) {
 
-		int upperLeftX = x - horResolution / 2;
-		int upperLeftY = y - vertResolution / 2;
+		int mapXInPixel = charMapPositionXInPixel - horResolution / 2;
+		int mapYInPixel = charMapPositionYInPixel - vertResolution / 2;
 
 		// prevents that the map moves if there's no more map to show
 		// only effects the upper and left side
-		if (upperLeftX < 0) {
-			upperLeftX = 0;
+		if (mapXInPixel < 0) {
+			mapXInPixel = 0;
 		}
-		if (upperLeftY < 0) {
-			upperLeftY = 0;
+		if (mapYInPixel < 0) {
+			mapYInPixel = 0;
 		}
 		// same for lower and right side
-		if (upperLeftX + horResolution > mapWidthInPixel) {
-			upperLeftX = mapWidthInPixel - horResolution;
+		if (mapXInPixel + horResolution > mapWidthInPixel) {
+			mapXInPixel = mapWidthInPixel - horResolution;
 		}
-		if (upperLeftY + vertResolution > mapHeightInPixel) {
-			upperLeftY = mapHeightInPixel - vertResolution;
+		if (mapYInPixel + vertResolution > mapHeightInPixel) {
+			mapYInPixel = mapHeightInPixel - vertResolution;
 		}
-		g.drawImage(map.getSubimage(upperLeftX, upperLeftY, horResolution, vertResolution), 0, 0, null);
-	}
-
-	public void drawEvents(Graphics g, int x, int y, int horResolution, int vertResolution) {
-
+		g.drawImage(map.getSubimage(mapXInPixel, mapYInPixel, horResolution, vertResolution), 0, 0, null);
+		
+		//paint all events
+		for (int i = 0; i < events.size(); i++) {
+			events.get(i).drawEvent(g, mapXInPixel, mapYInPixel, horResolution, vertResolution);
+		}
 	}
 
 	/**

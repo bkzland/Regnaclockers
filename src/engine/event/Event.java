@@ -12,6 +12,7 @@ public class Event {
 	private Page currentPage;
 	private MapCoordinates position;
 	private String eventName;
+	private int tileSize = 128;
 
 	public Event(String eventName, ArrayList<Page> pages, MapCoordinates position) {
 
@@ -29,15 +30,33 @@ public class Event {
 				+ ") with " + pages.size() + ((pages.size() != 1) ? " Pages" : " Page"));
 	}
 
-	public void drawEvent(Graphics g, MapCoordinates position, int horResolution, int vertResolution) {
-		currentPage.drawSprite(g, position);
+	/**
+	 * if the event or a part of it would be visible, it asks the active page to
+	 * draw its image.
+	 * 
+	 * @param g
+	 * @param mapXInPixel
+	 * @param mapYInPixel
+	 * @param horResolution
+	 * @param vertResolution
+	 */
+	public void drawEvent(Graphics g, int mapXInPixel, int mapYInPixel, int horResolution, int vertResolution) {
+
+		if (mapXInPixel < position.xToPixel(tileSize) + tileSize
+				&& mapXInPixel + horResolution > position.xToPixel(tileSize)
+				&& mapYInPixel < position.yToPixel(tileSize) + tileSize
+				&& mapYInPixel + vertResolution > position.yToPixel(tileSize)) {
+			currentPage.drawSprite(g, position.xToPixel(tileSize) - mapXInPixel, position.yToPixel(tileSize)
+					- mapYInPixel);
+		}
+
 	}
 
 	/**
 	 * It will make the highest page which has a fullfilled condition to
 	 * currentPage.
 	 */
-	private void changePageIfConditionTrue() {
+	public void changePageIfConditionTrue() {
 		Page tempPage = currentPage;
 		for (int i = 0, length = pages.size(); i < length; i++) {
 
@@ -46,7 +65,7 @@ public class Event {
 			}
 			if (currentPage != tempPage) {
 				currentPage = tempPage;
-				LOGGER.info(this.toString() + "changed Page");
+				LOGGER.info("\"" + this.toString() + "\"" + " changed Page");
 			}
 		}
 	}

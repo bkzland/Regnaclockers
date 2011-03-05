@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  * @author regnaclockers
  */
 
-public class MapCoordinates implements Cloneable {
+public class MapCoordinates{
 	private final static Logger LOGGER = Logger.getLogger(engine.map.MapCoordinates.class.getName());
 
 	private int x;

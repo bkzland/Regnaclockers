@@ -9,7 +9,7 @@ public class Timer implements Fullfillable, Runnable {
 	private int seconds;
 	private long startTime;
 	private Thread thread = new Thread(this);
-	private static final int TICKS_PER_SECOND = 25;
+	private static final int TICKS_PER_SECOND = 5;
 
 	public Timer(int minutes, int seconds) {
 		this(60 * minutes + seconds);
@@ -17,9 +17,6 @@ public class Timer implements Fullfillable, Runnable {
 
 	public Timer(int seconds) {
 		this.seconds = seconds;
-		startTime = System.currentTimeMillis();
-		thread.start();
-		LOGGER.info("Timer Thread started (" + seconds + "s)");
 	}
 
 	/**
@@ -31,6 +28,16 @@ public class Timer implements Fullfillable, Runnable {
 	public boolean isFullfilled() {
 		return timeIsUp;
 	}
+	
+	/**
+	 * starts the Timer.
+	 */
+	public void start() {
+		startTime = System.currentTimeMillis();
+		LOGGER.info("Timer Thread started (" + seconds + "s)");
+		thread.start();
+
+	}
 
 	@Override
 	public void run() {
@@ -40,9 +47,9 @@ public class Timer implements Fullfillable, Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			if (startTime >= System.currentTimeMillis() - seconds) {
+			if (startTime <= System.currentTimeMillis() - (seconds * 1000)) {
 				timeIsUp = true;
-				LOGGER.info("Time's up");
+				LOGGER.info("Time's up" + " (" + seconds + "s)" );
 
 			}
 		}
