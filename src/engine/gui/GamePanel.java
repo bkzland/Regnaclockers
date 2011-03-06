@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private Thread graphicsThread = new Thread(this);
 
 	public GamePanel() {
-		setPreferredSize(new Dimension(640, 480));
+		setPreferredSize(new Dimension(1024, 768));
 		setDoubleBuffered(true);
 		setFocusable(true);
 		addKeyListener(key);

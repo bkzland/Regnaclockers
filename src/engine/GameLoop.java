@@ -18,9 +18,12 @@ public class GameLoop implements Runnable {
 
 	// creating objects for testing
 	private Tileset tileset = new Tileset("dummytileset.png", 128);
-	private int grid[][] = { { 11, 12, 18, 18, 18, 22, 18 }, { 11, 12, 18, 18, 18, 22, 18 },
-			{ 11, 12, 18, 18, 18, 22, 18 }, { 11, 12, 12, 12, 18, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18 },
-			{ 11, 11, 11, 12, 22, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18 } };
+	private int grid[][] = { { 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 },
+			{ 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 }, { 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 },
+			{ 11, 12, 12, 12, 18, 22, 18, 18, 18, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 22, 18 },
+			{ 11, 11, 11, 12, 22, 22, 18, 18, 18, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 22, 18 },
+			{ 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 },
+			{ 11, 11, 11, 12, 18, 22, 22, 22, 22, 22, 22 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 18, 18 } };
 
 	private ArrayList<Fullfillable> conditions = new ArrayList<Fullfillable>();
 	private ArrayList<Fullfillable> conditions2 = new ArrayList<Fullfillable>();
@@ -32,8 +35,8 @@ public class GameLoop implements Runnable {
 	private Event event;
 
 	private Map map;
-	private Charset charset = new Charset("dummycharset.png", 128, 192);
-	private Character character = new Character(charset);
+	private Charset charset;
+	private Character character;
 
 	private int x;
 	private int y;
@@ -56,8 +59,9 @@ public class GameLoop implements Runnable {
 
 		ArrayList<Event> events = new ArrayList<Event>();
 		events.add(event);
-
+		charset = new Charset("dummycharset.png", 128, 192);
 		map = new Map("Map", grid, tileset, events);
+		character = new Character(charset, map, new MapCoordinates(2, 2));
 	}
 
 	@Override
@@ -73,19 +77,18 @@ public class GameLoop implements Runnable {
 			}
 			// test
 			if (key.isDownPressed()) {
-				y += 5;
+				character.walkDown();
 			} else if (key.isLeftPressed()) {
-				x -= 5;
+				character.walkLeft();
 			} else if (key.isRightPressed()) {
-				x += 5;
+				character.walkRight();
 			} else if (key.isUpPressed()) {
-				y -= 5;
+				character.walkUp();
 			}
 		}
 	}
 
 	public void drawGame(Graphics g) {
-		map.drawMapPart(g, x, y, 640, 480);
-		character.drawCharacter(g, x, y);
+		character.drawCharacter(g, 1024, 768);
 	}
 }

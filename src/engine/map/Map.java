@@ -99,7 +99,7 @@ public class Map {
 	 * @param horResolution
 	 * @param vertResolution
 	 */
-	public void drawMapPart(Graphics g, int charMapPositionXInPixel, int charMapPositionYInPixel, int horResolution,
+	public void drawMap(Graphics g, int charMapPositionXInPixel, int charMapPositionYInPixel, int horResolution,
 			int vertResolution) {
 
 		int mapXInPixel = charMapPositionXInPixel - horResolution / 2;
@@ -121,8 +121,8 @@ public class Map {
 			mapYInPixel = mapHeightInPixel - vertResolution;
 		}
 		g.drawImage(map.getSubimage(mapXInPixel, mapYInPixel, horResolution, vertResolution), 0, 0, null);
-		
-		//paint all events
+
+		// paint all events
 		for (int i = 0; i < events.size(); i++) {
 			events.get(i).drawEvent(g, mapXInPixel, mapYInPixel, horResolution, vertResolution);
 		}
@@ -142,6 +142,72 @@ public class Map {
 								null);
 			}
 		}
+	}
+
+	public int getTileSize() {
+		return tileset.getTileSize();
+	}
+
+	public boolean isHorMapEndReached(MapCoordinates playerPosition, int horResolution) {
+		if (playerPosition.xToPixel(tileSize) > mapWidthInPixel - horResolution / 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isVertMapEndReached(MapCoordinates playerPosition, int vertResolution) {
+		if (playerPosition.yToPixel(tileSize) > mapHeightInPixel - vertResolution / 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * gives back a valid position. If x|y are too high or too low, it will
+	 * return the highest/lowest possible value. 
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public MapCoordinates getLegitCoordinates(int x, int y) {
+		int newX;
+		int newY;
+		if (x > 0 && x < mapWidthInTiles - 1) {
+			newX = x;
+		} else if (x < 0) {
+			newX = 0;
+		} else {
+			newX = mapWidthInTiles - 1;
+		}
+
+		if (y > 0 && y < mapHeightInTiles - 1) {
+			newY = y;
+		} else if (y < 0) {
+			newY = 0;
+		} else {
+			newY = mapHeightInTiles - 1;
+		}
+
+		return new MapCoordinates(newX, newY);
+	}
+
+	public int getMapWidthInPixel() {
+		return mapWidthInPixel;
+	}
+
+	public int getMapHeightInPixel() {
+		return mapHeightInPixel;
+	}
+
+	public int getMapWidth() {
+		return mapWidthInTiles;
+	}
+
+	public int getMapHeight() {
+		return mapHeightInTiles;
 	}
 
 	public String toString() {

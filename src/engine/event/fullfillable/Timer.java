@@ -66,7 +66,7 @@ public class Timer implements Fullfillable, Runnable {
 
 	public void reduceTime(int lessSeconds) {
 		if (lessSeconds > 0) {
-			seconds += lessSeconds;
+			seconds -= lessSeconds;
 		} else {
 			LOGGER.severe("reduceTime(int) accepts only positive numbers.");
 		}
