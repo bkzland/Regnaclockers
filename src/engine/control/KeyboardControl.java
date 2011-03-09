@@ -77,4 +77,8 @@ public class KeyboardControl implements KeyListener {
 	public boolean isUpPressed() {
 		return upPressed;
 	}
+	
+	public boolean isWalkKeyPressed() {
+		return downPressed || leftPressed || rightPressed || upPressed;
+	}
 }

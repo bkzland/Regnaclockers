@@ -148,16 +148,48 @@ public class Map {
 		return tileset.getTileSize();
 	}
 
-	public boolean isHorMapEndReached(MapCoordinates playerPosition, int horResolution) {
-		if (playerPosition.xToPixel(tileSize) > mapWidthInPixel - horResolution / 2) {
+	public boolean isHorMapStartReached(MapCoordinates position, int distanceToPosition, int horResolution, int heroWidth) {
+		if (position.xToPixel(tileSize) + distanceToPosition < horResolution / 2 - heroWidth /2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isVertMapStartReached(MapCoordinates position, int distanceToPosition, int vertResolution, int heroHeight) {
+		if (position.yToPixel(tileSize) + distanceToPosition < vertResolution / 2 - heroHeight / 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isXCoordinateInMapEnd(MapCoordinates position, int horResolution) {
+		if ( position.xToPixel(tileSize) >= mapWidthInPixel - horResolution / 2 ) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean isVertMapEndReached(MapCoordinates playerPosition, int vertResolution) {
-		if (playerPosition.yToPixel(tileSize) > mapHeightInPixel - vertResolution / 2) {
+	public boolean isYCoordinateInMapEnd(MapCoordinates position, int vertResolution) {
+		if ( position.yToPixel(tileSize) >= mapHeightInPixel - vertResolution / 2 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isHorMapEndReached(MapCoordinates playerPosition, int distanceToPosition, int horResolution, int heroWidth) {
+		if (playerPosition.xToPixel(tileSize) + distanceToPosition > mapWidthInPixel - horResolution / 2 - heroWidth / 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isVertMapEndReached(MapCoordinates playerPosition, int distanceToPosition, int vertResolution, int heroHeight) {
+		if (playerPosition.yToPixel(tileSize) + distanceToPosition > mapHeightInPixel - vertResolution / 2 - heroHeight / 2) {
 			return true;
 		} else {
 			return false;
@@ -166,7 +198,7 @@ public class Map {
 
 	/**
 	 * gives back a valid position. If x|y are too high or too low, it will
-	 * return the highest/lowest possible value. 
+	 * return the highest/lowest possible value.
 	 * 
 	 * @param x
 	 * @param y
@@ -175,7 +207,7 @@ public class Map {
 	public MapCoordinates getLegitCoordinates(int x, int y) {
 		int newX;
 		int newY;
-		if (x > 0 && x < mapWidthInTiles - 1) {
+		if (x >= 0 && x <= mapWidthInTiles - 1) {
 			newX = x;
 		} else if (x < 0) {
 			newX = 0;
@@ -183,7 +215,7 @@ public class Map {
 			newX = mapWidthInTiles - 1;
 		}
 
-		if (y > 0 && y < mapHeightInTiles - 1) {
+		if (y >= 0 && y <= mapHeightInTiles - 1) {
 			newY = y;
 		} else if (y < 0) {
 			newY = 0;

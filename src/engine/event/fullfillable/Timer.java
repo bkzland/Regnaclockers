@@ -71,4 +71,8 @@ public class Timer implements Fullfillable, Runnable {
 			LOGGER.severe("reduceTime(int) accepts only positive numbers.");
 		}
 	}
+	
+	public String toString() {
+		return "Timer (" + seconds + "s left)"; 
+	}
 }

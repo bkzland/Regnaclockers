@@ -36,7 +36,7 @@ public class GameLoop implements Runnable {
 
 	private Map map;
 	private Charset charset;
-	private Character character;
+	private Hero character;
 
 	private int x;
 	private int y;
@@ -61,7 +61,7 @@ public class GameLoop implements Runnable {
 		events.add(event);
 		charset = new Charset("dummycharset.png", 128, 192);
 		map = new Map("Map", grid, tileset, events);
-		character = new Character(charset, map, new MapCoordinates(2, 2));
+		character = new Hero(charset, map, new MapCoordinates(2, 2));
 	}
 
 	@Override
@@ -76,19 +76,28 @@ public class GameLoop implements Runnable {
 				e.printStackTrace();
 			}
 			// test
-			if (key.isDownPressed()) {
-				character.walkDown();
-			} else if (key.isLeftPressed()) {
-				character.walkLeft();
-			} else if (key.isRightPressed()) {
-				character.walkRight();
-			} else if (key.isUpPressed()) {
-				character.walkUp();
+			if (key.isWalkKeyPressed()) {
+				int x = 0;
+				int y = 0;
+				if (key.isDownPressed()) {
+					y++;
+				}
+				if (key.isLeftPressed()) {
+					x--;
+				}
+				if (key.isRightPressed()) {
+					x++;
+				}
+				if (key.isUpPressed()) {
+					y--;
+
+				}
+				character.walk(x, y);
 			}
 		}
 	}
 
 	public void drawGame(Graphics g) {
-		character.drawCharacter(g, 1024, 768);
+		character.drawHero(g, 1080, 768);
 	}
 }
