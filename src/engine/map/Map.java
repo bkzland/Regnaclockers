@@ -157,7 +157,7 @@ public class Map {
 	}
 	
 	public boolean isVertMapStartReached(MapCoordinates position, int distanceToPosition, int vertResolution, int heroHeight) {
-		if (position.yToPixel(tileSize) + distanceToPosition < vertResolution / 2 - heroHeight / 2) {
+		if (position.yToPixel(tileSize) + distanceToPosition < vertResolution / 2  - heroHeight / 2 + heroHeight - tileSize)  {
 			return true;
 		} else {
 			return false;
@@ -181,7 +181,7 @@ public class Map {
 	}
 
 	public boolean isHorMapEndReached(MapCoordinates playerPosition, int distanceToPosition, int horResolution, int heroWidth) {
-		if (playerPosition.xToPixel(tileSize) + distanceToPosition > mapWidthInPixel - horResolution / 2 - heroWidth / 2) {
+		if (playerPosition.xToPixel(tileSize) + distanceToPosition > mapWidthInPixel - horResolution / 2 - heroWidth / 2 )  {
 			return true;
 		} else {
 			return false;
@@ -189,7 +189,7 @@ public class Map {
 	}
 
 	public boolean isVertMapEndReached(MapCoordinates playerPosition, int distanceToPosition, int vertResolution, int heroHeight) {
-		if (playerPosition.yToPixel(tileSize) + distanceToPosition > mapHeightInPixel - vertResolution / 2 - heroHeight / 2) {
+		if (playerPosition.yToPixel(tileSize) + distanceToPosition > mapHeightInPixel - vertResolution / 2 - heroHeight / 2 + heroHeight - tileSize) {
 			return true;
 		} else {
 			return false;

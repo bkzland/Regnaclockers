@@ -35,7 +35,9 @@ public class Hero {
 		int distanceToOldXPosition = 0;
 		int distanceToOldYPosition = 0;
 
-		if (position != targetPosition) {
+		System.out.println("Old: " + position.toString());
+		System.out.println("New: " + targetPosition.toString());
+		if (position.equals(targetPosition) == false) {
 			int newPixelsPerSecond;
 
 			// for diagonal walking
@@ -55,6 +57,7 @@ public class Hero {
 			if (position.getY() != targetPosition.getY()) {
 				distanceToOldYPosition = (int) timeElapsed / newPixelsPerSecond;
 			}
+			System.out.println(timeElapsed);
 
 			// prevents bugs
 			if (distanceToOldXPosition > map.getTileSize()) {
@@ -84,9 +87,10 @@ public class Hero {
 			}
 		} else if (map.isHorMapEndReached(position, distanceToOldXPosition, horResolution, charset.getSpriteWidth())) {
 			charX = charX + horResolution - map.getMapWidthInPixel();
-			
-			//without that the old position would cause problems if it's not in the map end.
-			if(map.isXCoordinateInMapEnd(position, horResolution) == false) {
+
+			// without that the old position would cause problems if it's not in
+			// the map end.
+			if (map.isXCoordinateInMapEnd(position, horResolution) == false) {
 				mapX += map.getTileSize();
 			}
 
@@ -104,25 +108,27 @@ public class Hero {
 
 		// y-value
 		if (map.isVertMapStartReached(position, distanceToOldYPosition, vertResolution, charset.getSpriteHeight())) {
-
+			charY = charY - charset.getSpriteHeight() + map.getTileSize();
 			if (position.getY() != targetPosition.getY()) {
 				charY += distanceToOldYPosition;
 			}
 		} else if (map.isVertMapEndReached(position, distanceToOldYPosition, vertResolution, charset.getSpriteHeight())) {
 			charY = charY + vertResolution - map.getMapWidthInPixel();
+			charY = charY - charset.getSpriteHeight() + map.getTileSize();
 
-			//without that the old position would cause problems if it's not in the map end.
-			if(map.isYCoordinateInMapEnd(position, vertResolution) == false) {
+			// without that the old position would cause problems if it's not in
+			// the map end.
+			if (map.isYCoordinateInMapEnd(position, vertResolution) == false) {
 				mapY += map.getTileSize();
 			}
 
-			
 			if (position.getY() != targetPosition.getY()) {
 				charY += distanceToOldYPosition;
 			}
 		} else {
 			charY = vertResolution / 2 - charset.getSpriteHeight() / 2;
-			mapY += charset.getSpriteHeight() / 2;
+			mapY = mapY +  charset.getSpriteHeight() / 2 + charset.getSpriteHeight() -  2* map.getTileSize();
+
 
 			if (position.getY() != targetPosition.getY()) {
 				mapY += distanceToOldYPosition;
@@ -136,7 +142,8 @@ public class Hero {
 		}
 
 		// without, the hero sprite would be too low on the tile
-		charY = charY - charset.getSpriteHeight() + map.getTileSize();
+//		charY = charY - charset.getSpriteHeight() + map.getTileSize();
+
 
 		// first the map must be drawn
 		map.drawMap(g, mapX, mapY, horResolution, vertResolution);
@@ -146,15 +153,13 @@ public class Hero {
 
 	public void walk(int x, int y) {
 
-		if (position == targetPosition) {
+		if (position.equals(targetPosition)) {
 			position = targetPosition;
 
 			int newX = targetPosition.getX() + x;
 			int newY = targetPosition.getY() + y;
 			targetPosition = map.getLegitCoordinates(newX, newY);
-
 			startTime = System.currentTimeMillis();
-
 		}
 	}
 }
