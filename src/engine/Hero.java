@@ -1,6 +1,9 @@
 package engine;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.logging.Logger;
 
 import engine.map.Map;
 import engine.map.MapCoordinates;
@@ -12,20 +15,41 @@ import engine.sprite.Charset;
  * @author regnaclockers
  */
 public class Hero {
+	private final static Logger LOGGER = Logger.getLogger(engine.Hero.class.getName());
+
+	
 	private Charset charset;
 	private Map map;
 	private MapCoordinates targetPosition;
 	private MapCoordinates position;
 	private int walkingTime = 700;
 	private long startTime;
+	private List<BufferedImage> lookDown;
+	private List<BufferedImage> lookLeft;
+	private List<BufferedImage> lookRight;
+	private List<BufferedImage> lookUp;
+	BufferedImage displayedSprite;
 
 	public Hero(Charset charset, Map map, MapCoordinates position) {
 		this.charset = charset;
 		this.map = map;
 		this.targetPosition = position;
 		this.position = position;
+		lookDown = charset.getLookDownSprites();
+		lookLeft = charset.getLookLeftSprites();
+		lookRight = charset.getLookRightSprites();
+		lookUp = charset.getLookUpSprites();
+		displayedSprite = lookDown.get(0);
+
 	}
 
+	/**
+	 * draws the hero.
+	 * 
+	 * @param g
+	 * @param horResolution
+	 * @param vertResolution
+	 */
 	public void drawHero(Graphics g, int horResolution, int vertResolution) {
 
 		int mapX = position.xToPixel(map.getTileSize());
@@ -35,8 +59,6 @@ public class Hero {
 		int distanceToOldXPosition = 0;
 		int distanceToOldYPosition = 0;
 
-		System.out.println("Old: " + position.toString());
-		System.out.println("New: " + targetPosition.toString());
 		if (position.equals(targetPosition) == false) {
 			int newPixelsPerSecond;
 
@@ -57,7 +79,6 @@ public class Hero {
 			if (position.getY() != targetPosition.getY()) {
 				distanceToOldYPosition = (int) timeElapsed / newPixelsPerSecond;
 			}
-			System.out.println(timeElapsed);
 
 			// prevents bugs
 			if (distanceToOldXPosition > map.getTileSize()) {
@@ -127,8 +148,7 @@ public class Hero {
 			}
 		} else {
 			charY = vertResolution / 2 - charset.getSpriteHeight() / 2;
-			mapY = mapY +  charset.getSpriteHeight() / 2 + charset.getSpriteHeight() -  2* map.getTileSize();
-
+			mapY = mapY + charset.getSpriteHeight() / 2 + charset.getSpriteHeight() - 2 * map.getTileSize();
 
 			if (position.getY() != targetPosition.getY()) {
 				mapY += distanceToOldYPosition;
@@ -137,18 +157,49 @@ public class Hero {
 
 		// walking stops if hero reaches new tile
 		if ((distanceToOldXPosition >= map.getTileSize() || distanceToOldXPosition <= 0 - map.getTileSize())
-				|| (distanceToOldYPosition >= map.getTileSize() || distanceToOldYPosition <= 0 - map.getTileSize())) {
+				|| (distanceToOldYPosition >= map.getTileSize() || distanceToOldYPosition <= (-1) * map.getTileSize())) {
 			position = targetPosition;
 		}
 
-		// without, the hero sprite would be too low on the tile
-//		charY = charY - charset.getSpriteHeight() + map.getTileSize();
+		// char animation
 
-
+		getAnimationSprite(distanceToOldXPosition, distanceToOldYPosition);
+		
+		LOGGER.finer("Map: (" + mapX + "|" + mapY + ") Hero: (" + charX + "|" + charY + ")");
 		// first the map must be drawn
 		map.drawMap(g, mapX, mapY, horResolution, vertResolution);
 		// then the hero on top
-		g.drawImage(charset.getLookDownSprites().get(0), charX, charY, null);
+		g.drawImage(displayedSprite, charX, charY, null);
+	}
+
+	private void getAnimationSprite(int distanceToOldXPosition, int distanceToOldYPosition) {
+		if (position.getX() > targetPosition.getX()) {
+			int spriteID = (Math.abs(distanceToOldXPosition) * lookLeft.size() - 1) / map.getTileSize() + 1;
+			if (spriteID >= lookLeft.size())
+				spriteID = 0;
+
+			displayedSprite = lookLeft.get(spriteID);
+		} else if (position.getX() < targetPosition.getX()) {
+			int spriteID = (Math.abs(distanceToOldXPosition) * lookRight.size() - 1) / map.getTileSize() + 1;
+			if (spriteID >= lookRight.size())
+				spriteID = 0;
+
+			displayedSprite = lookRight.get(spriteID);
+		}
+
+		if (position.getY() > targetPosition.getY()) {
+			int spriteID = (Math.abs(distanceToOldYPosition) * lookUp.size() - 1) / map.getTileSize() + 1;
+			if (spriteID >= lookUp.size())
+				spriteID = 0;
+
+			displayedSprite = lookUp.get(spriteID);
+		} else if (position.getY() < targetPosition.getY()) {
+			int spriteID = (Math.abs(distanceToOldYPosition) * lookDown.size() - 1) / map.getTileSize() + 1;
+			if (spriteID >= lookDown.size())
+				spriteID = 0;
+
+			displayedSprite = lookDown.get(spriteID);
+		}
 	}
 
 	public void walk(int x, int y) {
