@@ -81,38 +81,38 @@ public class Hero {
 		BufferedImage displayedSprite = null;
 
 		if (position.getX() > targetPosition.getX()) {
-			spriteID = (Math.abs(distanceToOldXPosition) * lookLeft.size()) / tileSize + 1;
+			spriteID = (Math.abs(distanceToOldXPosition) * lookLeft.size() + ((tileSize/lookLeft.size() *2 ))) / tileSize;
 			if (spriteID >= lookLeft.size()) {
-				spriteID = lookLeft.size() - 1;
+				spriteID = 0;
 			}
 			lookingDirection = lookLeft.get(0);
 			displayedSprite = lookLeft.get(spriteID);
 		} else if (position.getX() < targetPosition.getX()) {
-			spriteID = (Math.abs(distanceToOldXPosition) * lookRight.size()) / tileSize + 1;
+			spriteID = (Math.abs(distanceToOldXPosition) * lookRight.size() + ((tileSize/lookRight.size() *2 ))) / tileSize;
 			if (spriteID >= lookRight.size()) {
-				spriteID = lookRight.size() - 1;
+				spriteID = 0;
 			}
 			lookingDirection = lookRight.get(0);
 			displayedSprite = lookRight.get(spriteID);
 		}
 
 		if (position.getY() > targetPosition.getY()) {
-			spriteID = (Math.abs(distanceToOldYPosition) * lookUp.size()) / tileSize + 1;
+			spriteID = (Math.abs(distanceToOldYPosition) * lookUp.size() + ((tileSize/lookUp.size() *2 ))) / tileSize;
 			if (spriteID >= lookUp.size()) {
-				spriteID = lookUp.size() - 1;
+				spriteID = 0;
 			}
 			lookingDirection = lookUp.get(0);
 			displayedSprite = lookUp.get(spriteID);
 		} else if (position.getY() < targetPosition.getY()) {
-			spriteID = (Math.abs(distanceToOldYPosition) * lookDown.size()) / tileSize + 1;
+			spriteID = (Math.abs(distanceToOldYPosition) * lookDown.size() + ((tileSize/lookDown.size() *2 ))) / tileSize;
 			if (spriteID >= lookDown.size()) {
-				spriteID = lookDown.size() - 1;
+				spriteID = 0;
 			}
 			lookingDirection = lookDown.get(0);
 			displayedSprite = lookDown.get(spriteID);
 		}
-		
-		if(displayedSprite == null) {
+
+		if (displayedSprite == null) {
 			displayedSprite = lookingDirection;
 		}
 
@@ -286,7 +286,7 @@ public class Hero {
 	public void walk(int x, int y) {
 
 		if (position.equals(targetPosition)) {
-			
+
 			position = targetPosition;
 
 			int newX = targetPosition.getX() + x;
