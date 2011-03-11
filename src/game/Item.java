@@ -47,6 +47,7 @@ abstract class Item {
 		this.script = script;
 	}
 
+	@Override
 	public String toString() {
 		return name + " (Value: " + price + ")";
 	}

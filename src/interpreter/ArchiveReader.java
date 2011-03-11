@@ -50,7 +50,7 @@ public class ArchiveReader {
 	 * 
 	 * @return content
 	 */
-	protected String getGameInformation() {
+	public String getGameInformation() {
 		String content;
 		try {
 			content = getTextFileContent(gameArchive.getInputStream(gameInformation));
@@ -66,7 +66,7 @@ public class ArchiveReader {
 	 * 
 	 * @return content
 	 */
-	protected String getMonster() {
+	public String getMonster() {
 		String content;
 		try {
 			content = getTextFileContent(gameArchive.getInputStream(monster));
@@ -82,7 +82,7 @@ public class ArchiveReader {
 	 * 
 	 * @return content
 	 */
-	protected String getItem() {
+	public String getItem() {
 		String content;
 		try {
 			content = getTextFileContent(gameArchive.getInputStream(item));

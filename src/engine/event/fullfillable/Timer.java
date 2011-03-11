@@ -72,6 +72,7 @@ public class Timer implements Fullfillable, Runnable {
 		}
 	}
 	
+	@Override
 	public String toString() {
 		return "Timer (" + seconds + "s left)"; 
 	}

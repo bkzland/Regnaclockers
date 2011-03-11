@@ -22,13 +22,13 @@ public class Hero {
 	private Map map;
 	private MapCoordinates targetPosition;
 	private MapCoordinates position;
-	private int walkingTime = 600;
+	private int walkingTime = 1120;
 	private long startTime;
 	private List<BufferedImage> lookDown;
 	private List<BufferedImage> lookLeft;
 	private List<BufferedImage> lookRight;
 	private List<BufferedImage> lookUp;
-	private BufferedImage displayedSprite;
+	private BufferedImage lookingDirection;
 	private int tileSize;
 
 	public Hero(Charset charset, Map map, MapCoordinates position) {
@@ -40,7 +40,7 @@ public class Hero {
 		lookLeft = charset.getLookLeftSprites();
 		lookRight = charset.getLookRightSprites();
 		lookUp = charset.getLookUpSprites();
-		displayedSprite = lookDown.get(0);
+		lookingDirection = lookDown.get(0);
 		tileSize = map.getTileSize();
 	}
 
@@ -68,7 +68,7 @@ public class Hero {
 
 		setPositionToTargetPositionIfReached(distanceToOldXPosition, distanceToOldYPosition);
 
-		setAnimationSprite(distanceToOldXPosition, distanceToOldYPosition);
+		BufferedImage displayedSprite = setAnimationSprite(distanceToOldXPosition, distanceToOldYPosition);
 
 		LOGGER.finer("Map: (" + mapX + "|" + mapY + ") Hero: (" + charX + "|" + charY + ")");
 
@@ -76,34 +76,47 @@ public class Hero {
 		g.drawImage(displayedSprite, charX, charY, null);
 	}
 
-	private void setAnimationSprite(int distanceToOldXPosition, int distanceToOldYPosition) {
-		if (position.getX() > targetPosition.getX()) {
-			int spriteID = (Math.abs(distanceToOldXPosition) * lookLeft.size()) / tileSize + 1;
-			if (spriteID >= lookLeft.size())
-				spriteID = 0;
+	private BufferedImage setAnimationSprite(int distanceToOldXPosition, int distanceToOldYPosition) {
+		int spriteID = 0;
+		BufferedImage displayedSprite = null;
 
+		if (position.getX() > targetPosition.getX()) {
+			spriteID = (Math.abs(distanceToOldXPosition) * lookLeft.size()) / tileSize + 1;
+			if (spriteID >= lookLeft.size()) {
+				spriteID = lookLeft.size() - 1;
+			}
+			lookingDirection = lookLeft.get(0);
 			displayedSprite = lookLeft.get(spriteID);
 		} else if (position.getX() < targetPosition.getX()) {
-			int spriteID = (Math.abs(distanceToOldXPosition) * lookRight.size() - 1) / tileSize + 1;
-			if (spriteID >= lookRight.size())
-				spriteID = 0;
-
+			spriteID = (Math.abs(distanceToOldXPosition) * lookRight.size()) / tileSize + 1;
+			if (spriteID >= lookRight.size()) {
+				spriteID = lookRight.size() - 1;
+			}
+			lookingDirection = lookRight.get(0);
 			displayedSprite = lookRight.get(spriteID);
 		}
 
 		if (position.getY() > targetPosition.getY()) {
-			int spriteID = (Math.abs(distanceToOldYPosition) * lookUp.size() - 1) / tileSize + 1;
-			if (spriteID >= lookUp.size())
-				spriteID = 0;
-
+			spriteID = (Math.abs(distanceToOldYPosition) * lookUp.size()) / tileSize + 1;
+			if (spriteID >= lookUp.size()) {
+				spriteID = lookUp.size() - 1;
+			}
+			lookingDirection = lookUp.get(0);
 			displayedSprite = lookUp.get(spriteID);
 		} else if (position.getY() < targetPosition.getY()) {
-			int spriteID = (Math.abs(distanceToOldYPosition) * lookDown.size() - 1) / tileSize + 1;
-			if (spriteID >= lookDown.size())
-				spriteID = 0;
-
+			spriteID = (Math.abs(distanceToOldYPosition) * lookDown.size()) / tileSize + 1;
+			if (spriteID >= lookDown.size()) {
+				spriteID = lookDown.size() - 1;
+			}
+			lookingDirection = lookDown.get(0);
 			displayedSprite = lookDown.get(spriteID);
 		}
+		
+		if(displayedSprite == null) {
+			displayedSprite = lookingDirection;
+		}
+
+		return displayedSprite;
 	}
 
 	private int reduceDistanceToMaxDistance(int distance) {
@@ -273,6 +286,7 @@ public class Hero {
 	public void walk(int x, int y) {
 
 		if (position.equals(targetPosition)) {
+			
 			position = targetPosition;
 
 			int newX = targetPosition.getX() + x;

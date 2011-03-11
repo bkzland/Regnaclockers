@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private void measureFps() {
 		frames++;
 		currentFrame = System.currentTimeMillis();
-		if (currentFrame > firstFrame + 1000) {
+		if (currentFrame >= firstFrame + 1000) {
 			firstFrame = currentFrame;
 			fps = frames;
 			frames = 0;
