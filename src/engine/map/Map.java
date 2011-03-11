@@ -148,24 +148,24 @@ public class Map {
 		return tileset.getTileSize();
 	}
 
-	public boolean isHorMapStartReached(MapCoordinates position, int distanceToPosition, int horResolution, int heroWidth) {
-		if (position.xToPixel(tileSize) + distanceToPosition < horResolution / 2 - heroWidth /2) {
+	public boolean isHorMapStartReached(int xPosition, int horResolution) {
+		if (xPosition <= horResolution / 2) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
-	public boolean isVertMapStartReached(MapCoordinates position, int distanceToPosition, int vertResolution, int heroHeight) {
-		if (position.yToPixel(tileSize) + distanceToPosition < vertResolution / 2  - heroHeight / 2 + heroHeight - tileSize)  {
+
+	public boolean isVertMapStartReached(int yPosition, int vertResolution) {
+		if (yPosition <= vertResolution / 2) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean isXCoordinateInMapEnd(MapCoordinates position, int horResolution) {
-		if ( position.xToPixel(tileSize) >= mapWidthInPixel - horResolution / 2 ) {
+		if (position.xToPixel(tileSize) >= mapWidthInPixel - horResolution / 2) {
 			return true;
 		} else {
 			return false;
@@ -173,23 +173,23 @@ public class Map {
 	}
 
 	public boolean isYCoordinateInMapEnd(MapCoordinates position, int vertResolution) {
-		if ( position.yToPixel(tileSize) >= mapHeightInPixel - vertResolution / 2 ) {
+		if (position.yToPixel(tileSize) >= mapHeightInPixel - vertResolution / 2) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean isHorMapEndReached(MapCoordinates playerPosition, int distanceToPosition, int horResolution, int heroWidth) {
-		if (playerPosition.xToPixel(tileSize) + distanceToPosition > mapWidthInPixel - horResolution / 2 - heroWidth / 2 )  {
+	public boolean isHorMapEndReached(int xPosition, int horResolution) {
+		if (xPosition >= mapWidthInPixel - horResolution / 2) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean isVertMapEndReached(MapCoordinates playerPosition, int distanceToPosition, int vertResolution, int heroHeight) {
-		if (playerPosition.yToPixel(tileSize) + distanceToPosition > mapHeightInPixel - vertResolution / 2 - heroHeight / 2 + heroHeight - tileSize) {
+	public boolean isVertMapEndReached(int xPosition, int vertResolution) {
+		if (xPosition >= mapHeightInPixel - vertResolution / 2) {
 			return true;
 		} else {
 			return false;
@@ -232,14 +232,6 @@ public class Map {
 
 	public int getMapHeightInPixel() {
 		return mapHeightInPixel;
-	}
-
-	public int getMapWidth() {
-		return mapWidthInTiles;
-	}
-
-	public int getMapHeight() {
-		return mapHeightInTiles;
 	}
 
 	public String toString() {

@@ -1,12 +1,15 @@
 package game;
 
+import java.util.logging.Logger;
+
 /**
  * This class represents items.
  * 
  * @author regnaclockers
- * 
  */
 abstract class Item {
+	private final static Logger LOGGER = Logger.getLogger(game.Item.class.getName());
+
 	private String name;
 	private int price;
 	private String script;
@@ -24,9 +27,7 @@ abstract class Item {
 		if (price >= 0) {
 			this.price = price;
 		} else {
-			System.err.println("ERROR: 'price'  of " + name
-					+ "was set to less than 0 (" + price
-					+ "). Setting to '0'...");
+			LOGGER.severe("ERROR: 'price'  of " + name + "was set to less than 0 (" + price + ").");
 			price = 0;
 		}
 	}
@@ -44,5 +45,9 @@ abstract class Item {
 	public Item(String name, int price, String script) {
 		this(name, price);
 		this.script = script;
+	}
+
+	public String toString() {
+		return name + " (Value: " + price + ")";
 	}
 }
