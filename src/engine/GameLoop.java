@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import engine.map.Map;
 import engine.map.MapCoordinates;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import engine.event.fullfillable.*;
 import engine.control.KeyboardControl;
@@ -14,6 +15,8 @@ import engine.sprite.Charset;
 import engine.sprite.Tileset;
 
 public class GameLoop implements Runnable {
+	private final static Logger LOGGER = Logger.getLogger(engine.GameLoop.class.getName());
+
 	private static final int TICKS_PER_SECOND = 25;
 
 	// creating objects for testing
@@ -73,6 +76,7 @@ public class GameLoop implements Runnable {
 			try {
 				Thread.sleep(1000 / TICKS_PER_SECOND);
 			} catch (InterruptedException e) {
+				LOGGER.severe("Couldn't sleep for " + 1000/TICKS_PER_SECOND + "ms");
 				e.printStackTrace();
 			}
 			// test

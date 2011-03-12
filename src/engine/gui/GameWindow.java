@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class GameWindow extends JFrame {
 	private GamePanel panel = new GamePanel();
-	private GameMenu menu = new GameMenu();
+	private GameMenu menu = new GameMenu(panel);
 
 	/**
 	 * creates a GameWindow object.

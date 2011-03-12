@@ -148,6 +148,13 @@ public class Map {
 		return tileset.getTileSize();
 	}
 
+	/**
+	 * returns true if the horizontal start (left side) of the map is reached.
+	 * 
+	 * @param xPosition
+	 * @param horResolution
+	 * @return
+	 */
 	public boolean isHorMapStartReached(int xPosition, int horResolution) {
 		if (xPosition <= horResolution / 2) {
 			return true;
@@ -156,6 +163,13 @@ public class Map {
 		}
 	}
 
+	/**
+	 * returns true if the vertical start (upper side) of the map is reached.
+	 * 
+	 * @param yPosition
+	 * @param vertResolution
+	 * @return
+	 */
 	public boolean isVertMapStartReached(int yPosition, int vertResolution) {
 		if (yPosition <= vertResolution / 2) {
 			return true;
@@ -180,6 +194,13 @@ public class Map {
 		}
 	}
 
+	/**
+	 * returns true if the horizontal end (right side) of the map is reached.
+	 * 
+	 * @param xPosition
+	 * @param horResolution
+	 * @return
+	 */
 	public boolean isHorMapEndReached(int xPosition, int horResolution) {
 		if (xPosition >= mapWidthInPixel - horResolution / 2) {
 			return true;
@@ -188,6 +209,13 @@ public class Map {
 		}
 	}
 
+	/**
+	 * returns true if the vertical end (lower side) of the map is reached.
+	 * 
+	 * @param xPosition
+	 * @param vertResolution
+	 * @return
+	 */
 	public boolean isVertMapEndReached(int xPosition, int vertResolution) {
 		if (xPosition >= mapHeightInPixel - vertResolution / 2) {
 			return true;
@@ -197,8 +225,8 @@ public class Map {
 	}
 
 	/**
-	 * gives back a valid position. If x|y are too high or too low, it will
-	 * return the highest/lowest possible value.
+	 * gives back a valid position. If (x|y) is too high or too low, it will
+	 * return the highest/lowest possible coordinate.
 	 * 
 	 * @param x
 	 * @param y
@@ -234,6 +262,7 @@ public class Map {
 		return mapHeightInPixel;
 	}
 
+	@Override
 	public String toString() {
 		return mapName;
 	}

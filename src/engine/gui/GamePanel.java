@@ -1,7 +1,11 @@
 package engine.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
@@ -18,12 +22,12 @@ import engine.control.KeyboardControl;
 public class GamePanel extends JPanel implements Runnable {
 	private final static Logger LOGGER = Logger.getLogger(engine.gui.GamePanel.class.getName());
 
-	
 	// for measuring the fps
 	private int fps = 0;
 	private int frames = 0;
 	private long firstFrame;
 	private long currentFrame;
+	private boolean isFpsOn = false;
 
 	private static final int MAX_FPS = 120;
 
@@ -37,11 +41,12 @@ public class GamePanel extends JPanel implements Runnable {
 		setDoubleBuffered(true);
 		setFocusable(true);
 		addKeyListener(key);
+		gameThread.setPriority(Thread.MAX_PRIORITY);
 		gameThread.start();
 		LOGGER.info("Game Thread started");
+		graphicsThread.setPriority(Thread.MIN_PRIORITY);
 		graphicsThread.start();
 		LOGGER.info("Graphics Thread started");
-
 	}
 
 	/**
@@ -49,35 +54,38 @@ public class GamePanel extends JPanel implements Runnable {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		loop.drawGame(g);
-		showFps(g);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		loop.drawGame(g2);
+		showFpsIfOn(g2);
 	}
 
 	@Override
 	public void run() {
 		while (true) {
-			if (fps >= MAX_FPS || fps == 0) {
-				try {
-					Thread.sleep(1000 / MAX_FPS);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			try {
+				Thread.sleep(1000 / MAX_FPS);
+			} catch (InterruptedException e) {
+				LOGGER.severe("Couldn't sleep for " + 1000 / MAX_FPS + "ms");
+				e.printStackTrace();
 			}
 			repaint();
-			measureFps();
+			measureFpsIfOn();
 		}
 	}
 
 	/**
 	 * measures the frames per second.
 	 */
-	private void measureFps() {
-		frames++;
-		currentFrame = System.currentTimeMillis();
-		if (currentFrame >= firstFrame + 1000) {
-			firstFrame = currentFrame;
-			fps = frames;
-			frames = 0;
+	private void measureFpsIfOn() {
+		if (isFpsOn) {
+			frames++;
+			currentFrame = System.currentTimeMillis();
+			if (currentFrame >= firstFrame + 1000) {
+				firstFrame = currentFrame;
+				fps = frames;
+				frames = 0;
+			}
 		}
 	}
 
@@ -86,9 +94,26 @@ public class GamePanel extends JPanel implements Runnable {
 	 * 
 	 * @param g
 	 */
-	private void showFps(Graphics g) {
-		if (fps != 0) {
-			g.drawString(fps + "FPS", 0, 10);
+	private void showFpsIfOn(Graphics g) {
+		if (isFpsOn) {
+			if (fps != 0) {
+				g.setColor(Color.WHITE);
+				g.drawString(fps + "FPS", 0, 10);
+			}
 		}
 	}
+
+	public void triggerFps() {
+		if (isFpsOn) {
+			isFpsOn = false;
+		} else {
+			isFpsOn = true;
+		}
+	}
+	
+	@Override
+	public void update(Graphics g) {
+		paint(g);
+	}
+
 }

@@ -7,18 +7,22 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 // TODO Help, Info, Load Game, etc.
 
 @SuppressWarnings("serial")
 public class GameMenu extends JMenuBar {
+	private GamePanel panel;
 	private JMenu file = new JMenu("File");
 	private JMenuItem quit = new JMenuItem("Quit");
 
 	private JMenu options = new JMenu("Options");
 	private JCheckBoxMenuItem showFps = new JCheckBoxMenuItem("Show FPS");
 
-	public GameMenu() {
+	public GameMenu(GamePanel panel) {
+		this.panel = panel;
+		
 		ActionListener quitListener = new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -46,6 +50,6 @@ public class GameMenu extends JMenuBar {
 	}
 
 	public void showFps() {
-
+		panel.triggerFps();
 	}
 }
