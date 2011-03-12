@@ -55,7 +55,7 @@ public class Hero {
 		int distanceToOldXPosition = 0;
 		int distanceToOldYPosition = 0;
 
-		if (position.equals(targetPosition) == false) {
+		if (!position.equals(targetPosition)) {
 			distanceToOldXPosition = calculateXDistanceToStartPosition(distanceToOldXPosition, walkingTime);
 			distanceToOldYPosition = calculateYDistanceToStartPosition(distanceToOldYPosition, walkingTime);
 		}
@@ -80,14 +80,16 @@ public class Hero {
 		BufferedImage displayedSprite = null;
 
 		if (position.getX() > targetPosition.getX()) {
-			spriteID = (Math.abs(distanceToOldXPosition) * lookLeft.size() + ((tileSize/lookLeft.size() *2 ))) / tileSize;
+			spriteID = (Math.abs(distanceToOldXPosition) * lookLeft.size() + ((tileSize / lookLeft.size() * 2)))
+					/ tileSize;
 			if (spriteID >= lookLeft.size()) {
 				spriteID = 0;
 			}
 			lookingDirection = lookLeft.get(0);
 			displayedSprite = lookLeft.get(spriteID);
 		} else if (position.getX() < targetPosition.getX()) {
-			spriteID = (Math.abs(distanceToOldXPosition) * lookRight.size() + ((tileSize/lookRight.size() *2 ))) / tileSize;
+			spriteID = (Math.abs(distanceToOldXPosition) * lookRight.size() + ((tileSize / lookRight.size() * 2)))
+					/ tileSize;
 			if (spriteID >= lookRight.size()) {
 				spriteID = 0;
 			}
@@ -96,14 +98,15 @@ public class Hero {
 		}
 
 		if (position.getY() > targetPosition.getY()) {
-			spriteID = (Math.abs(distanceToOldYPosition) * lookUp.size() + ((tileSize/lookUp.size() *2 ))) / tileSize;
+			spriteID = (Math.abs(distanceToOldYPosition) * lookUp.size() + ((tileSize / lookUp.size() * 2))) / tileSize;
 			if (spriteID >= lookUp.size()) {
 				spriteID = 0;
 			}
 			lookingDirection = lookUp.get(0);
 			displayedSprite = lookUp.get(spriteID);
 		} else if (position.getY() < targetPosition.getY()) {
-			spriteID = (Math.abs(distanceToOldYPosition) * lookDown.size() + ((tileSize/lookDown.size() *2 ))) / tileSize;
+			spriteID = (Math.abs(distanceToOldYPosition) * lookDown.size() + ((tileSize / lookDown.size() * 2)))
+					/ tileSize;
 			if (spriteID >= lookDown.size()) {
 				spriteID = 0;
 			}
@@ -146,10 +149,10 @@ public class Hero {
 		return distance;
 	}
 
-	private int calculateHowManyMilliSecondsMustElapseForANewPixelOfDistance(int milliSecondsPerPixel) {
+	private int calculateElapsedMilliSecondsForNewPixelOfDistance(int milliSecondsPerPixel) {
 		// pythagoras for diagonal walking
 		if (position.getX() != targetPosition.getX() && position.getY() != targetPosition.getY()) {
-			int diagonalTime = (int) Math.sqrt(walkingTime * walkingTime * 2);
+			int diagonalTime = (int) Math.sqrt(2 * walkingTime * walkingTime);
 			milliSecondsPerPixel = diagonalTime / tileSize;
 		} else {
 			milliSecondsPerPixel = walkingTime / tileSize;
@@ -159,7 +162,7 @@ public class Hero {
 	}
 
 	private int calculateXDistanceToStartPosition(int distance, int walkingTime) {
-		int milliSecondsPerPixel = calculateHowManyMilliSecondsMustElapseForANewPixelOfDistance(walkingTime);
+		int milliSecondsPerPixel = calculateElapsedMilliSecondsForNewPixelOfDistance(walkingTime);
 		long timeElapsed = System.currentTimeMillis() - startTime;
 
 		if (position.getX() != targetPosition.getX()) {
@@ -175,7 +178,7 @@ public class Hero {
 	}
 
 	private int calculateYDistanceToStartPosition(int distance, int walkingTime) {
-		int milliSecondsPerPixel = calculateHowManyMilliSecondsMustElapseForANewPixelOfDistance(walkingTime);
+		int milliSecondsPerPixel = calculateElapsedMilliSecondsForNewPixelOfDistance(walkingTime);
 		long timeElapsed = System.currentTimeMillis() - startTime;
 
 		if (position.getY() != targetPosition.getY()) {
@@ -185,7 +188,6 @@ public class Hero {
 		} else {
 			distance = 0;
 		}
-
 		return distance;
 	}
 
@@ -193,17 +195,14 @@ public class Hero {
 		int mapX = position.xToPixel(tileSize);
 		int heroSpriteMapXPosition = position.xToPixel(tileSize) + distance + charset.getSpriteWidth() / 2;
 
-		if (map.isHorMapStartReached(heroSpriteMapXPosition, horResolution)) {
-
-		} else if (map.isHorMapEndReached(heroSpriteMapXPosition, horResolution)) {
+		if (map.isRightBorderVisible(heroSpriteMapXPosition, horResolution)) {
 
 			// without that the old position would cause problems if it's not in
 			// the map end.
-			if (map.isXCoordinateInMapEnd(position, horResolution) == false) {
+			if (!map.isXCoordinateInMapEnd(position, horResolution)) {
 				mapX += tileSize;
 			}
-
-		} else {
+		} else if (!map.isLeftBorderVisible(heroSpriteMapXPosition, horResolution)) {
 			mapX += charset.getSpriteWidth() / 2;
 
 			if (position.getX() != targetPosition.getX()) {
@@ -217,11 +216,11 @@ public class Hero {
 		int charX = position.xToPixel(tileSize);
 		int heroSpriteMapXPosition = position.xToPixel(tileSize) + distance + charset.getSpriteWidth() / 2;
 
-		if (map.isHorMapStartReached(heroSpriteMapXPosition, horResolution)) {
+		if (map.isLeftBorderVisible(heroSpriteMapXPosition, horResolution)) {
 			if (position.getX() != targetPosition.getX()) {
 				charX += distance;
 			}
-		} else if (map.isHorMapEndReached(heroSpriteMapXPosition, horResolution)) {
+		} else if (map.isRightBorderVisible(heroSpriteMapXPosition, horResolution)) {
 			charX = charX + horResolution - map.getMapWidthInPixel();
 
 			if (position.getX() != targetPosition.getX()) {
@@ -238,16 +237,14 @@ public class Hero {
 		int heroSpriteMapYPosition = position.yToPixel(tileSize) + distance + charset.getSpriteHeight() / 2
 				- charset.getSpriteHeight() + tileSize;
 
-		if (map.isVertMapStartReached(heroSpriteMapYPosition, vertResolution)) {
-
-		} else if (map.isVertMapEndReached(heroSpriteMapYPosition, vertResolution)) {
+		if (map.isLowerBorderVisible(heroSpriteMapYPosition, vertResolution)) {
 
 			// without that the old position would cause problems if it's not in
 			// the map end.
-			if (map.isYCoordinateInMapEnd(position, vertResolution) == false) {
+			if (!map.isYCoordinateInMapEnd(position, vertResolution)) {
 				mapY += tileSize;
 			}
-		} else {
+		} else if (!map.isUpperBorderVisible(heroSpriteMapYPosition, vertResolution)) {
 			mapY = mapY + charset.getSpriteHeight() / 2 + (tileSize - charset.getSpriteHeight());
 
 			if (position.getY() != targetPosition.getY()) {
@@ -263,12 +260,12 @@ public class Hero {
 		int heroSpriteMapYPosition = position.yToPixel(tileSize) + distance + charset.getSpriteHeight() / 2
 				- charset.getSpriteHeight() + tileSize;
 
-		if (map.isVertMapStartReached(heroSpriteMapYPosition, vertResolution)) {
+		if (map.isUpperBorderVisible(heroSpriteMapYPosition, vertResolution)) {
 			charY = charY - charset.getSpriteHeight() + tileSize;
 			if (position.getY() != targetPosition.getY()) {
 				charY += distance;
 			}
-		} else if (map.isVertMapEndReached(heroSpriteMapYPosition, vertResolution)) {
+		} else if (map.isLowerBorderVisible(heroSpriteMapYPosition, vertResolution)) {
 			charY = charY + vertResolution - map.getMapWidthInPixel();
 			charY = charY - charset.getSpriteHeight() + tileSize;
 
@@ -283,13 +280,9 @@ public class Hero {
 	}
 
 	public void walk(int x, int y) {
-
 		if (position.equals(targetPosition)) {
-
-			position = targetPosition;
-
-			int newX = targetPosition.getX() + x;
-			int newY = targetPosition.getY() + y;
+			int newX = position.getX() + x;
+			int newY = position.getY() + y;
 			targetPosition = map.getLegitCoordinates(newX, newY);
 			startTime = System.currentTimeMillis();
 		}

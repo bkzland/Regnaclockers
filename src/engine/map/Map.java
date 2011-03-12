@@ -20,7 +20,7 @@ public class Map {
 
 	private HashMap<MapCoordinates, Integer> mapGrid = new HashMap<MapCoordinates, Integer>();
 	private ArrayList<Event> events;
-	private BufferedImage map;
+	private BufferedImage imageOfWholeMap;
 	private int mapWidthInTiles;
 	private int mapHeightInTiles;
 	private int mapWidthInPixel;
@@ -120,7 +120,7 @@ public class Map {
 		if (mapYInPixel + vertResolution > mapHeightInPixel) {
 			mapYInPixel = mapHeightInPixel - vertResolution;
 		}
-		g.drawImage(map.getSubimage(mapXInPixel, mapYInPixel, horResolution, vertResolution), 0, 0, null);
+		g.drawImage(imageOfWholeMap.getSubimage(mapXInPixel, mapYInPixel, horResolution, vertResolution), 0, 0, null);
 
 		// paint all events
 		for (int i = 0; i < events.size(); i++) {
@@ -132,9 +132,8 @@ public class Map {
 	 * creates an image of the whole map.
 	 */
 	private void loadMap() {
-
-		map = new BufferedImage(mapWidthInPixel, mapHeightInPixel, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2d = map.createGraphics();
+		imageOfWholeMap = new BufferedImage(mapWidthInPixel, mapHeightInPixel, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = imageOfWholeMap.createGraphics();
 		for (int x = 0; x < mapWidthInTiles; x++) {
 			for (int y = 0; y < mapHeightInTiles; y++) {
 				g2d
@@ -155,7 +154,7 @@ public class Map {
 	 * @param horResolution
 	 * @return
 	 */
-	public boolean isHorMapStartReached(int xPosition, int horResolution) {
+	public boolean isLeftBorderVisible(int xPosition, int horResolution) {
 		if (xPosition < horResolution / 2) {
 			return true;
 		} else {
@@ -170,7 +169,7 @@ public class Map {
 	 * @param vertResolution
 	 * @return
 	 */
-	public boolean isVertMapStartReached(int yPosition, int vertResolution) {
+	public boolean isUpperBorderVisible(int yPosition, int vertResolution) {
 		if (yPosition < vertResolution / 2) {
 			return true;
 		} else {
@@ -201,7 +200,7 @@ public class Map {
 	 * @param horResolution
 	 * @return
 	 */
-	public boolean isHorMapEndReached(int xPosition, int horResolution) {
+	public boolean isRightBorderVisible(int xPosition, int horResolution) {
 		if (xPosition > mapWidthInPixel - horResolution / 2) {
 			return true;
 		} else {
@@ -216,7 +215,7 @@ public class Map {
 	 * @param vertResolution
 	 * @return
 	 */
-	public boolean isVertMapEndReached(int xPosition, int vertResolution) {
+	public boolean isLowerBorderVisible(int xPosition, int vertResolution) {
 		if (xPosition > mapHeightInPixel - vertResolution / 2) {
 			return true;
 		} else {

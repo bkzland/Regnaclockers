@@ -16,8 +16,9 @@ import engine.sprite.Tileset;
 
 public class GameLoop implements Runnable {
 	private final static Logger LOGGER = Logger.getLogger(engine.GameLoop.class.getName());
-
+	
 	private static final int TICKS_PER_SECOND = 25;
+	private boolean isGameLoopOn = true;
 
 	// creating objects for testing
 	private Tileset tileset = new Tileset("dummytileset.png", 128);
@@ -67,7 +68,7 @@ public class GameLoop implements Runnable {
 	@Override
 	public void run() {
 
-		while (true) {
+		while (isGameLoopOn) {
 			event.changePageIfConditionTrue();
 
 			try {
@@ -99,5 +100,11 @@ public class GameLoop implements Runnable {
 
 	public void drawGame(Graphics g) {
 		hero.drawHero(g, 1024, 768);
+	}
+
+	public void stopGameLoopProperly() {
+		isGameLoopOn = false;
+		LOGGER.info("Stopped Game Loop");
+
 	}
 }

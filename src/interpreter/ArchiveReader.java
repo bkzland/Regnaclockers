@@ -111,7 +111,6 @@ public class ArchiveReader {
 			}
 		} catch (IOException e) {
 			LOGGER.severe("Cannot get Line");
-			;
 		}
 		try {
 			inputStream.close();

@@ -29,7 +29,9 @@ public class GamePanel extends JPanel implements Runnable {
 	private boolean isFpsOn;
 
 	private static final int MAX_FPS = 120;
+	private boolean isGraphicsLoopOn = true;
 
+	
 	private KeyboardControl key = new KeyboardControl();
 	private GameLoop loop = new GameLoop(key);
 	private Thread gameThread = new Thread(loop);
@@ -61,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (isGraphicsLoopOn) {
 			try {
 				Thread.sleep(1000 / MAX_FPS);
 			} catch (InterruptedException e) {
@@ -89,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	/**
 	 * shows the frames per second in the upper left corner.
-	 * 
+	 *
 	 * @param g
 	 */
 	private void showFpsIfOn(Graphics g) {
@@ -115,6 +117,11 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void update(Graphics g) {
 		paint(g);
+	}
+	
+	public void stopGraphicsLoopProperly() {
+		isGraphicsLoopOn = false;
+		LOGGER.info("Stopped Graphics Loop");
 	}
 
 }

@@ -59,7 +59,7 @@ public class Event {
 		Page tempPage = currentPage;
 		for (int i = 0, length = pages.size(); i < length; i++) {
 
-			if (pages.get(i).checkCondition() == true) {
+			if (pages.get(i).isAConditionFullfilled()) {
 				tempPage = pages.get(i);
 			}
 			if (currentPage != tempPage) {

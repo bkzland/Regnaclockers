@@ -28,7 +28,7 @@ public class Switch implements Fullfillable {
 	}
 
 	public void turnOn() {
-		if (isOn == false) {
+		if (!isOn) {
 			isOn = true;
 			LOGGER.info("Switch turned on");
 		} else {
@@ -37,7 +37,7 @@ public class Switch implements Fullfillable {
 	}
 
 	public void turnOff() {
-		if (isOn == true) {
+		if (isOn) {
 			isOn = false;
 			LOGGER.info("Switch turned off");
 		} else {

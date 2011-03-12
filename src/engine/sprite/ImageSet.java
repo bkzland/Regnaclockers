@@ -63,7 +63,6 @@ public abstract class ImageSet {
 	 */
 	private void loadTiles() {
 		if (spriteset.getWidth() % spriteWidth != 0 || spriteset.getHeight() % spriteHeight != 0) {
-			System.err.println("ERROR: Sprite Size is wrong.");
 			LOGGER.severe("Sprite size is wrong: " + spriteWidth + 'x' + spriteHeight);
 		}
 
