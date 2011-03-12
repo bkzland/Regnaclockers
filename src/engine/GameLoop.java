@@ -41,9 +41,6 @@ public class GameLoop implements Runnable {
 	private Charset charset;
 	private Hero hero;
 
-	private int x;
-	private int y;
-
 	KeyboardControl key;
 
 	public GameLoop(KeyboardControl key) {
@@ -62,7 +59,7 @@ public class GameLoop implements Runnable {
 
 		ArrayList<Event> events = new ArrayList<Event>();
 		events.add(event);
-		charset = new Charset("dummycharset.png", 128, 192);
+		charset = new Charset("Regnaclock_Char2.png", 128, 256);
 		map = new Map("Map", grid, tileset, events);
 		hero = new Hero(charset, map, new MapCoordinates(2, 2));
 	}
@@ -76,8 +73,7 @@ public class GameLoop implements Runnable {
 			try {
 				Thread.sleep(1000 / TICKS_PER_SECOND);
 			} catch (InterruptedException e) {
-				LOGGER.severe("Couldn't sleep for " + 1000/TICKS_PER_SECOND + "ms");
-				e.printStackTrace();
+				LOGGER.severe("Cannot sleep for " + 1000 / TICKS_PER_SECOND + "ms");
 			}
 			// test
 			if (key.isWalkKeyPressed()) {
@@ -102,6 +98,6 @@ public class GameLoop implements Runnable {
 	}
 
 	public void drawGame(Graphics g) {
-		hero.drawHero(g, 1080, 768);
+		hero.drawHero(g, 1024, 768);
 	}
 }

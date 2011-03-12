@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 public class KeyboardControl implements KeyListener {
 	private final static Logger LOGGER = Logger.getLogger(engine.control.KeyboardControl.class.getName());
 
-	private boolean downPressed = false;
-	private boolean leftPressed = false;
-	private boolean rightPressed = false;
-	private boolean upPressed = false;
+	private boolean downPressed;
+	private boolean leftPressed;
+	private boolean rightPressed;
+	private boolean upPressed;
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -36,6 +36,10 @@ public class KeyboardControl implements KeyListener {
 			case KeyEvent.VK_ESCAPE:
 				LOGGER.fine("Escape pressed");
 				System.exit(0);
+				break;
+			default:
+				LOGGER.finer("Key without function pressed");
+
 		}
 	}
 
@@ -54,6 +58,8 @@ public class KeyboardControl implements KeyListener {
 			case KeyEvent.VK_UP:
 				upPressed = false;
 				break;
+			default:
+				LOGGER.finer("Key without function released");
 		}
 	}
 
@@ -77,7 +83,7 @@ public class KeyboardControl implements KeyListener {
 	public boolean isUpPressed() {
 		return upPressed;
 	}
-	
+
 	public boolean isWalkKeyPressed() {
 		return downPressed || leftPressed || rightPressed || upPressed;
 	}

@@ -24,7 +24,7 @@ public class Tileset extends ImageSet {
 	public Tileset(String tilesetPath, int tileSize) {
 		super(tilesetPath, tileSize);
 		this.tileSize = tileSize;
-		LOGGER.fine("\"" + tilesetPath + "\" loaded");
+		LOGGER.fine("\"" + toString() + "\" loaded");
 	}
 
 	/**

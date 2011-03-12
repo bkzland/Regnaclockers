@@ -15,6 +15,7 @@ import java.util.zip.ZipFile;
  * @author regnaclockers
  */
 public class ArchiveReader {
+	private final static Logger LOGGER = Logger.getLogger(interpreter.ArchiveReader.class.getName());
 
 	private ZipFile gameArchive;
 	private ZipEntry gameInformation;
@@ -34,7 +35,7 @@ public class ArchiveReader {
 		try {
 			gameArchive = new ZipFile(fileName);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("Cannot get \"" + fileName + '"');
 		}
 		gameInformation = gameArchive.getEntry("GameInformation.xml");
 		monster = gameArchive.getEntry("Monster.xml");
@@ -55,7 +56,7 @@ public class ArchiveReader {
 		try {
 			content = getTextFileContent(gameArchive.getInputStream(gameInformation));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("Cannot get GameInformation.xml content");
 			content = null;
 		}
 		return content;
@@ -71,7 +72,7 @@ public class ArchiveReader {
 		try {
 			content = getTextFileContent(gameArchive.getInputStream(monster));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("Cannot get Monster.xml content");
 			content = null;
 		}
 		return content;
@@ -87,7 +88,7 @@ public class ArchiveReader {
 		try {
 			content = getTextFileContent(gameArchive.getInputStream(item));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("Cannot get Item.xml content");
 			content = null;
 		}
 		return content;
@@ -109,12 +110,13 @@ public class ArchiveReader {
 				builder.append(line.trim());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("Cannot get Line");
+			;
 		}
 		try {
 			inputStream.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("Cannot close input stream");
 		}
 		String content = builder.toString();
 		return content;

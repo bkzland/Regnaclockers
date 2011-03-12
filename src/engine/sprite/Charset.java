@@ -35,7 +35,7 @@ public class Charset extends ImageSet {
 		super(charsetPath, charWidth, charHeight);
 		animationSpriteAmount = spriteset.getWidth() / charWidth;
 		readSprites();
-		LOGGER.fine("\"" + charsetPath + "\" loaded");
+		LOGGER.fine("\"" + toString() + "\" loaded");
 	}
 
 	/**

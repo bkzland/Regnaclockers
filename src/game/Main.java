@@ -1,6 +1,5 @@
 package game;
 
-import engine.GameLoop;
 import engine.gui.GameWindow;
 
 import interpreter.ArchiveReader;
@@ -18,7 +17,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// everything just for testing here
-		ArchiveReader archiveReader = new ArchiveReader("DummyGame.rcz");
-		GameWindow window = new GameWindow();
+		new ArchiveReader("DummyGame.rcz");
+		new GameWindow();
 	}
 }

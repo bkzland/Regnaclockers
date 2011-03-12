@@ -36,7 +36,7 @@ public abstract class ImageSet {
 		try {
 			spriteset = ImageIO.read(new File(imagePath));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe("Cannot read \"" + imagePath + '"');
 		}
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
@@ -64,7 +64,7 @@ public abstract class ImageSet {
 	private void loadTiles() {
 		if (spriteset.getWidth() % spriteWidth != 0 || spriteset.getHeight() % spriteHeight != 0) {
 			System.err.println("ERROR: Sprite Size is wrong.");
-			System.exit(1);
+			LOGGER.severe("Sprite size is wrong: " + spriteWidth + 'x' + spriteHeight);
 		}
 
 		int widthInTiles = spriteset.getWidth() / spriteWidth;

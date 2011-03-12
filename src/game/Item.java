@@ -49,6 +49,6 @@ abstract class Item {
 
 	@Override
 	public String toString() {
-		return name + " (Value: " + price + ")";
+		return name + " (Value: " + price + ')';
 	}
 }

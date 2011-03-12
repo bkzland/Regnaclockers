@@ -2,7 +2,6 @@ package engine.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -23,11 +22,11 @@ public class GamePanel extends JPanel implements Runnable {
 	private final static Logger LOGGER = Logger.getLogger(engine.gui.GamePanel.class.getName());
 
 	// for measuring the fps
-	private int fps = 0;
-	private int frames = 0;
+	private int fps;
+	private int frames;
 	private long firstFrame;
 	private long currentFrame;
-	private boolean isFpsOn = false;
+	private boolean isFpsOn;
 
 	private static final int MAX_FPS = 120;
 
@@ -37,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private Thread graphicsThread = new Thread(this);
 
 	public GamePanel() {
-		setPreferredSize(new Dimension(1080, 768));
+		setPreferredSize(new Dimension(1024, 768));
 		setDoubleBuffered(true);
 		setFocusable(true);
 		addKeyListener(key);
@@ -66,8 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
 			try {
 				Thread.sleep(1000 / MAX_FPS);
 			} catch (InterruptedException e) {
-				LOGGER.severe("Couldn't sleep for " + 1000 / MAX_FPS + "ms");
-				e.printStackTrace();
+				LOGGER.severe("Cannot sleep for " + 1000 / MAX_FPS + "ms");
 			}
 			repaint();
 			measureFpsIfOn();
@@ -106,8 +104,11 @@ public class GamePanel extends JPanel implements Runnable {
 	public void triggerFps() {
 		if (isFpsOn) {
 			isFpsOn = false;
+			LOGGER.info("FPS display deactivated");
+
 		} else {
 			isFpsOn = true;
+			LOGGER.info("FPS display activated");
 		}
 	}
 	

@@ -23,10 +23,9 @@ public class Event {
 			currentPage = this.pages.get(0); // first page is default
 		} catch (IndexOutOfBoundsException e) {
 			LOGGER.severe("Event \"" + this.toString() + "\"  was created with 0 Pages");
-			e.printStackTrace();
 		}
 
-		LOGGER.info("Event \"" + this.toString() + "\" created on (" + position.getX() + "|" + position.getY()
+		LOGGER.info("Event \"" + this.toString() + "\" created on (" + position.getX() + '|' + position.getY()
 				+ ") with " + pages.size() + ((pages.size() != 1) ? " Pages" : " Page"));
 	}
 

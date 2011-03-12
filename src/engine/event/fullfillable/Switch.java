@@ -30,18 +30,18 @@ public class Switch implements Fullfillable {
 	public void turnOn() {
 		if (isOn == false) {
 			isOn = true;
-			LOGGER.info("Switch was turned on");
+			LOGGER.info("Switch turned on");
 		} else {
-			LOGGER.warning("Tried to turn Switch on, but was already on");
+			LOGGER.warning("Switch already on");
 		}
 	}
 
 	public void turnOff() {
 		if (isOn == true) {
 			isOn = false;
-			LOGGER.info("Switch was turned off");
+			LOGGER.info("Switch turned off");
 		} else {
-			LOGGER.warning("Tried to turn Switch off, but was already off");
+			LOGGER.warning("Switch already off");
 		}
 	}
 }

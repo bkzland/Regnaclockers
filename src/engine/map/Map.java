@@ -156,7 +156,7 @@ public class Map {
 	 * @return
 	 */
 	public boolean isHorMapStartReached(int xPosition, int horResolution) {
-		if (xPosition <= horResolution / 2) {
+		if (xPosition < horResolution / 2) {
 			return true;
 		} else {
 			return false;
@@ -171,7 +171,7 @@ public class Map {
 	 * @return
 	 */
 	public boolean isVertMapStartReached(int yPosition, int vertResolution) {
-		if (yPosition <= vertResolution / 2) {
+		if (yPosition < vertResolution / 2) {
 			return true;
 		} else {
 			return false;
@@ -202,7 +202,7 @@ public class Map {
 	 * @return
 	 */
 	public boolean isHorMapEndReached(int xPosition, int horResolution) {
-		if (xPosition >= mapWidthInPixel - horResolution / 2) {
+		if (xPosition > mapWidthInPixel - horResolution / 2) {
 			return true;
 		} else {
 			return false;
@@ -217,7 +217,7 @@ public class Map {
 	 * @return
 	 */
 	public boolean isVertMapEndReached(int xPosition, int vertResolution) {
-		if (xPosition >= mapHeightInPixel - vertResolution / 2) {
+		if (xPosition > mapHeightInPixel - vertResolution / 2) {
 			return true;
 		} else {
 			return false;

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  * @author regnaclockers
  */
 
-public class MapCoordinates{
+public class MapCoordinates {
 	private final static Logger LOGGER = Logger.getLogger(engine.map.MapCoordinates.class.getName());
 
 	private int x;
@@ -34,13 +34,15 @@ public class MapCoordinates{
 
 	/**
 	 * returns the x coordinate.
+	 * 
 	 * @return x
 	 */
 	public int getX() {
 		return x;
 	}
 
-	/** returns the y coordinate.
+	/**
+	 * returns the y coordinate.
 	 * 
 	 * @return y
 	 */
@@ -50,6 +52,7 @@ public class MapCoordinates{
 
 	/**
 	 * multiplies the x coordinate with the tileWidth.
+	 * 
 	 * @param tileWidth
 	 * @return
 	 */
@@ -59,29 +62,31 @@ public class MapCoordinates{
 
 	/**
 	 * multiplies the y coordinate with the tileWidth.
+	 * 
 	 * @param tileWidth
 	 * @return
 	 */
 	public int yToPixel(int tileHeight) {
 		return tileHeight * y;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof MapCoordinates) {
+		if (obj instanceof MapCoordinates) {
 			MapCoordinates coords = (MapCoordinates) obj;
 			return (x == coords.getX()) && (y == coords.getY());
 		}
 		return false;
- 	}
-	
+	}
+
 	@Override
 	public int hashCode() {
 		return (x * 11) ^ (y * 17);
 	}
-	
+
 	@Override
 	public String toString() {
-		return new String("(" + x + "|" + y + ")");
+		String string = "" + '(' + x + '|' + y + ')';
+		return string;
 	}
 }

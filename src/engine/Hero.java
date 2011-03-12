@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import engine.map.Map;
 import engine.map.MapCoordinates;
 import engine.sprite.Charset;
-import engine.sprite.Tileset;
 
 /**
  * The player.
@@ -70,7 +69,7 @@ public class Hero {
 
 		BufferedImage displayedSprite = setAnimationSprite(distanceToOldXPosition, distanceToOldYPosition);
 
-		LOGGER.finer("Map: (" + mapX + "|" + mapY + ") Hero: (" + charX + "|" + charY + ")");
+		LOGGER.finer("Map: (" + mapX + '|' + mapY + ") Hero: (" + charX + '|' + charY + ')');
 
 		map.drawMap(g, mapX, mapY, horResolution, vertResolution);
 		g.drawImage(displayedSprite, charX, charY, null);
@@ -249,7 +248,7 @@ public class Hero {
 				mapY += tileSize;
 			}
 		} else {
-			mapY = mapY + charset.getSpriteHeight() / 2 + charset.getSpriteHeight() - 2 * tileSize;
+			mapY = mapY + charset.getSpriteHeight() / 2 + (tileSize - charset.getSpriteHeight());
 
 			if (position.getY() != targetPosition.getY()) {
 				mapY += distance;
