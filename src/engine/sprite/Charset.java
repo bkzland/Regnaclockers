@@ -1,5 +1,6 @@
 package engine.sprite;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.logging.Logger;
 public class Charset extends AbstractImageSet {
 	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Charset.class.getName());
 
-	int animationSpriteAmount;
+	private int animationSpriteAmount;
 	private List<BufferedImage> lookDown = new ArrayList<BufferedImage>();
 	private List<BufferedImage> lookLeft = new ArrayList<BufferedImage>();
 	private List<BufferedImage> lookRight = new ArrayList<BufferedImage>();
 	private List<BufferedImage> lookUp = new ArrayList<BufferedImage>();
+	private BufferedImage standSprite;
 
 	/**
 	 * creates a Charset Object.
@@ -36,6 +38,7 @@ public class Charset extends AbstractImageSet {
 		super(charsetPath, charWidth, charHeight);
 		animationSpriteAmount = spriteset.getWidth() / charWidth;
 		readSprites();
+		standSprite = lookDown.get(0); // character looks down by default
 		LOGGER.fine("\"" + toString() + "\" loaded");
 	}
 
@@ -101,5 +104,48 @@ public class Charset extends AbstractImageSet {
 			spriteArray.add(getImage(start + i));
 		}
 		return spriteArray;
+	}
+
+	public void drawDownSprite(Graphics g, int spriteID, int charX, int charY) {
+		standSprite = lookDown.get(0);
+		try {
+			g.drawImage(lookDown.get(spriteID), charX, charY, null);
+		} catch (IndexOutOfBoundsException e) {
+			LOGGER.severe("No sprite with ID " + spriteID);
+		}
+	}
+
+	public void drawLeftSprite(Graphics g, int spriteID, int charX, int charY) {
+		standSprite = lookLeft.get(0);
+		try {
+			g.drawImage(lookLeft.get(spriteID), charX, charY, null);
+		} catch (IndexOutOfBoundsException e) {
+			LOGGER.severe("No sprite with ID " + spriteID);
+
+		}
+	}
+
+	public void drawRightSprite(Graphics g, int spriteID, int charX, int charY) {
+		standSprite = lookRight.get(0);
+		try {
+			g.drawImage(lookRight.get(spriteID), charX, charY, null);
+		} catch (IndexOutOfBoundsException e) {
+			LOGGER.severe("No sprite with ID " + spriteID);
+
+		}
+	}
+
+	public void drawUpSprite(Graphics g, int spriteID, int charX, int charY) {
+		standSprite = lookUp.get(0);
+		try {
+			g.drawImage(lookUp.get(spriteID), charX, charY, null);
+		} catch (IndexOutOfBoundsException e) {
+			LOGGER.severe("No sprite with ID " + spriteID);
+
+		}
+	}
+
+	public void drawLast(Graphics g, int charX, int charY) {
+		g.drawImage(standSprite, charX, charY, null);
 	}
 }

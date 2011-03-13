@@ -21,7 +21,7 @@ public class Hero {
 	private TileMap map;
 	private MapCoordinates target;
 	private MapCoordinates position;
-	private int walkingTime = 600;
+	private int walkingTime = 1120;
 	private long startTime;
 	private List<BufferedImage> lookDown;
 	private List<BufferedImage> lookLeft;
@@ -29,6 +29,10 @@ public class Hero {
 	private List<BufferedImage> lookUp;
 	private BufferedImage lookingDirection;
 	private int tileSize;
+	private int distanceOldX;
+	private int distanceOldY;
+	private int xRequest = 0;
+	private int yRequest = 0;
 
 	public Hero(Charset charset, TileMap map, MapCoordinates position) {
 		this.charset = charset;
@@ -52,39 +56,39 @@ public class Hero {
 	 */
 	public void drawHero(Graphics g, int horResolution, int vertResolution) {
 
-		int distanceOldX = calculateDistanceToStart(position.getX(), target.getX(), walkingTime);
-		int distanceOldY = calculateDistanceToStart(position.getY(), target.getY(), walkingTime);
+		distanceOldX = calculateDistanceToStart(position.getX(), target.getX());
+		distanceOldY = calculateDistanceToStart(position.getY(), target.getY());
 
-		int charX = calculateNewCharX(distanceOldX, horResolution);
+		int heroX = calculateNewHeroX(distanceOldX, horResolution);
 		int mapX = calculateNewMapX(distanceOldX, horResolution);
-		int charY = calculateNewCharY(distanceOldY, vertResolution);
+		int heroY = calculateNewHeroY(distanceOldY, vertResolution);
 		int mapY = calculateNewMapY(distanceOldY, vertResolution);
 
+		map.drawMap(g, mapX, mapY, horResolution, vertResolution);
+
+		// BufferedImage displayedSprite = getAnimationSprite(distanceOldX,
+		// distanceOldY);
+
+		LOGGER.finer("Map: (" + mapX + '|' + mapY + ") Hero: (" + heroX + '|' + heroY + ')');
+		drawSprite(g, heroX, heroY, distanceOldX, distanceOldY);
+		// g.drawImage(displayedSprite, heroX, heroY, null);
 		setToTargetIfReached(distanceOldX, distanceOldY);
 
-		BufferedImage displayedSprite = getAnimationSprite(distanceOldX, distanceOldY);
-
-		LOGGER.finer("Map: (" + mapX + '|' + mapY + ") Hero: (" + charX + '|' + charY + ')');
-
-		map.drawMap(g, mapX, mapY, horResolution, vertResolution);
-		g.drawImage(displayedSprite, charX, charY, null);
 	}
 
-	private BufferedImage getAnimationSprite(int distanceOldXPosition, int distanceOldYPosition) {
+	private BufferedImage getAnimationSprite(int distanceOldX, int distanceOldY) {
 		int spriteID;
 		BufferedImage displayedSprite = null;
 
 		if (position.xGreaterThan(target)) {
-			spriteID = (Math.abs(distanceOldXPosition) * lookLeft.size() + ((tileSize / lookLeft.size() * 2)))
-					/ tileSize;
+			spriteID = (Math.abs(distanceOldX) * lookLeft.size() + ((tileSize / lookLeft.size() * 2))) / tileSize;
 			if (spriteID >= lookLeft.size()) {
 				spriteID = 0;
 			}
 			lookingDirection = lookLeft.get(0);
 			displayedSprite = lookLeft.get(spriteID);
 		} else if (position.xLessThan(target)) {
-			spriteID = (Math.abs(distanceOldXPosition) * lookRight.size() + ((tileSize / lookRight.size() * 2)))
-					/ tileSize;
+			spriteID = (Math.abs(distanceOldX) * lookRight.size() + ((tileSize / lookRight.size() * 2))) / tileSize;
 			if (spriteID >= lookRight.size()) {
 				spriteID = 0;
 			}
@@ -93,15 +97,14 @@ public class Hero {
 		}
 
 		if (position.yGreaterThan(target)) {
-			spriteID = (Math.abs(distanceOldYPosition) * lookUp.size() + ((tileSize / lookUp.size() * 2))) / tileSize;
+			spriteID = (Math.abs(distanceOldY) * lookUp.size() + ((tileSize / lookUp.size() * 2))) / tileSize;
 			if (spriteID >= lookUp.size()) {
 				spriteID = 0;
 			}
 			lookingDirection = lookUp.get(0);
 			displayedSprite = lookUp.get(spriteID);
 		} else if (position.yLessThan(target)) {
-			spriteID = (Math.abs(distanceOldYPosition) * lookDown.size() + ((tileSize / lookDown.size() * 2)))
-					/ tileSize;
+			spriteID = (Math.abs(distanceOldY) * lookDown.size() + ((tileSize / lookDown.size() * 2))) / tileSize;
 			if (spriteID >= lookDown.size()) {
 				spriteID = 0;
 			}
@@ -112,15 +115,58 @@ public class Hero {
 		if (displayedSprite == null) {
 			displayedSprite = lookingDirection;
 		}
-
 		return displayedSprite;
+	}
+
+	private void drawSprite(Graphics g, int heroX, int heroY, int distanceOldX, int distanceOldY) {
+		int spriteID;
+		if (position.equals(target)) {
+			charset.drawLast(g, heroX, heroY);
+		} else if (position.xGreaterThan(target)) {
+			spriteID = (Math.abs(distanceOldX) * (lookLeft.size() - 1)) / tileSize + 1;
+			if (spriteID >= lookLeft.size()) {
+				spriteID = lookLeft.size() - 1;
+			}
+			charset.drawLeftSprite(g, spriteID, heroX, heroY);
+		} else if (position.xLessThan(target)) {
+			spriteID = (Math.abs(distanceOldX) * (lookRight.size() - 1)) / tileSize + 1;
+			if (spriteID >= lookRight.size()) {
+				spriteID = lookRight.size() - 1;
+			}
+			charset.drawRightSprite(g, spriteID, heroX, heroY);
+		} else if (position.yGreaterThan(target)) {
+			spriteID = (Math.abs(distanceOldY) * (lookUp.size() - 1)) / tileSize + 1;
+			if (spriteID >= lookUp.size()) {
+				spriteID = lookUp.size() - 1;
+			}
+			charset.drawUpSprite(g, spriteID, heroX, heroY);
+		} else if (position.yLessThan(target)) {
+			spriteID = (Math.abs(distanceOldY) * (lookDown.size() - 1)) / tileSize + 1;
+			if (spriteID >= lookDown.size()) {
+				spriteID = lookDown.size() - 1;
+			}
+			charset.drawDownSprite(g, spriteID, heroX, heroY);
+		} else {
+			LOGGER.severe("This should be impossible to reach");
+		}
 	}
 
 	private void setToTargetIfReached(int distanceOldX, int distanceOldY) {
 		if ((distanceOldX >= tileSize || distanceOldX <= (-1) * tileSize)
 				|| (distanceOldY >= tileSize || distanceOldY <= (-1) * tileSize)) {
 			position = target;
+
+			// Sets new position if position change was requested while walking
+			if (xRequest != 0 || yRequest != 0) {
+				int newX = position.getX() + xRequest;
+				int newY = position.getY() + yRequest;
+				target = map.getLegitCoordinates(newX, newY);
+				startTime = System.currentTimeMillis();
+				xRequest = 0;
+				yRequest = 0;
+			}
 		}
+
 	}
 
 	private int calculateMilliSecondsForNewPixel() {
@@ -135,7 +181,7 @@ public class Hero {
 		return milliSecondsPerPixel;
 	}
 
-	private int calculateDistanceToStart(int oldValue, int newValue, int walkingTime) {
+	private int calculateDistanceToStart(int oldValue, int newValue) {
 		int milliSecondsPerPixel = calculateMilliSecondsForNewPixel();
 		long timeElapsed = System.currentTimeMillis() - startTime;
 		int distance;
@@ -177,24 +223,24 @@ public class Hero {
 		return mapX;
 	}
 
-	private int calculateNewCharX(int distance, int horResolution) {
-		int charX = position.xToPixel(tileSize);
+	private int calculateNewHeroX(int distance, int horResolution) {
+		int heroX = position.xToPixel(tileSize);
 		int heroSpriteMapXPosition = position.xToPixel(tileSize) + distance + charset.getSpriteWidth() / 2;
 
 		if (map.isLeftBorderVisible(heroSpriteMapXPosition, horResolution)) {
 			if (!position.xEquals(target)) {
-				charX += distance;
+				heroX += distance;
 			}
 		} else if (map.isRightBorderVisible(heroSpriteMapXPosition, horResolution)) {
-			charX = charX + horResolution - map.getMapWidthInPixel();
+			heroX = heroX + horResolution - map.getMapWidthInPixel();
 
 			if (!position.xEquals(target)) {
-				charX += distance;
+				heroX += distance;
 			}
 		} else {
-			charX = horResolution / 2 - charset.getSpriteWidth() / 2;
+			heroX = horResolution / 2 - charset.getSpriteWidth() / 2;
 		}
-		return charX;
+		return heroX;
 	}
 
 	private int calculateNewMapY(int distance, int vertResolution) {
@@ -220,28 +266,27 @@ public class Hero {
 		return mapY;
 	}
 
-	private int calculateNewCharY(int distance, int vertResolution) {
-		int charY = position.yToPixel(tileSize);
+	private int calculateNewHeroY(int distance, int vertResolution) {
+		int heroY = position.yToPixel(tileSize);
 		int heroSpriteMapYPosition = position.yToPixel(tileSize) + distance + charset.getSpriteHeight() / 2
 				- charset.getSpriteHeight() + tileSize;
 
 		if (map.isUpperBorderVisible(heroSpriteMapYPosition, vertResolution)) {
-			charY = charY - charset.getSpriteHeight() + tileSize;
+			heroY = heroY - charset.getSpriteHeight() + tileSize;
 			if (!position.yEquals(target)) {
-				charY += distance;
+				heroY += distance;
 			}
 		} else if (map.isLowerBorderVisible(heroSpriteMapYPosition, vertResolution)) {
-			charY = charY + vertResolution - map.getMapWidthInPixel();
-			charY = charY - charset.getSpriteHeight() + tileSize;
+			heroY = heroY + vertResolution - map.getMapWidthInPixel();
+			heroY = heroY - charset.getSpriteHeight() + tileSize;
 
 			if (!position.yEquals(target)) {
-				charY += distance;
+				heroY += distance;
 			}
 		} else {
-			charY = vertResolution / 2 - charset.getSpriteHeight() / 2;
-
+			heroY = vertResolution / 2 - charset.getSpriteHeight() / 2;
 		}
-		return charY;
+		return heroY;
 	}
 
 	public void walk(int x, int y) {
@@ -250,6 +295,10 @@ public class Hero {
 			int newY = position.getY() + y;
 			target = map.getLegitCoordinates(newX, newY);
 			startTime = System.currentTimeMillis();
+		} else if (Math.abs(distanceOldX) + Math.abs(distanceOldX) / 5 > tileSize
+				|| Math.abs(distanceOldY) + Math.abs(distanceOldY) / 5 > tileSize) {
+			xRequest = x;
+			yRequest = y;
 		}
 	}
 }
