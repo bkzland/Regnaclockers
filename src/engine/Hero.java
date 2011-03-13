@@ -76,48 +76,6 @@ public class Hero {
 
 	}
 
-	private BufferedImage getAnimationSprite(int distanceOldX, int distanceOldY) {
-		int spriteID;
-		BufferedImage displayedSprite = null;
-
-		if (position.xGreaterThan(target)) {
-			spriteID = (Math.abs(distanceOldX) * lookLeft.size() + ((tileSize / lookLeft.size() * 2))) / tileSize;
-			if (spriteID >= lookLeft.size()) {
-				spriteID = 0;
-			}
-			lookingDirection = lookLeft.get(0);
-			displayedSprite = lookLeft.get(spriteID);
-		} else if (position.xLessThan(target)) {
-			spriteID = (Math.abs(distanceOldX) * lookRight.size() + ((tileSize / lookRight.size() * 2))) / tileSize;
-			if (spriteID >= lookRight.size()) {
-				spriteID = 0;
-			}
-			lookingDirection = lookRight.get(0);
-			displayedSprite = lookRight.get(spriteID);
-		}
-
-		if (position.yGreaterThan(target)) {
-			spriteID = (Math.abs(distanceOldY) * lookUp.size() + ((tileSize / lookUp.size() * 2))) / tileSize;
-			if (spriteID >= lookUp.size()) {
-				spriteID = 0;
-			}
-			lookingDirection = lookUp.get(0);
-			displayedSprite = lookUp.get(spriteID);
-		} else if (position.yLessThan(target)) {
-			spriteID = (Math.abs(distanceOldY) * lookDown.size() + ((tileSize / lookDown.size() * 2))) / tileSize;
-			if (spriteID >= lookDown.size()) {
-				spriteID = 0;
-			}
-			lookingDirection = lookDown.get(0);
-			displayedSprite = lookDown.get(spriteID);
-		}
-
-		if (displayedSprite == null) {
-			displayedSprite = lookingDirection;
-		}
-		return displayedSprite;
-	}
-
 	private void drawSprite(Graphics g, int heroX, int heroY, int distanceOldX, int distanceOldY) {
 		int spriteID;
 		if (position.equals(target)) {
