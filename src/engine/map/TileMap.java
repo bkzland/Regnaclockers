@@ -3,8 +3,9 @@ package engine.map;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 import java.util.logging.Logger;
 
 import engine.event.Event;
@@ -15,11 +16,11 @@ import engine.sprite.Tileset;
  * 
  * @author regnaclockers
  */
-public class Map {
-	private final static Logger LOGGER = Logger.getLogger(engine.map.Map.class.getName());
+public class TileMap {
+	private final static Logger LOGGER = Logger.getLogger(engine.map.TileMap.class.getName());
 
-	private HashMap<MapCoordinates, Integer> mapGrid = new HashMap<MapCoordinates, Integer>();
-	private ArrayList<Event> events;
+	private Map<MapCoordinates, Integer> mapGrid;
+	private List<Event> events;
 	private BufferedImage imageOfWholeMap;
 	private int mapWidthInTiles;
 	private int mapHeightInTiles;
@@ -40,13 +41,14 @@ public class Map {
 	 * @param tileset
 	 *            the Tileset object it should use.
 	 */
-	public Map(String mapName, int[][] mapGrid, Tileset tileset, ArrayList<Event> events) {
+	public TileMap(String mapName, int[][] mapGrid, Tileset tileset, List<Event> events) {
 		this.mapName = mapName;
 		this.mapWidthInTiles = mapGrid.length;
 		this.mapHeightInTiles = mapGrid[0].length;
 		tileSize = tileset.getTileSize();
 		mapWidthInPixel = mapWidthInTiles * tileSize;
 		mapHeightInPixel = mapHeightInTiles * tileSize;
+		this.mapGrid = new HashMap<MapCoordinates, Integer>();
 		for (int x = 0, width = mapWidthInTiles; x < width; x++) {
 			for (int y = 0, height = mapHeightInTiles; y < height; y++) {
 				this.mapGrid.put(new MapCoordinates(x, y), mapGrid[x][y]);
@@ -73,8 +75,8 @@ public class Map {
 	 * @param tileset
 	 *            the Tileset object it should use.
 	 */
-	public Map(String mapName, HashMap<MapCoordinates, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles,
-			Tileset tileset, ArrayList<Event> events) {
+	public TileMap(String mapName, Map<MapCoordinates, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles,
+			Tileset tileset, List<Event> events) {
 		this.mapName = mapName;
 		this.mapGrid = mapGrid;
 		this.mapWidthInTiles = mapWidthInTiles;
@@ -92,18 +94,18 @@ public class Map {
 	 * draws a part of the map. It creates a rectangle around (x|y).
 	 * 
 	 * @param g
-	 * @param charMapPositionXInPixel
+	 * @param heroXInPixel
 	 *            players position on x-axis
-	 * @param charMapPositionYInPixel
+	 * @param heroYInPixel
 	 *            players position on y-axis.
 	 * @param horResolution
 	 * @param vertResolution
 	 */
-	public void drawMap(Graphics g, int charMapPositionXInPixel, int charMapPositionYInPixel, int horResolution,
+	public void drawMap(Graphics g, int heroXInPixel, int heroYInPixel, int horResolution,
 			int vertResolution) {
 
-		int mapXInPixel = charMapPositionXInPixel - horResolution / 2;
-		int mapYInPixel = charMapPositionYInPixel - vertResolution / 2;
+		int mapXInPixel = heroXInPixel - horResolution / 2;
+		int mapYInPixel = heroYInPixel - vertResolution / 2;
 
 		// prevents that the map moves if there's no more map to show
 		// only effects the upper and left side
@@ -155,11 +157,7 @@ public class Map {
 	 * @return
 	 */
 	public boolean isLeftBorderVisible(int xPosition, int horResolution) {
-		if (xPosition < horResolution / 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return xPosition < horResolution / 2;
 	}
 
 	/**
@@ -170,27 +168,15 @@ public class Map {
 	 * @return
 	 */
 	public boolean isUpperBorderVisible(int yPosition, int vertResolution) {
-		if (yPosition < vertResolution / 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return yPosition < vertResolution / 2;
 	}
 
 	public boolean isXCoordinateInMapEnd(MapCoordinates position, int horResolution) {
-		if (position.xToPixel(tileSize) >= mapWidthInPixel - horResolution / 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return position.xToPixel(tileSize) >= mapWidthInPixel - horResolution / 2;
 	}
 
 	public boolean isYCoordinateInMapEnd(MapCoordinates position, int vertResolution) {
-		if (position.yToPixel(tileSize) >= mapHeightInPixel - vertResolution / 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return position.yToPixel(tileSize) >= mapHeightInPixel - vertResolution / 2;
 	}
 
 	/**
@@ -201,11 +187,7 @@ public class Map {
 	 * @return
 	 */
 	public boolean isRightBorderVisible(int xPosition, int horResolution) {
-		if (xPosition > mapWidthInPixel - horResolution / 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return xPosition > mapWidthInPixel - horResolution / 2;
 	}
 
 	/**
@@ -216,11 +198,7 @@ public class Map {
 	 * @return
 	 */
 	public boolean isLowerBorderVisible(int xPosition, int vertResolution) {
-		if (xPosition > mapHeightInPixel - vertResolution / 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return xPosition > mapHeightInPixel - vertResolution / 2;
 	}
 
 	/**

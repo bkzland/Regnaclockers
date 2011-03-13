@@ -41,7 +41,7 @@ public class Timer implements Fullfillable, Runnable {
 
 	@Override
 	public void run() {
-		while (timeIsUp == false) {
+		while (!timeIsUp) {
 			try {
 				Thread.sleep(1000 / TICKS_PER_SECOND);
 			} catch (InterruptedException e) {

@@ -2,19 +2,19 @@ package engine.event;
 
 import java.awt.Graphics;
 import engine.map.MapCoordinates;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Event {
-	private final static Logger LOGGER = Logger.getLogger(engine.event.Event.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.event.Event.class.getName());
 
-	private ArrayList<Page> pages;
+	private List<Page> pages;
 	private Page currentPage;
 	private MapCoordinates position;
 	private String eventName;
 	private int tileSize = 128;
 
-	public Event(String eventName, ArrayList<Page> pages, MapCoordinates position) {
+	public Event(final String eventName, final List<Page> pages, final MapCoordinates position) {
 
 		this.eventName = eventName;
 		this.pages = pages;
@@ -26,7 +26,7 @@ public class Event {
 		}
 
 		LOGGER.info("Event \"" + this.toString() + "\" created on (" + position.getX() + '|' + position.getY()
-				+ ") with " + pages.size() + ((pages.size() != 1) ? " Pages" : " Page"));
+				+ ") with " + pages.size() + ((pages.size() == 1) ? " Page" : " Pages"));
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class Event {
 	 * @param horResolution
 	 * @param vertResolution
 	 */
-	public void drawEvent(Graphics g, int mapXInPixel, int mapYInPixel, int horResolution, int vertResolution) {
+	public final void drawEvent(final Graphics g, final int mapXInPixel, final int mapYInPixel, final int horResolution, final int vertResolution) {
 
 		if (mapXInPixel < position.xToPixel(tileSize) + tileSize
 				&& mapXInPixel + horResolution > position.xToPixel(tileSize)
@@ -55,7 +55,7 @@ public class Event {
 	 * It will make the highest page which has a fullfilled condition to
 	 * currentPage.
 	 */
-	public void changePageIfConditionTrue() {
+	public final void changePageIfConditionTrue() {
 		Page tempPage = currentPage;
 		for (int i = 0, length = pages.size(); i < length; i++) {
 
@@ -70,7 +70,7 @@ public class Event {
 	}
 
 	@Override
-	public String toString() {
+    public final String toString() {
 		return eventName;
 	}
 }

@@ -18,6 +18,7 @@ public class GameWindow extends JFrame {
 	 * creates a GameWindow object.
 	 */
 	public GameWindow() {
+		super();
 		setTitle("Regnaclock");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		requestFocus();

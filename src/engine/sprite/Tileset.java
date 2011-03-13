@@ -7,10 +7,10 @@ import java.util.logging.Logger;
  * 
  * @author regnaclockers
  */
-public class Tileset extends ImageSet {
+public class Tileset extends AbstractImageSet {
 	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Tileset.class.getName());
 
-	private int tileSize;
+	private final int tileSize;
 
 	/**
 	 * creates a Tileset object.

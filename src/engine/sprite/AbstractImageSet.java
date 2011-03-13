@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
@@ -14,9 +15,9 @@ import javax.imageio.ImageIO;
  * 
  * @author regnaclockers
  */
-public abstract class ImageSet {
-	private final static Logger LOGGER = Logger.getLogger(engine.sprite.ImageSet.class.getName());
-	protected ArrayList<BufferedImage> sprites = new ArrayList<BufferedImage>();
+public abstract class AbstractImageSet {
+	private final static Logger LOGGER = Logger.getLogger(engine.sprite.AbstractImageSet.class.getName());
+	protected List<BufferedImage> sprites = new ArrayList<BufferedImage>();
 	protected BufferedImage spriteset;
 	private int spriteWidth;
 	private int spriteHeight;
@@ -32,7 +33,7 @@ public abstract class ImageSet {
 	 * @param spriteHeight
 	 *            Height of the subimages.
 	 */
-	public ImageSet(String imagePath, int spriteWidth, int spriteHeight) {
+	public AbstractImageSet(String imagePath, int spriteWidth, int spriteHeight) {
 		try {
 			spriteset = ImageIO.read(new File(imagePath));
 		} catch (IOException e) {
@@ -54,7 +55,7 @@ public abstract class ImageSet {
 	 * @param spriteSize
 	 *            Height and Width of the subimages.
 	 */
-	public ImageSet(String imagePath, int spriteSize) {
+	public AbstractImageSet(String imagePath, int spriteSize) {
 		this(imagePath, spriteSize, spriteSize);
 	}
 
@@ -81,8 +82,7 @@ public abstract class ImageSet {
 	 * @return spriteAmount
 	 */
 	public int length() {
-		int spriteAmount = sprites.size();
-		return spriteAmount;
+		return sprites.size();
 	}
 
 	/**
@@ -119,7 +119,7 @@ public abstract class ImageSet {
 
 		} catch (IndexOutOfBoundsException e) {
 			LOGGER.severe("Sprite ID " + spriteID + " does not exist");
-			sprite = null;
+			sprite = sprites.get(0);
 		}
 
 		LOGGER.exiting(this.getClass().getName(), "getImage", sprite);

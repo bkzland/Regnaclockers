@@ -20,12 +20,13 @@ public class GameMenu extends JMenuBar {
 	private JCheckBoxMenuItem showFps = new JCheckBoxMenuItem("Show FPS");
 
 	public GameMenu(GamePanel panel) {
+		super();
 		this.panel = panel;
 		
 		ActionListener quitListener = new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				quit();		
+				quitGame();		
 			}
 		};
 
@@ -44,7 +45,7 @@ public class GameMenu extends JMenuBar {
 		add(options);
 	}
 
-	public void quit() {
+	public void quitGame() {
 		System.exit(0);
 	}
 

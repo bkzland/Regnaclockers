@@ -117,7 +117,6 @@ public class ArchiveReader {
 		} catch (IOException e) {
 			LOGGER.severe("Cannot close input stream");
 		}
-		String content = builder.toString();
-		return content;
+		return builder.toString();
 	}
 }

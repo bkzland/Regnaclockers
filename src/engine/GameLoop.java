@@ -2,21 +2,24 @@ package engine;
 
 import java.awt.Graphics;
 
-import engine.map.Map;
+import engine.map.TileMap;
 import engine.map.MapCoordinates;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
-import engine.event.fullfillable.*;
 import engine.control.KeyboardControl;
 import engine.event.Event;
 import engine.event.Page;
+import engine.event.fullfillable.Fullfillable;
+import engine.event.fullfillable.Switch;
+import engine.event.fullfillable.Timer;
 import engine.sprite.Charset;
 import engine.sprite.Tileset;
 
 public class GameLoop implements Runnable {
 	private final static Logger LOGGER = Logger.getLogger(engine.GameLoop.class.getName());
-	
+
 	private static final int TICKS_PER_SECOND = 25;
 	private boolean isGameLoopOn = true;
 
@@ -29,20 +32,20 @@ public class GameLoop implements Runnable {
 			{ 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 },
 			{ 11, 11, 11, 12, 18, 22, 22, 22, 22, 22, 22 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 18, 18 } };
 
-	private ArrayList<Fullfillable> conditions = new ArrayList<Fullfillable>();
-	private ArrayList<Fullfillable> conditions2 = new ArrayList<Fullfillable>();
+	private List<Fullfillable> conditions = new ArrayList<Fullfillable>();
+	private List<Fullfillable> conditions2 = new ArrayList<Fullfillable>();
 
 	private Page page;
 	private Page page2;
-	private ArrayList<Page> pages = new ArrayList<Page>();
+	private List<Page> pages = new ArrayList<Page>();
 
 	private Event event;
 
-	private Map map;
+	private TileMap map;
 	private Charset charset;
 	private Hero hero;
 
-	KeyboardControl key;
+	private KeyboardControl key;
 
 	public GameLoop(KeyboardControl key) {
 		this.key = key;
@@ -61,7 +64,7 @@ public class GameLoop implements Runnable {
 		ArrayList<Event> events = new ArrayList<Event>();
 		events.add(event);
 		charset = new Charset("Regnaclock_Char2.png", 128, 256);
-		map = new Map("Map", grid, tileset, events);
+		map = new TileMap("Map", grid, tileset, events);
 		hero = new Hero(charset, map, new MapCoordinates(2, 2));
 	}
 

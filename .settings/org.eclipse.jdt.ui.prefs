@@ -1,4 +1,4 @@
-#Sat Mar 12 17:04:29 CET 2011
+#Sun Mar 13 06:57:10 CET 2011
 cleanup.add_default_serial_version_id=true
 cleanup.add_generated_serial_version_id=false
 cleanup.add_missing_annotations=true
@@ -52,5 +52,4 @@ cleanup.use_this_for_non_static_method_access_only_if_necessary=true
 cleanup_profile=_eclipse-cs Regna
 cleanup_settings_version=2
 eclipse.preferences.version=1
-formatter_profile=_eclipse-cs Regna
 formatter_settings_version=11

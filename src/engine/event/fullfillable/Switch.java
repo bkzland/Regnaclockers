@@ -28,11 +28,11 @@ public class Switch implements Fullfillable {
 	}
 
 	public void turnOn() {
-		if (!isOn) {
+		if (isOn) {
+			LOGGER.warning("Switch already on");
+		} else {
 			isOn = true;
 			LOGGER.info("Switch turned on");
-		} else {
-			LOGGER.warning("Switch already on");
 		}
 	}
 

@@ -11,11 +11,12 @@ import java.util.logging.Logger;
 public class MapCoordinates {
 	private final static Logger LOGGER = Logger.getLogger(engine.map.MapCoordinates.class.getName());
 
-	private int x;
-	private int y;
+	private final int x;
+	private final int y;
 
 	/**
-	 * creates MapCoordinates with x and y. Only positive integers are accepted.
+	 * creates MapCoordinates with x and y. Only positive integers or zero are
+	 * accepted.
 	 * 
 	 * @param x
 	 *            the x coordinate
@@ -28,8 +29,10 @@ public class MapCoordinates {
 			this.y = y;
 		} else {
 			LOGGER.severe("x and y must be >= 0");
+			this.x = 0;
+			this.y = 0;
 		}
-		LOGGER.finer("MapCoordinates " + toString() + " created");
+		LOGGER.finer("MapCoordinates (" + x + '|' + y + ") created");
 	}
 
 	/**
@@ -68,6 +71,30 @@ public class MapCoordinates {
 	 */
 	public int yToPixel(int tileHeight) {
 		return tileHeight * y;
+	}
+
+	public boolean xGreaterThan(MapCoordinates coords) {
+		return x > coords.getX();
+	}
+
+	public boolean yGreaterThan(MapCoordinates coords) {
+		return y > coords.getY();
+	}
+
+	public boolean xLessThan(MapCoordinates coords) {
+		return x < coords.getX();
+	}
+
+	public boolean yLessThan(MapCoordinates coords) {
+		return y < coords.getY();
+	}
+
+	public boolean xEquals(MapCoordinates coords) {
+		return x == coords.getX();
+	}
+
+	public boolean yEquals(MapCoordinates coords) {
+		return y == coords.getY();
 	}
 
 	@Override

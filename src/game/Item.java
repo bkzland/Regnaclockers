@@ -27,8 +27,7 @@ abstract class Item {
 		if (price >= 0) {
 			this.price = price;
 		} else {
-			LOGGER.severe("ERROR: 'price'  of " + name + "was set to less than 0 (" + price + ").");
-			price = 0;
+			LOGGER.severe("Price of " + name + "was set to less than 0 (" + price + ").");
 		}
 	}
 

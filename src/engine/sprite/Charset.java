@@ -2,6 +2,7 @@ package engine.sprite;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -10,14 +11,14 @@ import java.util.logging.Logger;
  * 
  * @author regnaclockers
  */
-public class Charset extends ImageSet {
+public class Charset extends AbstractImageSet {
 	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Charset.class.getName());
 
 	int animationSpriteAmount;
-	private ArrayList<BufferedImage> lookDown = new ArrayList<BufferedImage>();
-	private ArrayList<BufferedImage> lookLeft = new ArrayList<BufferedImage>();
-	private ArrayList<BufferedImage> lookRight = new ArrayList<BufferedImage>();
-	private ArrayList<BufferedImage> lookUp = new ArrayList<BufferedImage>();
+	private List<BufferedImage> lookDown = new ArrayList<BufferedImage>();
+	private List<BufferedImage> lookLeft = new ArrayList<BufferedImage>();
+	private List<BufferedImage> lookRight = new ArrayList<BufferedImage>();
+	private List<BufferedImage> lookUp = new ArrayList<BufferedImage>();
 
 	/**
 	 * creates a Charset Object.
@@ -44,7 +45,7 @@ public class Charset extends ImageSet {
 	 * 
 	 * @return lookDown
 	 */
-	public ArrayList<BufferedImage> getLookDownSprites() {
+	public List<BufferedImage> getLookDownSprites() {
 		return lookDown;
 	}
 
@@ -54,7 +55,7 @@ public class Charset extends ImageSet {
 	 * 
 	 * @return lookLeft
 	 */
-	public ArrayList<BufferedImage> getLookLeftSprites() {
+	public List<BufferedImage> getLookLeftSprites() {
 		return lookLeft;
 	}
 
@@ -64,7 +65,7 @@ public class Charset extends ImageSet {
 	 * 
 	 * @return lookRight
 	 */
-	public ArrayList<BufferedImage> getLookRightSprites() {
+	public List<BufferedImage> getLookRightSprites() {
 		return lookRight;
 	}
 
@@ -74,7 +75,7 @@ public class Charset extends ImageSet {
 	 * 
 	 * @return lookUp
 	 */
-	public ArrayList<BufferedImage> getLookUpSprites() {
+	public List<BufferedImage> getLookUpSprites() {
 		return lookUp;
 	}
 
@@ -94,8 +95,8 @@ public class Charset extends ImageSet {
 	 *            TileID to stop.
 	 * @return spriteArray
 	 */
-	private ArrayList<BufferedImage> getSprites(int start, int end) {
-		ArrayList<BufferedImage> spriteArray = new ArrayList<BufferedImage>();
+	private List<BufferedImage> getSprites(int start, int end) {
+		List<BufferedImage> spriteArray = new ArrayList<BufferedImage>();
 		for (int i = 0; start + i <= end; i++) {
 			spriteArray.add(getImage(start + i));
 		}
