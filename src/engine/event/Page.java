@@ -43,7 +43,7 @@ public class Page {
 	 * 
 	 * @return
 	 */
-	public boolean isAConditionFullfilled() {
+	public boolean isSomeConditionFullfilled() {
 		for (int i = 0, length = conditions.size(); i < length; i++) {
 			if (conditions.get(i).isFullfilled()) {
 				return true;

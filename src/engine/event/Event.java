@@ -9,7 +9,7 @@ public class Event {
 	private static final Logger LOGGER = Logger.getLogger(engine.event.Event.class.getName());
 
 	private List<Page> pages;
-	private Page currentPage;
+	private Page activatedPage;
 	private MapCoordinates position;
 	private String eventName;
 	private int tileSize = 128;
@@ -20,7 +20,7 @@ public class Event {
 		this.pages = pages;
 		this.position = position;
 		try {
-			currentPage = this.pages.get(0); // first page is default
+			activatedPage = this.pages.get(0); // first page is default
 		} catch (IndexOutOfBoundsException e) {
 			LOGGER.severe("Event \"" + this.toString() + "\"  was created with 0 Pages");
 		}
@@ -45,7 +45,7 @@ public class Event {
 				&& mapXInPixel + horResolution > position.xToPixel(tileSize)
 				&& mapYInPixel < position.yToPixel(tileSize) + tileSize
 				&& mapYInPixel + vertResolution > position.yToPixel(tileSize)) {
-			currentPage.drawSprite(g, position.xToPixel(tileSize) - mapXInPixel, position.yToPixel(tileSize)
+			activatedPage.drawSprite(g, position.xToPixel(tileSize) - mapXInPixel, position.yToPixel(tileSize)
 					- mapYInPixel);
 		}
 
@@ -56,14 +56,14 @@ public class Event {
 	 * currentPage.
 	 */
 	public final void changePageIfConditionTrue() {
-		Page tempPage = currentPage;
+		Page tempPage = activatedPage;
 		for (int i = 0, length = pages.size(); i < length; i++) {
 
-			if (pages.get(i).isAConditionFullfilled()) {
+			if (pages.get(i).isSomeConditionFullfilled()) {
 				tempPage = pages.get(i);
 			}
-			if (currentPage != tempPage) {
-				currentPage = tempPage;
+			if (activatedPage != tempPage) {
+				activatedPage = tempPage;
 				LOGGER.info("\"" + this.toString() + "\"" + " changed Page");
 			}
 		}

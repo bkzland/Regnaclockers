@@ -66,12 +66,8 @@ public class Hero {
 
 		map.drawMap(g, mapX, mapY, horResolution, vertResolution);
 
-		// BufferedImage displayedSprite = getAnimationSprite(distanceOldX,
-		// distanceOldY);
-
 		LOGGER.finer("Map: (" + mapX + '|' + mapY + ") Hero: (" + heroX + '|' + heroY + ')');
 		drawSprite(g, heroX, heroY, distanceOldX, distanceOldY);
-		// g.drawImage(displayedSprite, heroX, heroY, null);
 		setToTargetIfReached(distanceOldX, distanceOldY);
 
 	}
