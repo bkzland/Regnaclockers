@@ -1,9 +1,14 @@
-package engine.event.fullfillable;
+package engine.map.event.fulfillable;
 
 import java.util.logging.Logger;
 
-public class Timer implements Fullfillable, Runnable {
-	private final static Logger LOGGER = Logger.getLogger(engine.event.fullfillable.Timer.class.getName());
+/**
+ * A timer which will count down until 0.
+ * 
+ * @author regnaclockers
+ */
+public class Timer implements Fulfillable, Runnable {
+	private static final Logger LOGGER = Logger.getLogger(engine.map.event.fulfillable.Timer.class.getName());
 
 	private boolean timeIsUp;
 	private int seconds;
@@ -11,10 +16,24 @@ public class Timer implements Fullfillable, Runnable {
 	private Thread thread = new Thread(this);
 	private static final int TICKS_PER_SECOND = 5;
 
+	/**
+	 * create a new timer.
+	 * 
+	 * @param minutes
+	 *            minutes to start
+	 * @param seconds
+	 *            seconds to start
+	 */
 	public Timer(int minutes, int seconds) {
 		this(60 * minutes + seconds);
 	}
 
+	/**
+	 * create a new timer.
+	 * 
+	 * @param seconds
+	 *            seconds to start
+	 */
 	public Timer(int seconds) {
 		this.seconds = seconds;
 	}
@@ -25,7 +44,7 @@ public class Timer implements Fullfillable, Runnable {
 	 * @return timeIsUp
 	 */
 	@Override
-	public boolean isFullfilled() {
+	public boolean isFulfilled() {
 		return timeIsUp;
 	}
 
@@ -55,20 +74,32 @@ public class Timer implements Fullfillable, Runnable {
 		}
 	}
 
+	/**
+	 * adds additional seconds to the timer.
+	 * 
+	 * @param additionalSeconds
+	 *            seconds to add
+	 */
 	public void addTime(int additionalSeconds) {
 		if (additionalSeconds > 0) {
 			seconds += additionalSeconds;
 		} else {
-			LOGGER.severe("addTime(int) accepts only positive numbers.");
+			LOGGER.severe("Only positive numbers are accepted");
 		}
 
 	}
 
+	/**
+	 * decreases the amount of seconds until timer reaches 0.
+	 * 
+	 * @param lessSeconds
+	 *            seconds to remove
+	 */
 	public void reduceTime(int lessSeconds) {
 		if (lessSeconds > 0) {
 			seconds -= lessSeconds;
 		} else {
-			LOGGER.severe("reduceTime(int) accepts only positive numbers.");
+			LOGGER.severe("Only positive numbers are accepted");
 		}
 	}
 

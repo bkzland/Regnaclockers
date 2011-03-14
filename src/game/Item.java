@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  * @author regnaclockers
  */
 abstract class Item {
-	private final static Logger LOGGER = Logger.getLogger(game.Item.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(game.Item.class.getName());
 
 	private String name;
 	private int price;

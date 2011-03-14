@@ -2,38 +2,44 @@ package engine;
 
 import java.awt.Graphics;
 
-import engine.map.TileMap;
 import engine.map.MapCoordinates;
+import engine.map.TileMap;
+import engine.map.event.Event;
+import engine.map.event.Page;
+import engine.map.event.fulfillable.Fulfillable;
+import engine.map.event.fulfillable.Switch;
+import engine.map.event.fulfillable.Timer;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import engine.control.KeyboardControl;
-import engine.event.Event;
-import engine.event.Page;
-import engine.event.fullfillable.Fullfillable;
-import engine.event.fullfillable.Switch;
-import engine.event.fullfillable.Timer;
 import engine.sprite.Charset;
 import engine.sprite.Tileset;
 
+/**
+ * The game loop updates the game logic multiple times in a second.
+ * 
+ * @author regnaclockers
+ */
 public class GameLoop implements Runnable {
-	private final static Logger LOGGER = Logger.getLogger(engine.GameLoop.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.GameLoop.class.getName());
 
 	private static final int TICKS_PER_SECOND = 25;
 	private boolean isGameLoopOn = true;
 
 	// creating objects for testing
 	private Tileset tileset = new Tileset("dummytileset.png", 128);
-	private int grid[][] = { { 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 },
+	private int[][] grid = { { 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 },
 			{ 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 }, { 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 },
 			{ 11, 12, 12, 12, 18, 22, 18, 18, 18, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 22, 18 },
 			{ 11, 11, 11, 12, 22, 22, 18, 18, 18, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 22, 18 },
 			{ 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 },
 			{ 11, 11, 11, 12, 18, 22, 22, 22, 22, 22, 22 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 18, 18 } };
 
-	private List<Fullfillable> conditions = new ArrayList<Fullfillable>();
-	private List<Fullfillable> conditions2 = new ArrayList<Fullfillable>();
+	private List<Fulfillable> conditions = new ArrayList<Fulfillable>();
+	private List<Fulfillable> conditions2 = new ArrayList<Fulfillable>();
 
 	private Page page;
 	private Page page2;
@@ -47,6 +53,12 @@ public class GameLoop implements Runnable {
 
 	private KeyboardControl key;
 
+	/**
+	 * creates a new game loop.
+	 * 
+	 * @param key
+	 *            the keyboardcontrol
+	 */
 	public GameLoop(KeyboardControl key) {
 		this.key = key;
 
@@ -61,7 +73,7 @@ public class GameLoop implements Runnable {
 		pages.add(page2);
 		event = new Event("TestEvent", pages, new MapCoordinates(2, 1));
 
-		ArrayList<Event> events = new ArrayList<Event>();
+		List<Event> events = new ArrayList<Event>();
 		events.add(event);
 		charset = new Charset("Regnaclock_Char2.png", 128, 256);
 		map = new TileMap("Map", grid, tileset, events);
@@ -101,10 +113,19 @@ public class GameLoop implements Runnable {
 		}
 	}
 
+	/**
+	 * draws the game.
+	 * 
+	 * @param g
+	 *            graphics object
+	 */
 	public void drawGame(Graphics g) {
 		hero.drawHero(g, 1024, 768);
 	}
 
+	/**
+	 * stops the game loop.
+	 */
 	public void stopGameLoopProperly() {
 		isGameLoopOn = false;
 		LOGGER.info("Stopped Game Loop");

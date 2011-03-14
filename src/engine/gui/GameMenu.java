@@ -10,7 +10,9 @@ import javax.swing.JMenuItem;
 
 // TODO Help, Info, Load Game, etc.
 
-@SuppressWarnings("serial")
+/**
+ * the menu with options for the user.
+ */
 public class GameMenu extends JMenuBar {
 	private GamePanel panel;
 	private JMenu file = new JMenu("File");
@@ -19,24 +21,30 @@ public class GameMenu extends JMenuBar {
 	private JMenu options = new JMenu("Options");
 	private JCheckBoxMenuItem showFps = new JCheckBoxMenuItem("Show FPS");
 
+	/**
+	 * creates a new game menu.
+	 * 
+	 * @param panel
+	 *            the panel to use its methods
+	 */
 	public GameMenu(GamePanel panel) {
 		super();
 		this.panel = panel;
-		
-		ActionListener quitListener = new ActionListener() {	
+
+		ActionListener quitListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				quitGame();		
+				quitGame();
 			}
 		};
 
-		ActionListener showFpsListener = new ActionListener() {	
+		ActionListener showFpsListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showFps();		
+				showFps();
 			}
 		};
-		
+
 		quit.addActionListener(quitListener);
 		showFps.addActionListener(showFpsListener);
 		file.add(quit);
@@ -45,10 +53,16 @@ public class GameMenu extends JMenuBar {
 		add(options);
 	}
 
+	/**
+	 * quits the game.
+	 */
 	public void quitGame() {
 		System.exit(0);
 	}
 
+	/**
+	 * triggers the displaying of frames per second.
+	 */
 	public void showFps() {
 		panel.triggerFps();
 	}

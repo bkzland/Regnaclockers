@@ -19,7 +19,7 @@ import engine.control.KeyboardControl;
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable {
-	private final static Logger LOGGER = Logger.getLogger(engine.gui.GamePanel.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.gui.GamePanel.class.getName());
 
 	// for measuring the fps
 	private int fps;
@@ -36,6 +36,9 @@ public class GamePanel extends JPanel implements Runnable {
 	private Thread gameThread = new Thread(loop);
 	private Thread graphicsThread = new Thread(this);
 
+	/**
+	 * creates the game panel and the graphics thread.
+	 */
 	public GamePanel() {
 		super();
 		setPreferredSize(new Dimension(1024, 768));
@@ -52,6 +55,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 	/**
 	 * draws everything.
+	 * 
+	 * @param g
+	 *            graphics object
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -93,6 +99,7 @@ public class GamePanel extends JPanel implements Runnable {
 	 * shows the frames per second in the upper left corner.
 	 * 
 	 * @param g
+	 *            graphics object
 	 */
 	private void showFpsIfOn(Graphics g) {
 		if (isFpsOn) {
@@ -101,6 +108,9 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * turns fps display on and off.
+	 */
 	public void triggerFps() {
 		if (isFpsOn) {
 			isFpsOn = false;
@@ -117,6 +127,9 @@ public class GamePanel extends JPanel implements Runnable {
 		paint(g);
 	}
 
+	/**
+	 *stops the graphics loop.
+	 */
 	public void stopGraphicsLoopProperly() {
 		isGraphicsLoopOn = false;
 		LOGGER.info("Stopped Graphics Loop");

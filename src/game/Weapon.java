@@ -17,8 +17,6 @@ public class Weapon extends Item {
 	 *            price of the weapon.
 	 * @param attack
 	 *            attack value of the weapon.
-	 * @param script
-	 *            script of the weapon.
 	 */
 	public Weapon(String name, int price, int attack) {
 		super(name, price);

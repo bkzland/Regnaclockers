@@ -16,7 +16,7 @@ import javax.swing.JFrame;
  */
 @SuppressWarnings("serial")
 public class GameWindow extends JFrame {
-	private final static Logger LOGGER = Logger.getLogger(engine.gui.GameWindow.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.gui.GameWindow.class.getName());
 
 	private GamePanel panel = new GamePanel();
 	private GameMenu menu = new GameMenu(panel);

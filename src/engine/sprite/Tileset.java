@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  * @author regnaclockers
  */
 public class Tileset extends AbstractImageSet {
-	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Tileset.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.sprite.Tileset.class.getName());
 
 	private final int tileSize;
 

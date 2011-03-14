@@ -15,7 +15,7 @@ import java.util.zip.ZipFile;
  * @author regnaclockers
  */
 public class ArchiveReader {
-	private final static Logger LOGGER = Logger.getLogger(interpreter.ArchiveReader.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(interpreter.ArchiveReader.class.getName());
 
 	private ZipFile gameArchive;
 	private ZipEntry gameInformation;

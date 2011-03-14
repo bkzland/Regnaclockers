@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  * @author regnaclockers
  */
 public class Charset extends AbstractImageSet {
-	private final static Logger LOGGER = Logger.getLogger(engine.sprite.Charset.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.sprite.Charset.class.getName());
 
 	private int animationSpriteAmount;
 	private List<BufferedImage> lookDown = new ArrayList<BufferedImage>();
@@ -31,8 +31,6 @@ public class Charset extends AbstractImageSet {
 	 *            Width of the sprite.
 	 * @param charHeight
 	 *            Height of the sprite.
-	 * @param animationSprites
-	 *            Amount of sprites for animation.
 	 */
 	public Charset(String charsetPath, int charWidth, int charHeight) {
 		super(charsetPath, charWidth, charHeight);
@@ -82,6 +80,9 @@ public class Charset extends AbstractImageSet {
 		return lookUp;
 	}
 
+	/**
+	 * organizes the sprites in lists.
+	 */
 	private void readSprites() {
 		lookDown = getSprites(0, animationSpriteAmount - 1);
 		lookLeft = getSprites(animationSpriteAmount, 2 * animationSpriteAmount - 1);
@@ -106,6 +107,18 @@ public class Charset extends AbstractImageSet {
 		return spriteArray;
 	}
 
+	/**
+	 * draws the requested sprite on (charX|charY) on the panel.
+	 * 
+	 * @param g
+	 *            graphics object
+	 * @param spriteID
+	 *            id of the sprite
+	 * @param charX
+	 *            char x position on JPanel in pixel
+	 * @param charY
+	 *            char y position on JPanel in pixel
+	 */
 	public void drawDownSprite(Graphics g, int spriteID, int charX, int charY) {
 		standSprite = lookDown.get(0);
 		try {
@@ -115,6 +128,18 @@ public class Charset extends AbstractImageSet {
 		}
 	}
 
+	/**
+	 * draws the requested sprite on (charX|charY) on the panel.
+	 * 
+	 * @param g
+	 *            graphics object
+	 * @param spriteID
+	 *            id of the sprite
+	 * @param charX
+	 *            char x position on JPanel in pixel
+	 * @param charY
+	 *            char y position on JPanel in pixel
+	 */
 	public void drawLeftSprite(Graphics g, int spriteID, int charX, int charY) {
 		standSprite = lookLeft.get(0);
 		try {
@@ -125,6 +150,18 @@ public class Charset extends AbstractImageSet {
 		}
 	}
 
+	/**
+	 * draws the requested sprite on (charX|charY) on the panel.
+	 * 
+	 * @param g
+	 *            graphics object
+	 * @param spriteID
+	 *            id of the sprite
+	 * @param charX
+	 *            char x position on JPanel in pixel
+	 * @param charY
+	 *            char y position on JPanel in pixel
+	 */
 	public void drawRightSprite(Graphics g, int spriteID, int charX, int charY) {
 		standSprite = lookRight.get(0);
 		try {
@@ -135,6 +172,18 @@ public class Charset extends AbstractImageSet {
 		}
 	}
 
+	/**
+	 * draws the requested sprite on (charX|charY) on the panel.
+	 * 
+	 * @param g
+	 *            graphics object
+	 * @param spriteID
+	 *            id of the sprite
+	 * @param charX
+	 *            char x position on JPanel in pixel
+	 * @param charY
+	 *            char y position on JPanel in pixel
+	 */
 	public void drawUpSprite(Graphics g, int spriteID, int charX, int charY) {
 		standSprite = lookUp.get(0);
 		try {
@@ -145,6 +194,16 @@ public class Charset extends AbstractImageSet {
 		}
 	}
 
+	/**
+	 * draws the 'stand' sprite depending on the last walking direction.
+	 * 
+	 * @param g
+	 *            graphics object
+	 * @param charX
+	 *            char x position on JPanel in pixel
+	 * @param charY
+	 *            char y position on JPanel in pixel
+	 */
 	public void drawLast(Graphics g, int charX, int charY) {
 		g.drawImage(standSprite, charX, charY, null);
 	}

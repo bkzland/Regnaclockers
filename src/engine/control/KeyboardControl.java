@@ -4,8 +4,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Logger;
 
+/**
+ * listens to keyboard.
+ * 
+ * @author regnaclockers
+ */
 public class KeyboardControl implements KeyListener {
-	private final static Logger LOGGER = Logger.getLogger(engine.control.KeyboardControl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.control.KeyboardControl.class.getName());
 
 	private boolean downPressed;
 	private boolean leftPressed;
@@ -68,22 +73,47 @@ public class KeyboardControl implements KeyListener {
 
 	}
 
+	/**
+	 * returns if down is pressed.
+	 * 
+	 * @return true, if down is pressed
+	 */
 	public boolean isDownPressed() {
 		return downPressed;
 	}
 
+	/**
+	 * returns if left is pressed.
+	 * 
+	 * @return true, if left is pressed
+	 */
 	public boolean isLeftPressed() {
 		return leftPressed;
 	}
 
+	/**
+	 * returns if right is pressed.
+	 * 
+	 * @return true, if right is pressed
+	 */
 	public boolean isRightPressed() {
 		return rightPressed;
 	}
 
+	/**
+	 * returns if up is pressed.
+	 * 
+	 * @return true, if up is pressed
+	 */
 	public boolean isUpPressed() {
 		return upPressed;
 	}
 
+	/**
+	 * returns if a walking key is pressed.
+	 * 
+	 * @return true if a walking key is pressed
+	 */
 	public boolean isWalkKeyPressed() {
 		return downPressed || leftPressed || rightPressed || upPressed;
 	}

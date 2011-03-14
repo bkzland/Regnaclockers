@@ -10,12 +10,12 @@ import engine.map.MapCoordinates;
 import engine.sprite.Charset;
 
 /**
- * The player.
+ * The hero which is controlled by the player.
  * 
  * @author regnaclockers
  */
 public class Hero {
-	private final static Logger LOGGER = Logger.getLogger(engine.Hero.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.Hero.class.getName());
 
 	private Charset charset;
 	private TileMap map;
@@ -27,13 +27,22 @@ public class Hero {
 	private List<BufferedImage> lookLeft;
 	private List<BufferedImage> lookRight;
 	private List<BufferedImage> lookUp;
-	private BufferedImage lookingDirection;
 	private int tileSize;
 	private int distanceOldX;
 	private int distanceOldY;
 	private int xRequest = 0;
 	private int yRequest = 0;
 
+	/**
+	 * creates a new hero. The hero is controlled by the player.
+	 * 
+	 * @param charset
+	 *            the graphical representation of the hero
+	 * @param map
+	 *            the map the hero is on
+	 * @param position
+	 *            the heros position on the map.
+	 */
 	public Hero(Charset charset, TileMap map, MapCoordinates position) {
 		this.charset = charset;
 		this.map = map;
@@ -43,7 +52,6 @@ public class Hero {
 		lookLeft = charset.getLookLeftSprites();
 		lookRight = charset.getLookRightSprites();
 		lookUp = charset.getLookUpSprites();
-		lookingDirection = lookDown.get(0);
 		tileSize = map.getTileSize();
 	}
 
@@ -51,8 +59,11 @@ public class Hero {
 	 * draws the hero.
 	 * 
 	 * @param g
+	 *            graphics object
 	 * @param horResolution
+	 *            width of JPanel
 	 * @param vertResolution
+	 *            height of JPanel
 	 */
 	public void drawHero(Graphics g, int horResolution, int vertResolution) {
 
@@ -65,13 +76,29 @@ public class Hero {
 		int mapY = calculateNewMapY(distanceOldY, vertResolution);
 
 		map.drawMap(g, mapX, mapY, horResolution, vertResolution);
+		drawSprite(g, heroX, heroY, distanceOldX, distanceOldY);
 
 		LOGGER.finer("Map: (" + mapX + '|' + mapY + ") Hero: (" + heroX + '|' + heroY + ')');
-		drawSprite(g, heroX, heroY, distanceOldX, distanceOldY);
+
 		setToTargetIfReached(distanceOldX, distanceOldY);
 
 	}
 
+	/**
+	 * draws the sprite which has to be shown according to the position of the
+	 * hero. This will result in a walking animation.
+	 * 
+	 * @param g
+	 *            graphics object
+	 * @param heroX
+	 *            x position of the hero on the JPanel
+	 * @param heroY
+	 *            y position of the hero on the JPanel
+	 * @param distanceOldX
+	 *            distance to x of the old position
+	 * @param distanceOldY
+	 *            distance to y of the old position
+	 */
 	private void drawSprite(Graphics g, int heroX, int heroY, int distanceOldX, int distanceOldY) {
 		int spriteID;
 		if (position.equals(target)) {
@@ -105,6 +132,15 @@ public class Hero {
 		}
 	}
 
+	/**
+	 * sets the hero position to the target position, except if a new position
+	 * was requested. It will set the new target position then, too.
+	 * 
+	 * @param distanceOldX
+	 *            distance to old x position
+	 * @param distanceOldY
+	 *            distance to old y position
+	 */
 	private void setToTargetIfReached(int distanceOldX, int distanceOldY) {
 		if ((distanceOldX >= tileSize || distanceOldX <= (-1) * tileSize)
 				|| (distanceOldY >= tileSize || distanceOldY <= (-1) * tileSize)) {
@@ -123,6 +159,13 @@ public class Hero {
 
 	}
 
+	/**
+	 * calculates how many milliseconds have to elapse for a new pixel of
+	 * distance. If the new position is diagonal from the old position, it will
+	 * return more milliseconds because it's a greater distance (pythagoras).
+	 * 
+	 * @return milliSecondsPerPixel
+	 */
 	private int calculateMilliSecondsForNewPixel() {
 		int milliSecondsPerPixel;
 		if (position.xEquals(target) || position.yEquals(target)) {
@@ -135,6 +178,15 @@ public class Hero {
 		return milliSecondsPerPixel;
 	}
 
+	/**
+	 * calculates how far away from his old position the hero is.
+	 * 
+	 * @param oldValue
+	 *            old x or y position
+	 * @param newValue
+	 *            new x or y position
+	 * @return distance to old position in pixel
+	 */
 	private int calculateDistanceToStart(int oldValue, int newValue) {
 		int milliSecondsPerPixel = calculateMilliSecondsForNewPixel();
 		long timeElapsed = System.currentTimeMillis() - startTime;
@@ -156,6 +208,16 @@ public class Hero {
 		return distance;
 	}
 
+	/**
+	 * calculates the x position of the map on the JPanel.
+	 * 
+	 * @param distance
+	 *            distance to the old position
+	 * @param horResolution
+	 *            width of the JPanel
+	 * @return mapX
+	 */
+
 	private int calculateNewMapX(int distance, int horResolution) {
 		int mapX = position.xToPixel(tileSize);
 		int heroSpriteMapXPosition = position.xToPixel(tileSize) + distance + charset.getSpriteWidth() / 2;
@@ -164,7 +226,7 @@ public class Hero {
 
 			// without that the old position would cause problems if it's not in
 			// the map end.
-			if (!map.isXCoordinateInMapEnd(position, horResolution)) {
+			if (!map.isXInRightBorder(position, horResolution)) {
 				mapX += tileSize;
 			}
 		} else if (!map.isLeftBorderVisible(heroSpriteMapXPosition, horResolution)) {
@@ -177,6 +239,47 @@ public class Hero {
 		return mapX;
 	}
 
+	/**
+	 * calculates the y position of the map on the JPanel.
+	 * 
+	 * @param distance
+	 *            distance to the old position
+	 * @param vertResolution
+	 *            height of the JPanel
+	 * @return mapY
+	 */
+	private int calculateNewMapY(int distance, int vertResolution) {
+		int mapY = position.yToPixel(tileSize);
+		int heroSpriteMapYPosition = position.yToPixel(tileSize) + distance + charset.getSpriteHeight() / 2
+				- charset.getSpriteHeight() + tileSize;
+
+		if (map.isLowerBorderVisible(heroSpriteMapYPosition, vertResolution)) {
+
+			// without that the old position would cause problems if it's not in
+			// the map end.
+			if (!map.isYInLowerBorder(position, vertResolution)) {
+				mapY += tileSize;
+			}
+		} else if (!map.isUpperBorderVisible(heroSpriteMapYPosition, vertResolution)) {
+			mapY = mapY + charset.getSpriteHeight() / 2 + (tileSize - charset.getSpriteHeight());
+
+			if (!position.yEquals(target)) {
+				mapY += distance;
+			}
+		}
+
+		return mapY;
+	}
+
+	/**
+	 * calculates the x position of the hero sprite on the JPanel.
+	 * 
+	 * @param distance
+	 *            distance to the old position
+	 * @param horResolution
+	 *            width of the JPanel
+	 * @return heroX
+	 */
 	private int calculateNewHeroX(int distance, int horResolution) {
 		int heroX = position.xToPixel(tileSize);
 		int heroSpriteMapXPosition = position.xToPixel(tileSize) + distance + charset.getSpriteWidth() / 2;
@@ -197,29 +300,15 @@ public class Hero {
 		return heroX;
 	}
 
-	private int calculateNewMapY(int distance, int vertResolution) {
-		int mapY = position.yToPixel(tileSize);
-		int heroSpriteMapYPosition = position.yToPixel(tileSize) + distance + charset.getSpriteHeight() / 2
-				- charset.getSpriteHeight() + tileSize;
-
-		if (map.isLowerBorderVisible(heroSpriteMapYPosition, vertResolution)) {
-
-			// without that the old position would cause problems if it's not in
-			// the map end.
-			if (!map.isYCoordinateInMapEnd(position, vertResolution)) {
-				mapY += tileSize;
-			}
-		} else if (!map.isUpperBorderVisible(heroSpriteMapYPosition, vertResolution)) {
-			mapY = mapY + charset.getSpriteHeight() / 2 + (tileSize - charset.getSpriteHeight());
-
-			if (!position.yEquals(target)) {
-				mapY += distance;
-			}
-		}
-
-		return mapY;
-	}
-
+	/**
+	 * calculates the y position of the hero sprite on the JPanel.
+	 * 
+	 * @param distance
+	 *            distance to the old position
+	 * @param vertResolution
+	 *            height of the JPanel
+	 * @return heroY
+	 */
 	private int calculateNewHeroY(int distance, int vertResolution) {
 		int heroY = position.yToPixel(tileSize);
 		int heroSpriteMapYPosition = position.yToPixel(tileSize) + distance + charset.getSpriteHeight() / 2
@@ -243,6 +332,16 @@ public class Hero {
 		return heroY;
 	}
 
+	/**
+	 * makes the hero walk to a new position. It will only react if the hero is
+	 * not moving or the hero is close to its target. Negative values are
+	 * allowed.
+	 * 
+	 * @param x
+	 *            added to the current position
+	 * @param y
+	 *            added to the current position
+	 */
 	public void walk(int x, int y) {
 		if (position.equals(target)) {
 			int newX = position.getX() + x;

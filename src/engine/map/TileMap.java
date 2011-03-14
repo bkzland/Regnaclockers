@@ -4,11 +4,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
-import engine.event.Event;
+import engine.map.event.Event;
 import engine.sprite.Tileset;
 
 /**
@@ -17,7 +17,8 @@ import engine.sprite.Tileset;
  * @author regnaclockers
  */
 public class TileMap {
-	private final static Logger LOGGER = Logger.getLogger(engine.map.TileMap.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(engine.map.TileMap.class.getName());
+	private static int mapIdCounter = 1;
 
 	private Map<MapCoordinates, Integer> mapGrid;
 	private List<Event> events;
@@ -29,6 +30,7 @@ public class TileMap {
 	private String mapName;
 	private Tileset tileset;
 	private int tileSize;
+	private final int mapId;
 
 	/**
 	 * creates a Map object. It gets the height and width of the map from the
@@ -40,6 +42,8 @@ public class TileMap {
 	 *            contains the IDs of the tiles for every single position.
 	 * @param tileset
 	 *            the Tileset object it should use.
+	 * @param events
+	 *            all events of the map.
 	 */
 	public TileMap(String mapName, int[][] mapGrid, Tileset tileset, List<Event> events) {
 		this.mapName = mapName;
@@ -58,7 +62,8 @@ public class TileMap {
 
 		this.events = events;
 		loadMap();
-		LOGGER.info("Map \"" + mapName + "\" created with " + tileset.toString());
+		mapId = mapIdCounter++;
+		LOGGER.info("Map #" + mapId + " \"" + mapName + "\" created with " + tileset.toString());
 	}
 
 	/**
@@ -74,6 +79,8 @@ public class TileMap {
 	 *            height of the map.
 	 * @param tileset
 	 *            the Tileset object it should use.
+	 * @param events
+	 *            all events of the map.
 	 */
 	public TileMap(String mapName, Map<MapCoordinates, Integer> mapGrid, int mapWidthInTiles, int mapHeightInTiles,
 			Tileset tileset, List<Event> events) {
@@ -87,6 +94,8 @@ public class TileMap {
 		mapHeightInPixel = mapHeightInTiles * tileSize;
 		this.events = events;
 		loadMap();
+		mapId = mapIdCounter++;
+
 		LOGGER.info("Map \"" + mapName + "\" created");
 	}
 
@@ -94,15 +103,17 @@ public class TileMap {
 	 * draws a part of the map. It creates a rectangle around (x|y).
 	 * 
 	 * @param g
+	 *            graphics object
 	 * @param heroXInPixel
 	 *            players position on x-axis
 	 * @param heroYInPixel
 	 *            players position on y-axis.
 	 * @param horResolution
+	 *            width of JPanel
 	 * @param vertResolution
+	 *            height of JPanel
 	 */
-	public void drawMap(Graphics g, int heroXInPixel, int heroYInPixel, int horResolution,
-			int vertResolution) {
+	public void drawMap(Graphics g, int heroXInPixel, int heroYInPixel, int horResolution, int vertResolution) {
 
 		int mapXInPixel = heroXInPixel - horResolution / 2;
 		int mapYInPixel = heroYInPixel - vertResolution / 2;
@@ -145,6 +156,11 @@ public class TileMap {
 		}
 	}
 
+	/**
+	 * returns tile size.
+	 * 
+	 * @return tile size
+	 */
 	public int getTileSize() {
 		return tileset.getTileSize();
 	}
@@ -152,30 +168,52 @@ public class TileMap {
 	/**
 	 * returns true if the horizontal start (left side) of the map is reached.
 	 * 
-	 * @param xPosition
+	 * @param xPositionInPixel
+	 *            x position on the map in pixel
 	 * @param horResolution
-	 * @return
+	 *            width of the JPanel
+	 * @return true, if left border visible
 	 */
-	public boolean isLeftBorderVisible(int xPosition, int horResolution) {
-		return xPosition < horResolution / 2;
+	public boolean isLeftBorderVisible(int xPositionInPixel, int horResolution) {
+		return xPositionInPixel < horResolution / 2;
 	}
 
 	/**
 	 * returns true if the vertical start (upper side) of the map is reached.
 	 * 
 	 * @param yPosition
+	 *            y position on the map in pixel
 	 * @param vertResolution
-	 * @return
+	 *            height of the JPanel
+	 * @return true, if upper border visible
 	 */
 	public boolean isUpperBorderVisible(int yPosition, int vertResolution) {
 		return yPosition < vertResolution / 2;
 	}
 
-	public boolean isXCoordinateInMapEnd(MapCoordinates position, int horResolution) {
+	/**
+	 * checks if position is in the right border.
+	 * 
+	 * @param position
+	 *            position in tiles
+	 * @param horResolution
+	 *            width of the JPanel
+	 * @return true, if x is in the right border.
+	 */
+	public boolean isXInRightBorder(MapCoordinates position, int horResolution) {
 		return position.xToPixel(tileSize) >= mapWidthInPixel - horResolution / 2;
 	}
 
-	public boolean isYCoordinateInMapEnd(MapCoordinates position, int vertResolution) {
+	/**
+	 * checks if position is in the lower border.
+	 * 
+	 * @param position
+	 *            position in tiles
+	 * @param vertResolution
+	 *            height of the JPanel
+	 * @return true, if y is in the lower border.
+	 */
+	public boolean isYInLowerBorder(MapCoordinates position, int vertResolution) {
 		return position.yToPixel(tileSize) >= mapHeightInPixel - vertResolution / 2;
 	}
 
@@ -183,8 +221,10 @@ public class TileMap {
 	 * returns true if the horizontal end (right side) of the map is reached.
 	 * 
 	 * @param xPosition
+	 *            x position on the map in pixel
 	 * @param horResolution
-	 * @return
+	 *            width of the JPanel
+	 * @return true, if right order is visible
 	 */
 	public boolean isRightBorderVisible(int xPosition, int horResolution) {
 		return xPosition > mapWidthInPixel - horResolution / 2;
@@ -193,12 +233,14 @@ public class TileMap {
 	/**
 	 * returns true if the vertical end (lower side) of the map is reached.
 	 * 
-	 * @param xPosition
+	 * @param yPosition
+	 *            y position on the map in pixel
 	 * @param vertResolution
-	 * @return
+	 *            height of the JPanel
+	 * @return true, if lower border is visible
 	 */
-	public boolean isLowerBorderVisible(int xPosition, int vertResolution) {
-		return xPosition > mapHeightInPixel - vertResolution / 2;
+	public boolean isLowerBorderVisible(int yPosition, int vertResolution) {
+		return yPosition > mapHeightInPixel - vertResolution / 2;
 	}
 
 	/**
@@ -206,8 +248,10 @@ public class TileMap {
 	 * return the highest/lowest possible coordinate.
 	 * 
 	 * @param x
+	 *            x that should be on map in tiles
 	 * @param y
-	 * @return
+	 *            y that should be on map in tiles
+	 * @return legit map coordinates
 	 */
 	public MapCoordinates getLegitCoordinates(int x, int y) {
 		int newX;
@@ -231,16 +275,26 @@ public class TileMap {
 		return new MapCoordinates(newX, newY);
 	}
 
+	/**
+	 * returns map width in pixel.
+	 * 
+	 * @return map width in pixel
+	 */
 	public int getMapWidthInPixel() {
 		return mapWidthInPixel;
 	}
 
+	/**
+	 * returns map height in pixel.
+	 * 
+	 * @return map height in pixel
+	 */
 	public int getMapHeightInPixel() {
 		return mapHeightInPixel;
 	}
 
 	@Override
 	public String toString() {
-		return mapName;
+		return "Map #" + mapId + " \"" + mapName + '"';
 	}
 }

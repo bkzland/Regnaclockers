@@ -1,0 +1,70 @@
+Found a 2 line (47 tokens) duplication in the following files: 
+Starting at line 35 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/GameLoop.java
+Starting at line 36 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/GameLoop.java
+
+			{ 11, 11, 11, 12, 22, 22, 18, 18, 18, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 22, 18 },
+			{ 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 },
+=====================================================================
+Found a 5 line (38 tokens) duplication in the following files: 
+Starting at line 252 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/Hero.java
+Starting at line 313 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/Hero.java
+
+		int heroY = position.yToPixel(tileSize);
+		int heroSpriteMapYPosition = position.yToPixel(tileSize) + distance + charset.getSpriteHeight() / 2
+				- charset.getSpriteHeight() + tileSize;
+
+		if (map.isUpperBorderVisible(heroSpriteMapYPosition, vertResolution)) {
+=====================================================================
+Found a 7 line (32 tokens) duplication in the following files: 
+Starting at line 45 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/event/fulfillable/Timer.java
+Starting at line 82 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/GameLoop.java
+
+			try {
+				Thread.sleep(1000 / TICKS_PER_SECOND);
+			} catch (InterruptedException e) {
+				LOGGER.severe("Cannot sleep for " + 1000 / TICKS_PER_SECOND + "ms");
+			}
+			// test
+			if (key.isWalkKeyPressed()) {
+=====================================================================
+Found a 8 line (31 tokens) duplication in the following files: 
+Starting at line 110 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/sprite/Charset.java
+Starting at line 119 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/sprite/Charset.java
+Starting at line 129 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/sprite/Charset.java
+Starting at line 139 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/sprite/Charset.java
+
+			g.drawImage(lookUp.get(spriteID), charX, charY, null);
+		} catch (IndexOutOfBoundsException e) {
+			LOGGER.severe("No sprite with ID " + spriteID);
+
+		}
+	}
+
+	public void drawLast(Graphics g, int charX, int charY) {
+=====================================================================
+Found a 4 line (30 tokens) duplication in the following files: 
+Starting at line 222 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/Hero.java
+Starting at line 284 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/Hero.java
+
+		int heroX = position.xToPixel(tileSize);
+		int heroSpriteMapXPosition = position.xToPixel(tileSize) + distance + charset.getSpriteWidth() / 2;
+
+		if (map.isLeftBorderVisible(heroSpriteMapXPosition, horResolution)) {
+=====================================================================
+Found a 2 line (29 tokens) duplication in the following files: 
+Starting at line 33 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/GameLoop.java
+Starting at line 34 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/GameLoop.java
+
+			{ 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 }, { 11, 12, 18, 18, 18, 22, 18, 18, 18, 22, 18 },
+			{ 11, 12, 12, 12, 18, 22, 18, 18, 18, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 22, 18 },
+=====================================================================
+Found a 6 line (28 tokens) duplication in the following files: 
+Starting at line 318 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/Hero.java
+Starting at line 324 of /home/kevin/workspace/regnaclockers/Regnaclockers/src/engine/Hero.java
+
+			heroY = heroY - charset.getSpriteHeight() + tileSize;
+
+			if (!position.yEquals(target)) {
+				heroY += distance;
+			}
+		} else {

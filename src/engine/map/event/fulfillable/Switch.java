@@ -1,4 +1,4 @@
-package engine.event.fullfillable;
+package engine.map.event.fulfillable;
 
 import java.util.logging.Logger;
 
@@ -7,11 +7,17 @@ import java.util.logging.Logger;
  * 
  * @author regnaclockers
  */
-public class Switch implements Fullfillable {
-	private final static Logger LOGGER = Logger.getLogger(engine.event.fullfillable.Switch.class.getName());
+public class Switch implements Fulfillable {
+	private static final Logger LOGGER = Logger.getLogger(engine.map.event.fulfillable.Switch.class.getName());
 
 	private boolean isOn;
 
+	/**
+	 * creates a switch which is on (true) or off (false).
+	 * 
+	 * @param isOn
+	 *            initial state of the switch
+	 */
 	public Switch(boolean isOn) {
 		this.isOn = isOn;
 		LOGGER.info("Switch created");
@@ -20,13 +26,16 @@ public class Switch implements Fullfillable {
 	/**
 	 * Returns true if the switch is on.
 	 * 
-	 * @return isOn;
+	 * @return isOn
 	 */
 	@Override
-	public boolean isFullfilled() {
+	public boolean isFulfilled() {
 		return isOn;
 	}
 
+	/**
+	 * turns the switch on.
+	 */
 	public void turnOn() {
 		if (isOn) {
 			LOGGER.warning("Switch already on");
@@ -36,6 +45,9 @@ public class Switch implements Fullfillable {
 		}
 	}
 
+	/**
+	 * turns the switch off.
+	 */
 	public void turnOff() {
 		if (isOn) {
 			isOn = false;

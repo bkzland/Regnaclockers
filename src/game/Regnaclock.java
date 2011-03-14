@@ -9,7 +9,7 @@ import interpreter.ArchiveReader;
  * 
  * @author regnaclockers
  */
-public class Main {
+public class Regnaclock {
 
 	/**
 	 * @param args
