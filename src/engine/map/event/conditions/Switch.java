@@ -1,4 +1,4 @@
-package engine.map.event.fulfillable;
+package engine.map.event.conditions;
 
 import java.util.logging.Logger;
 
@@ -7,8 +7,8 @@ import java.util.logging.Logger;
  * 
  * @author regnaclockers
  */
-public class Switch implements Fulfillable {
-	private static final Logger LOGGER = Logger.getLogger(engine.map.event.fulfillable.Switch.class.getName());
+public class Switch implements Condition {
+	private static final Logger LOGGER = Logger.getLogger(engine.map.event.conditions.Switch.class.getName());
 
 	private boolean isOn;
 

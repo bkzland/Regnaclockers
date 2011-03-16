@@ -1,9 +1,10 @@
 package engine.map.event;
 
 import java.awt.Graphics;
-import engine.map.MapCoordinates;
 import java.util.List;
 import java.util.logging.Logger;
+
+import engine.map.MapCoordinates;
 
 /**
  * Events are objects on maps which can have sprites and perform scripts.
@@ -21,7 +22,7 @@ public class Event {
 	private Page activatedPage;
 	private MapCoordinates position;
 	private String eventName;
-	private int tileSize = 128;
+	private int tileSize;
 	private final int eventId;
 
 	/**

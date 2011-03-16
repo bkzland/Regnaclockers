@@ -1,4 +1,4 @@
 /**
- * all classes for the gui.
+ * classes to help you to write a gui.
  */
 package engine.gui;

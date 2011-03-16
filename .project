@@ -25,11 +25,17 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.instantiations.assist.eclipse.coverage.instrumentationBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.jutils.lint4j.core.Nature</nature>
 		<nature>com.stateofflow.eclipse.metrics.MetricsNature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
+		<nature>com.instantiations.assist.eclipse.coverage.codeCoverageNature</nature>
 	</natures>
 </projectDescription>

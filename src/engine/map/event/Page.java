@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.List;
 import java.util.logging.Logger;
 
-import engine.map.event.fulfillable.Fulfillable;
+import engine.map.event.conditions.Condition;
 import engine.sprite.Charset;
 import engine.sprite.AbstractImageSet;
 import engine.sprite.Tileset;
@@ -18,7 +18,7 @@ import engine.sprite.Tileset;
 public class Page {
 	private static final Logger LOGGER = Logger.getLogger(engine.map.event.Page.class.getName());
 
-	private List<Fulfillable> conditions;
+	private List<Condition> conditions;
 	private String script;
 	private AbstractImageSet sprites;
 	private int tileID;
@@ -33,7 +33,7 @@ public class Page {
 	 * @param script
 	 *            the script
 	 */
-	public Page(Charset charset, List<Fulfillable> conditions, String script) {
+	public Page(Charset charset, List<Condition> conditions, String script) {
 		this(conditions, script);
 		this.sprites = charset;
 	}
@@ -50,7 +50,7 @@ public class Page {
 	 * @param script
 	 *            the scrpt
 	 */
-	public Page(Tileset tileset, int tileID, List<Fulfillable> conditions, String script) {
+	public Page(Tileset tileset, int tileID, List<Condition> conditions, String script) {
 		this(conditions, script);
 		this.sprites = tileset;
 		this.tileID = tileID;
@@ -64,7 +64,7 @@ public class Page {
 	 * @param script
 	 *            the script
 	 */
-	public Page(List<Fulfillable> conditions, String script) {
+	public Page(List<Condition> conditions, String script) {
 		this.conditions = conditions;
 		this.script = script;
 	}

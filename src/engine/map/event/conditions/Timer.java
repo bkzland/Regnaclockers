@@ -1,4 +1,4 @@
-package engine.map.event.fulfillable;
+package engine.map.event.conditions;
 
 import java.util.logging.Logger;
 
@@ -7,13 +7,13 @@ import java.util.logging.Logger;
  * 
  * @author regnaclockers
  */
-public class Timer implements Fulfillable, Runnable {
-	private static final Logger LOGGER = Logger.getLogger(engine.map.event.fulfillable.Timer.class.getName());
+public class Timer implements Condition, Runnable {
+	private static final Logger LOGGER = Logger.getLogger(engine.map.event.conditions.Timer.class.getName());
 
 	private boolean timeIsUp;
 	private int seconds;
 	private long startTime;
-	private Thread thread = new Thread(this);
+	private Thread thread = new Thread(this, "Timer");
 	private static final int TICKS_PER_SECOND = 5;
 
 	/**

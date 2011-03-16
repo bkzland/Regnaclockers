@@ -17,7 +17,8 @@ import javax.imageio.ImageIO;
  */
 public abstract class AbstractImageSet {
 	private static final Logger LOGGER = Logger.getLogger(engine.sprite.AbstractImageSet.class.getName());
-	protected List<BufferedImage> sprites = new ArrayList<BufferedImage>();
+	
+	private List<BufferedImage> sprites = new ArrayList<BufferedImage>();
 	protected BufferedImage spriteset;
 	private int spriteWidth;
 	private int spriteHeight;

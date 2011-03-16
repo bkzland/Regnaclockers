@@ -1,7 +1,8 @@
-package engine.gui;
+package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -14,22 +15,24 @@ import javax.swing.JMenuItem;
  * the menu with options for the user.
  */
 public class GameMenu extends JMenuBar {
+	private static final Logger LOGGER = Logger.getLogger(gui.GameMenu.class.getName());
+
+	
 	private GamePanel panel;
 	private JMenu file = new JMenu("File");
 	private JMenuItem quit = new JMenuItem("Quit");
 
 	private JMenu options = new JMenu("Options");
 	private JCheckBoxMenuItem showFps = new JCheckBoxMenuItem("Show FPS");
-
 	/**
 	 * creates a new game menu.
 	 * 
 	 * @param panel
-	 *            the panel to use its methods
+	 *            the panel
 	 */
 	public GameMenu(GamePanel panel) {
 		super();
-		this.panel = panel;
+		this.panel  = panel;
 
 		ActionListener quitListener = new ActionListener() {
 			@Override
@@ -64,6 +67,5 @@ public class GameMenu extends JMenuBar {
 	 * triggers the displaying of frames per second.
 	 */
 	public void showFps() {
-		panel.triggerFps();
 	}
 }

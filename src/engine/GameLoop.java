@@ -6,9 +6,9 @@ import engine.map.MapCoordinates;
 import engine.map.TileMap;
 import engine.map.event.Event;
 import engine.map.event.Page;
-import engine.map.event.fulfillable.Fulfillable;
-import engine.map.event.fulfillable.Switch;
-import engine.map.event.fulfillable.Timer;
+import engine.map.event.conditions.Condition;
+import engine.map.event.conditions.Switch;
+import engine.map.event.conditions.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +38,8 @@ public class GameLoop implements Runnable {
 			{ 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 }, { 11, 11, 11, 12, 18, 22, 18, 11, 11, 22, 18 },
 			{ 11, 11, 11, 12, 18, 22, 22, 22, 22, 22, 22 }, { 11, 11, 11, 12, 18, 22, 18, 18, 18, 18, 18 } };
 
-	private List<Fulfillable> conditions = new ArrayList<Fulfillable>();
-	private List<Fulfillable> conditions2 = new ArrayList<Fulfillable>();
+	private List<Condition> conditions = new ArrayList<Condition>();
+	private List<Condition> conditions2 = new ArrayList<Condition>();
 
 	private Page page;
 	private Page page2;

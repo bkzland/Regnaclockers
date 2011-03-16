@@ -1,11 +1,11 @@
-package engine.map.event.fulfillable;
+package engine.map.event.conditions;
 
 /**
  * Classes which can fulfill something.
  * 
  * @author regnaclockers
  */
-public interface Fulfillable {
+public interface Condition {
 
 	/**
 	 * should return true if it fulfilled a condition.

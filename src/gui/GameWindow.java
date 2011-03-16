@@ -1,6 +1,5 @@
-package engine.gui;
+package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -16,10 +15,9 @@ import javax.swing.JFrame;
  */
 @SuppressWarnings("serial")
 public class GameWindow extends JFrame {
-	private static final Logger LOGGER = Logger.getLogger(engine.gui.GameWindow.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(gui.GameWindow.class.getName());
 
-	private GamePanel panel = new GamePanel();
-	private GameMenu menu = new GameMenu(panel);
+	// private GameMenu menu = new GameMenu(drawer);
 
 	/**
 	 * creates a GameWindow object.
@@ -29,16 +27,14 @@ public class GameWindow extends JFrame {
 		setTitle("Regnaclock");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		requestFocus();
-		add(menu, BorderLayout.NORTH);
-		add(panel);
-		pack();
+		setVisible(true);
+
 		try {
 			Image img = ImageIO.read(new File("regnaclock.png"));
 			setIconImage(img);
 		} catch (IOException e) {
 			LOGGER.severe("Cannot load program icon");
 		}
-		setVisible(true);
 
 	}
 }

@@ -1,6 +1,6 @@
 package game;
 
-import engine.gui.GameWindow;
+import gui.GamePanel;
 
 import interpreter.ArchiveReader;
 
@@ -18,6 +18,6 @@ public class Regnaclock {
 	public static void main(String[] args) {
 		// everything just for testing here
 		new ArchiveReader("DummyGame.rcz");
-		new GameWindow();
+		new GamePanel();
 	}
 }
