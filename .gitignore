@@ -3,3 +3,8 @@
 /.classpath
 /.project
 /reports*
+/.checkstyle
+/logging.properties
+/.codepro
+/.lint4jprefs
+
