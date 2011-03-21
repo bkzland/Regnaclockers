@@ -253,7 +253,7 @@ public class TileMap {
 	 *            y that should be on map in tiles
 	 * @return legit map coordinates
 	 */
-	public MapCoordinates getLegitCoordinates(int x, int y) {
+	public MapCoordinates changeToLegitCoordinates(int x, int y) {
 		int newX;
 		int newY;
 		if (x >= 0 && x <= mapWidthInTiles - 1) {

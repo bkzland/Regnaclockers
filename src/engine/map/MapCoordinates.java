@@ -81,7 +81,7 @@ public class MapCoordinates {
 	 * @return true, if x of this is greater.
 	 */
 	public boolean xGreaterThan(MapCoordinates coords) {
-		return x > coords.getX();
+		return x > coords.x;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class MapCoordinates {
 	 * @return true, if y of this is greater.
 	 */
 	public boolean yGreaterThan(MapCoordinates coords) {
-		return y > coords.getY();
+		return y > coords.y;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class MapCoordinates {
 	 * @return true, if x of this is less.
 	 */
 	public boolean xLessThan(MapCoordinates coords) {
-		return x < coords.getX();
+		return x < coords.x;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class MapCoordinates {
 	 * @return true, if y of this is less.
 	 */
 	public boolean yLessThan(MapCoordinates coords) {
-		return y < coords.getY();
+		return y < coords.y;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class MapCoordinates {
 	 * @return true, if x of this is the same.
 	 */
 	public boolean xEquals(MapCoordinates coords) {
-		return x == coords.getX();
+		return x == coords.x;
 	}
 
 	/**
@@ -126,14 +126,14 @@ public class MapCoordinates {
 	 * @return true, if y of this is the same.
 	 */
 	public boolean yEquals(MapCoordinates coords) {
-		return y == coords.getY();
+		return y == coords.y;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof MapCoordinates) {
 			MapCoordinates coords = (MapCoordinates) obj;
-			return (x == coords.getX()) && (y == coords.getY());
+			return (x == coords.x) && (y == coords.y);
 		}
 		return false;
 	}

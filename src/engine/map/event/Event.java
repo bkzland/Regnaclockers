@@ -104,6 +104,6 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event #" + eventId + " \"" + eventName + "\" (" + position.getX() + '|' + position.getY() + ')';
+		return "Event #" + eventId + " \"" + eventName + "\" (" + position.toString();
 	}
 }

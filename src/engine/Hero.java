@@ -9,6 +9,8 @@ import engine.map.TileMap;
 import engine.map.MapCoordinates;
 import engine.sprite.Charset;
 
+// TODO break this monster in smaller classes, remove getters (especially getX and getY)
+
 /**
  * The hero which is controlled by the player.
  * 
@@ -150,7 +152,7 @@ public class Hero {
 			if (xRequest != 0 || yRequest != 0) {
 				int newX = position.getX() + xRequest;
 				int newY = position.getY() + yRequest;
-				target = map.getLegitCoordinates(newX, newY);
+				target = map.changeToLegitCoordinates(newX, newY);
 				startTime = System.currentTimeMillis();
 				xRequest = 0;
 				yRequest = 0;
@@ -346,7 +348,7 @@ public class Hero {
 		if (position.equals(target)) {
 			int newX = position.getX() + x;
 			int newY = position.getY() + y;
-			target = map.getLegitCoordinates(newX, newY);
+			target = map.changeToLegitCoordinates(newX, newY);
 			startTime = System.currentTimeMillis();
 		} else if (Math.abs(distanceOldX) + Math.abs(distanceOldX) / 5 > tileSize
 				|| Math.abs(distanceOldY) + Math.abs(distanceOldY) / 5 > tileSize) {
